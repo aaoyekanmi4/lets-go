@@ -15,7 +15,7 @@ create table `event` (
     category varchar(50) not null,
     image_url varchar(250) not null,
     `description` text,
-    event_date date not null,
+    event_date datetime not null,
     `source` varchar(50) null,
     source_id varchar(100) null,
     event_link varchar(250) null,
