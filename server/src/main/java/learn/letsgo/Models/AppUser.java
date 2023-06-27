@@ -1,10 +1,13 @@
 package learn.letsgo.Models;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AppUser implements UserDetails {
     private int appUserId;
@@ -16,6 +19,12 @@ public class AppUser implements UserDetails {
     private String lastName;
     private boolean enabled;
     private final Collection<GrantedAuthority> authorities;
+
+    private List<Event> events;
+
+    private List<Contact> contacts;
+
+    private List<Group> groups;
 
     public AppUser(int appUserId, String username, String password, String email, String phone, String firstName, String lastName, boolean enabled, List<String> roles) {
         this.appUserId = appUserId;
@@ -29,38 +38,88 @@ public class AppUser implements UserDetails {
         this.authorities = convertRolesToAuthorities(roles);
     }
 
+    private static Collection<GrantedAuthority> convertRolesToAuthorities(List<String> roles) {
+        return roles.stream()
+                .map(r -> new SimpleGrantedAuthority(r))
+                .collect(Collectors.toList());
+    }
+
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public Collection<GrantedAuthority> getAuthorities() {
+        return new ArrayList<>(this.authorities);
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.username;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.enabled;
+    }
+
+    public int getAppUserId() {
+        return appUserId;
+    }
+
+    public void setAppUserId(int appUserId) {
+        this.appUserId = appUserId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

@@ -1,6 +1,7 @@
 package learn.letsgo.Models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Event {
     private int eventId;
@@ -12,6 +13,10 @@ public class Event {
     private String sourceId;
     private String eventLink;
     private Venue venue;
+
+    private List<AppUser> appUsers;
+
+    private List<EventPost> eventPosts;
 
     public Event(){
 
