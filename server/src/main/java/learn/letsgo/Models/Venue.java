@@ -1,5 +1,7 @@
 package learn.letsgo.Models;
 
+import java.util.List;
+
 public class Venue {
     private int venueId;
     private String venueName;
@@ -8,7 +10,8 @@ public class Venue {
     private String state;
     private String country;
     private int zipCode;
-
+    
+    private List<Event> events;
     public Venue(){
 
     }
