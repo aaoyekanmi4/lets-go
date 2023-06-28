@@ -7,22 +7,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class GroupJdbcTemplateRepositoryTest {
 
     @Test
-    void findById() {
+    void shouldFindGroupById() {
     }
 
     @Test
-    void create() {
+    void shouldCreateGroup() {
     }
 
     @Test
-    void update() {
+    void shouldUpdateGroup() {
     }
 
     @Test
-    void deleteById() {
+    void shouldDeleteGroupById() {
     }
 
     @Test
-    void findAllByUserId() {
+    void shouldFindAllGroupsByUserId() {
     }
 }
