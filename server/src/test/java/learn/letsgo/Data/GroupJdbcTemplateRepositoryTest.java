@@ -22,11 +22,22 @@ class GroupJdbcTemplateRepositoryTest {
         knownGoodState.set();
     }
 
+
+
     @Test
     void shouldFindAllGroupsByUserId() {
         List<Group> groups = groupRepository.findAllByUserId(2);
         assertNotNull(groups);
         assertEquals(2, groups.size());
+    }
+
+    @Test
+    void shouldAddContactToGroup() {
+        // int initialSize = groupRepository.findById(groupId).getContacts.size();
+        // boolean actual = groupRepository.addContactToGroup(int contactId, int groupId);
+        // assertTrue(actual)
+        // int finalSize = groupRepository.findById(groupId).getContacts.size();
+        // assertEquals(1, finalSize - initialSize);
     }
 
     @Test

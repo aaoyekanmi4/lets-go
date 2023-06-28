@@ -1,6 +1,7 @@
 package learn.letsgo.Data;
 
 import learn.letsgo.Models.Contact;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public interface ContactRepository {
 
     boolean update(Contact contact);
 
+    @Transactional
     boolean deleteById(int contactId);
 
     List<Contact> findAllByUserId(int appUserId);

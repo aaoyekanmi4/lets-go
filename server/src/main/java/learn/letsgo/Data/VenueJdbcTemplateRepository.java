@@ -4,7 +4,6 @@ import learn.letsgo.Data.Mappers.EventMapper;
 import learn.letsgo.Data.Mappers.VenueMapper;
 import learn.letsgo.Models.Event;
 import learn.letsgo.Models.Venue;
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
