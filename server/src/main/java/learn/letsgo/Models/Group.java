@@ -1,5 +1,6 @@
 package learn.letsgo.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Group {
@@ -40,5 +41,14 @@ public class Group {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public List<Contact> getContacts() {
+        return new ArrayList<>(contacts);
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
     }
 }

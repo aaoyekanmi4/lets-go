@@ -34,6 +34,7 @@ class GroupJdbcTemplateRepositoryTest {
         Group actual = groupRepository.findById(1);
         assertNotNull(actual);
         assertEquals("The Adventurers", actual.getName());
+        assertEquals(1, actual.getContacts().size());
     }
 
     @Test

@@ -23,12 +23,12 @@ public class ContactJdbcTemplateRepository implements ContactRepository{
     }
 
     @Override
-    public boolean delete(Contact contact) {
+    public boolean deleteById(int contactId) {
         return false;
     }
 
     @Override
-    public List<Contact> findAll(int appUserId) {
+    public List<Contact> findAllByUserId(int appUserId) {
         return null;
     }
 }

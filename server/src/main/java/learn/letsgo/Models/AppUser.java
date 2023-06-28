@@ -20,11 +20,11 @@ public class AppUser implements UserDetails {
     private boolean enabled;
     private final Collection<GrantedAuthority> authorities;
 
-    private List<Event> events;
+    private List<Event> events = new ArrayList<>();
 
-    private List<Contact> contacts;
+    private List<Contact> contacts = new ArrayList<>();
 
-    private List<Group> groups;
+    private List<Group> groups = new ArrayList<>();
 
     public AppUser(int appUserId, String username, String password, String email, String phone, String firstName, String lastName, boolean enabled, List<String> roles) {
         this.appUserId = appUserId;
@@ -121,5 +121,29 @@ public class AppUser implements UserDetails {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public List<Event> getEvents() {
+        return new ArrayList<>(events);
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<Contact> getContacts() {
+        return new ArrayList<>(contacts);
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
+    public List<Group> getGroups() {
+        return new ArrayList<>(groups);
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
     }
 }

@@ -11,7 +11,7 @@ public interface ContactRepository {
 
     boolean update(Contact contact);
 
-    boolean delete(Contact contact);
+    boolean deleteById(int contactId);
 
-    List<Contact> findAll(int appUserId);
+    List<Contact> findAllByUserId(int appUserId);
 }

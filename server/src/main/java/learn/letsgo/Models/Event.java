@@ -1,6 +1,7 @@
 package learn.letsgo.Models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Event {
@@ -15,9 +16,9 @@ public class Event {
     private String eventLink;
     private Venue venue;
 
-    private List<AppUser> appUsers;
+    private List<AppUser> appUsers = new ArrayList<>();
 
-    private List<EventPost> eventPosts;
+    private List<EventPost> eventPosts = new ArrayList<>();
 
     public Event(){
 
@@ -25,7 +26,6 @@ public class Event {
 
     public Event( String category, String eventName, String imageUrl,
                  String description, LocalDateTime dateTime, String source, String sourceId, String eventLink, Venue venue) {
-
         this.category = category;
         this.eventName = eventName;
         this.imageUrl = imageUrl;
@@ -115,5 +115,21 @@ public class Event {
 
     public void setVenue(Venue venue) {
         this.venue = venue;
+    }
+
+    public List<AppUser> getAppUsers() {
+        return new ArrayList<>(appUsers);
+    }
+
+    public void setAppUsers(List<AppUser> appUsers) {
+        this.appUsers = appUsers;
+    }
+
+    public List<EventPost> getEventPosts() {
+        return new ArrayList<>(eventPosts);
+    }
+
+    public void setEventPosts(List<EventPost> eventPosts) {
+        this.eventPosts = eventPosts;
     }
 }

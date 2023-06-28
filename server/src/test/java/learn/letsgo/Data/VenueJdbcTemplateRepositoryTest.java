@@ -36,6 +36,7 @@ class VenueJdbcTemplateRepositoryTest {
         Venue actual = repository.findById(1);
         assertNotNull(actual);
         assertEquals(1, actual.getVenueId());
+        assertEquals(1, actual.getEvents().size());
     }
 
     @Test
