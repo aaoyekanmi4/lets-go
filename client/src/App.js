@@ -8,6 +8,7 @@ import Contacts from "./views/pages/Contacts/Contacts.js";
 import Groups from "./views/pages/Groups/Groups.js";
 import SavedEvents from "./views/pages/SavedEvents/SavedEvents.js";
 import UserAccount from "./views/pages/UserAccount/UserAccount.js";
+import EventResults from "./views/pages/EventResults/EventResults.js";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/groups/:userId" element={<Groups />} />
         <Route path="/saved-events/:userId" element={<SavedEvents />} />
         <Route path="/account/:userId" element={<UserAccount />} />
+        <Route path="/events" element={<EventResults />} />
       </Routes>
     </BrowserRouter>
   );

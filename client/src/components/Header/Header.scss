@@ -1,0 +1,17 @@
+.Header {
+  background-color: var(--color-primary);
+  padding: 2rem 0rem;
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__links {
+    display: flex;
+  }
+  &__link {
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}

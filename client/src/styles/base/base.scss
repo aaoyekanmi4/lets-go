@@ -1,3 +1,16 @@
+:root {
+  //font family
+  --ff-logo: "Kavoon", cursive;
+
+  //color
+  --color-primary: #f7fff7;
+  --color-secondary: #ff6b6b;
+  --color-tertiary: #800080;
+
+  --color-dark: #22181c;
+  --color-light: white;
+}
+
 html {
   font-size: 62.5%;
 }
@@ -26,6 +39,11 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+ol,
+ul {
+  list-style-type: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
