@@ -114,4 +114,5 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
                 + "where au.username = ?";
         return jdbcTemplate.query(sql, (rs, rowId) -> rs.getString("name"), username);
     }
+//    TODO: Add events, groups, contacts to user
 }

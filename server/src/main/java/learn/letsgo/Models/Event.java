@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Event {
     private int eventId;
+    private String eventName;
     private String category;
     private String imageUrl;
     private String description;
@@ -22,8 +23,11 @@ public class Event {
 
     }
 
-    public Event(String category, String imageUrl, String description, LocalDateTime dateTime, String source, String sourceId, String eventLink, Venue venue) {
+    public Event( String category, String eventName, String imageUrl,
+                 String description, LocalDateTime dateTime, String source, String sourceId, String eventLink, Venue venue) {
+
         this.category = category;
+        this.eventName = eventName;
         this.imageUrl = imageUrl;
         this.description = description;
         this.dateTime = dateTime;
@@ -39,6 +43,14 @@ public class Event {
 
     public void setEventId(int eventId) {
         this.eventId = eventId;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
     public String getCategory() {

@@ -7,22 +7,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class EventPostJdbcTemplateRepositoryTest {
 
     @Test
-    void findById() {
+    void shouldFindEventPostById() {
     }
 
     @Test
-    void create() {
+    void shouldCreateEventPost() {
     }
 
     @Test
-    void update() {
+    void shouldUpdateEventPost() {
     }
 
     @Test
-    void deleteById() {
+    void shouldDeleteEventPostById() {
     }
 
     @Test
-    void findAllByEventId() {
+    void shouldFindAllEventPostsByEventId() {
     }
 }

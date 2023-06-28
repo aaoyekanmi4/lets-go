@@ -23,7 +23,7 @@ public class EventJdbcTemplateRepository implements EventRepository{
     }
 
     @Override
-    public boolean deleteById(Event event) {
+    public boolean deleteById(int eventId) {
         return false;
     }
 

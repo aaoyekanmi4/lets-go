@@ -14,7 +14,7 @@ public interface EventRepository {
     @Transactional
     boolean update(Event event);
 
-    boolean deleteById(Event event);
+    boolean deleteById(int eventId);
 
     List<Event> findAllByUserId(int appUserId);
 }

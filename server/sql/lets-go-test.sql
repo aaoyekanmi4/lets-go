@@ -171,11 +171,12 @@ insert into app_user_role
 		(3, 'NRG Stadium', '1922 Fondren St.', 'Houston', 'TX', 'United States', 77282);
         
 	
-    insert into `event`(event_id,  category, image_url,event_name, `description`, event_date, `source`, source_id, event_link, venue_id) 
+    insert into `event`(event_id,  category, event_name, image_url, `description`, event_date, `source`, source_id, event_link, venue_id)
     values
-        (1, 'concert', 'https://chairnerd.global.ssl.fastly.net/images/performers/8741/555bce1815140ad65ab0b1066467ae7d/huge.jpg','Young The Giant with Grouplove', null, '2012-03-09T19:00:00', 'SeatGeek', '721901', 1),        
-		(2, 'sports', 'www.coolpic.net/image/huge.jpg', 'Knicks vs Spurs', '', '2015-08-09T19:00:00', 'SeatGeek', '728901', 2),       
-		(3, 'sports', 'www.coolpic4.net/image/large.jpg', 'Bulls vs Spurs', '', '2018-08-09T19:00:00', 'TicketMaster', '1034901', 3);
+        (1, 'concert', 'Young The Giant with Grouplove', 'https://chairnerd.global.ssl.fastly.net/images/performers/8741/555bce1815140ad65ab0b1066467ae7d/huge.jpg',
+        "", '2012-03-09T19:00:00', 'SeatGeek', '721901', "https://example.com", 1),
+		(2, 'sports', 'Knicks vs Spurs', 'www.coolpic.net/image/huge.jpg',  '', '2015-08-09T19:00:00', 'SeatGeek', '728901',"https://example.com", 2),
+		(3, 'sports', 'Bulls vs Spurs', 'www.coolpic4.net/image/large.jpg',  '', '2018-08-09T19:00:00', 'TicketMaster', '1034901',"https://example.com", 3);
 
 insert into event_post (event_post_id, event_id, app_user_id, post_body, likes)
 values 
