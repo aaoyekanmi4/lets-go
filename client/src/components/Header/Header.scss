@@ -8,9 +8,8 @@
   }
   &__links {
     display: flex;
-  }
-  &__link {
-    &:not(:last-child) {
+    align-items: center;
+    & > * {
       margin-right: 1rem;
     }
   }

@@ -13,3 +13,17 @@
     }
   }
 }
+
+.button-text {
+  font-size: 2rem;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  &--primary {
+    color: var(--color-tertiary);
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
