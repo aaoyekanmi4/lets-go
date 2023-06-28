@@ -1,5 +1,6 @@
 package learn.letsgo.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Venue {
@@ -11,7 +12,8 @@ public class Venue {
     private String country;
     private int zipCode;
     
-    private List<Event> events;
+    private List<Event> events = new ArrayList<>();
+
     public Venue(){
 
     }
@@ -79,5 +81,13 @@ public class Venue {
 
     public void setZipCode(int zipCode) {
         this.zipCode = zipCode;
+    }
+
+    public List<Event> getEvents() {
+        return new ArrayList<>(events);
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 }
