@@ -39,7 +39,7 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
     @Transactional
     public AppUser create(AppUser user) {
 
-        final String sql = "insert into app_user (username, password_hash, email, phone, first_name, last_name) " +
+        final String sql = "insert into app_user (username, password_hash,email, phone, first_name, last_name) " +
                 "values (?, ?, ?, ?, ?, ?);";
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();

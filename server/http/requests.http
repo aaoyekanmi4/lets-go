@@ -1,0 +1,30 @@
+@url=http://localhost:8080/api
+
+POST {{url}}/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username":"arit@dev10.com",
+  "password":"P@ssw0rd!"
+}
+
+
+###
+POST {{url}}/create_account HTTP/1.1
+Content-Type: application/json
+
+{
+  "username":"bill@dev10.com",
+  "password":"P@ssw0rd!",
+  "email": "bill@dev10.com",
+  "phone":"2222222",
+  "firstName": "Bill",
+  "lastName":"Blase"
+}
+
+###
+
+POST {{url}}/refresh_token HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg3OTU3MjgxfQ.B2WA0lRoEOn_n8Vds9FddgqtYbiZwajvfdxfbmwUjt8
+
+
