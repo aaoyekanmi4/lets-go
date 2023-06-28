@@ -48,6 +48,7 @@ create table venue (
 
 create table `event` (
 	event_id int primary key auto_increment,
+	event_name varchar(100) not null,
     category varchar(50) not null,
     image_url varchar(250) not null,
     `description` text,
