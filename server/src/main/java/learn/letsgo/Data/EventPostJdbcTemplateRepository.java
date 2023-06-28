@@ -7,6 +7,7 @@ import java.util.List;
 
 @Repository
 public class EventPostJdbcTemplateRepository implements EventPostRepository{
+
     @Override
     public EventPost findById(int postId) {
         return null;
