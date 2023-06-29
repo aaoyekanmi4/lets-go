@@ -323,7 +323,7 @@ import "./EventCard.scss";
 
 const EventCard = ({ image, dateTime, eventName, venue, category }) => {
   return (
-    <Link className="EventCard">
+    <Link className="EventCard" to="/contacts">
       <div className="EventCard__image-container">
         <img src={image} className="EventCard__image" alt={eventName} />
       </div>
