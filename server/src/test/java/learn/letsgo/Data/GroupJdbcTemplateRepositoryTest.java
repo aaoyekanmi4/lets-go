@@ -24,8 +24,6 @@ class GroupJdbcTemplateRepositoryTest {
         knownGoodState.set();
     }
 
-
-
     @Test
     void shouldFindAllGroupsByUserId() {
         List<Group> groups = groupRepository.findAllByUserId(2);
@@ -35,11 +33,20 @@ class GroupJdbcTemplateRepositoryTest {
 
     @Test
     void shouldAddContactToGroup() {
-        // int initialSize = groupRepository.findById(groupId).getContacts.size();
-        // boolean actual = groupRepository.addContactToGroup(int contactId, int groupId);
-        // assertTrue(actual)
-        // int finalSize = groupRepository.findById(groupId).getContacts.size();
-        // assertEquals(1, finalSize - initialSize);
+        int initialCount =  groupRepository.findById(1).getContacts().size();
+        boolean actual = groupRepository.addContactToGroup(1,1);
+        assertTrue(actual);
+        int resultCount = groupRepository.findById(1).getContacts().size();
+        assertEquals(1, resultCount - initialCount);
+    }
+
+    @Test
+    void shouldRemoveContactToGroup() {
+        int initialCount =  groupRepository.findById(3).getContacts().size();
+        boolean actual = groupRepository.removeContactFromGroup(2,3);
+        assertTrue(actual);
+        int resultCount = groupRepository.findById(3).getContacts().size();
+        assertEquals(-1, resultCount - initialCount);
     }
 
     @Test
