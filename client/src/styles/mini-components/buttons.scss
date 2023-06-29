@@ -1,8 +1,9 @@
 .button-outline {
+  display: flex;
   text-decoration: none;
   padding: 1rem 1.5rem;
   font-size: var(--fs-400);
-  border-radius: var(--br-large);
+
   &--primary {
     color: var(--color-tertiary);
     border: 2px solid var(--color-tertiary);

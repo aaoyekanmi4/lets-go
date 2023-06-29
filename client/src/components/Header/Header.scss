@@ -39,10 +39,10 @@
   &__mobile-links {
     position: absolute;
     top: 0;
-    padding-top: 10rem;
+    padding: 10rem 0rem 2rem 0rem;
     display: flex;
     justify-content: space-between;
-
+    align-items: center;
     flex-direction: column;
     width: 30rem;
     height: 100%;
@@ -59,13 +59,17 @@
       transition: right 400ms ease-in;
     }
   }
+  &__search-container-mobile {
+    width: 25rem;
+  }
   &__search-container-full {
-    width: 1rem;
+    width: 20rem;
   }
   &__container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0rem 3rem;
   }
   &__actions {
     display: flex;

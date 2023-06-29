@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 import Logo from "../Logo/Logo.js";
 import TextButtonDropdown from "../TextButtonDropdown/TextButtonDropdown.js";
@@ -8,6 +9,10 @@ import useWindowSize from "../../hooks/useWindowSize.js";
 import "./Header.scss";
 
 const Header = () => {
+  console.log(moment("2016-03-18T14:00:00Z").format("MMM"));
+  console.log(moment("2016-03-18T14:00:00Z").date());
+  console.log(moment("2016-03-18T14:00:00Z").format("dddd, MMMM Do YYYY"));
+  console.log(moment("2016-03-18T14:00:00Z").format("h:mm a"));
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const windowSize = useWindowSize();
@@ -32,7 +37,7 @@ const Header = () => {
             }`}
           >
             <li>
-              <div className="Header__search-container">
+              <div className="Header__search-container-mobile">
                 <SearchField placeholder="Search Events..." />
               </div>
             </li>
@@ -88,6 +93,11 @@ const Header = () => {
         <nav className="Header__nav">
           <ul className="Header__links">
             <li>
+              <div className="Header__search-container-full">
+                <SearchField placeholder="Search Events..." />
+              </div>
+            </li>
+            <li>
               <TextButtonDropdown buttonName="My Personals">
                 <Link
                   className="button-text button-text--primary"
@@ -123,9 +133,6 @@ const Header = () => {
                 Sign Out
               </Link>
             </li>
-            <li>
-              <SearchField placeholder="Search Events..." />
-            </li>
           </ul>
         </nav>
       </>
@@ -134,7 +141,7 @@ const Header = () => {
 
   return (
     <header className="Header">
-      <div className="Header__container container">
+      <div className="Header__container">
         <Logo />
         <div className="Header__actions">
           {windowSize < 768 ? getMobileMenu() : getFullMenu()}

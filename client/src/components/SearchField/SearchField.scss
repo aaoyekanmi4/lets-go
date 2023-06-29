@@ -3,7 +3,8 @@
   display: flex;
   position: relative;
   &__input {
-    border-radius: var(--br-small);
+    width: 100%;
+    border: none;
     padding: 1rem 5rem 1rem 1rem;
     border: 2px solid var(--color-tertiary);
     height: 4rem;

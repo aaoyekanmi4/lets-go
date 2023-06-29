@@ -6,10 +6,6 @@ import "./TextButtonDropdown.scss";
 const TextButtonDropdown = ({ buttonName, children }) => {
   const [showDropdownOptions, setShowDropdownOptions] = useState(false);
 
-  // const renderedOptions = options.map((option, index) => {
-  //   return <span key={index}>option</span>;
-  // });
-
   return (
     <div
       className="TextButtonDropdown"
