@@ -193,9 +193,9 @@ values
 
 insert into contact(app_user_id, email, phone, first_name, last_name)
 values 
-(1, 'blue@gmail.com', 2222222, 'Rick', 'James'),
-(1, 'red@gmail.com', 2222222, 'Martha', 'Stewart'),
-(2, 'yellow@gmail.com', 2222222, 'Natalie', 'Portman');
+(1, 'blue@gmail.com', "2222222", 'Rick', 'James'),
+(1, 'red@gmail.com', "2222222"", 'Martha', 'Stewart'),
+(2, 'yellow@gmail.com', "2222222", 'Natalie', 'Portman');
 
 
 insert into `group`(app_user_id, group_name)
