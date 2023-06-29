@@ -19,8 +19,8 @@ const Home = () => {
       <ContactCard
         firstName="Eric"
         lastName="Baffour-Addo"
-        email="ericbaddo13@gmail.com"
-        phone="6787931777"
+        email="ericdoes13@gmail.com"
+        phone="6788022654"
       />
     </div>
   );
