@@ -16,7 +16,7 @@ public class EventPostService {
         this.postRepository = postRepository;
     }
 
-    public List<EventPost> findAllForUser(int eventId) {
+    public List<EventPost> findAllByEventId(int eventId) {
         return postRepository.findAllByEventId(eventId);
     }
 
