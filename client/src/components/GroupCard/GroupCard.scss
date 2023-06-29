@@ -14,7 +14,7 @@
   &__icon {
     margin-left: 1.3rem;
     font-size: 2rem;
-    transform: rotate(-10deg);
+    transform: translatey(-0.8rem) rotate(-10deg);
   }
   &__name {
   }
@@ -28,5 +28,5 @@
 }
 
 .GroupCard:hover .GroupCard__icon {
-  transform: scale(1.4) rotate(-10deg);
+  transform: scale(1.4) translatey(-0.8rem) rotate(-10deg);
 }
