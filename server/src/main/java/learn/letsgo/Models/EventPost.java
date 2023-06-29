@@ -2,8 +2,8 @@ package learn.letsgo.Models;
 
 public class EventPost {
     private int postId;
-    private Event event;
-    private AppUser appUser;
+    private int eventId;
+    private int appUserId;
     private String postBody;
     private int likes;
 
@@ -11,9 +11,9 @@ public class EventPost {
 
     }
 
-    public EventPost(Event event, AppUser appUser, String postBody, int likes) {
-        this.event = event;
-        this.appUser = appUser;
+    public EventPost(int eventId, int appUserID, String postBody, int likes) {
+        this.eventId = eventId;
+        this.appUserId = appUserId;
         this.postBody = postBody;
         this.likes = likes;
     }
@@ -26,20 +26,20 @@ public class EventPost {
         this.postId = postId;
     }
 
-    public Event getEvent() {
-        return event;
+    public int getEventId() {
+        return eventId;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
     }
 
-    public AppUser getAppUser() {
-        return appUser;
+    public int getAppUserId() {
+        return appUserId;
     }
 
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
+    public void setAppUserId(int appUserId) {
+        this.appUserId = appUserId;
     }
 
     public String getPostBody() {

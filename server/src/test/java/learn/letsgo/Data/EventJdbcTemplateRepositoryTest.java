@@ -51,7 +51,6 @@ class EventJdbcTemplateRepositoryTest {
         assertNotNull(actual);
         assertEquals(3, actual.getVenue().getVenueId());
         assertEquals(4, actual.getEventId());
-
     }
 
     @Test
