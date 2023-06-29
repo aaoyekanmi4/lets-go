@@ -1,0 +1,53 @@
+.ContactCard {
+  margin-left: 50rem;
+  width: 30rem;
+  height: 40rem;
+  border-radius: 15px;
+  background-color: var(--color-light);
+  color: #8a4fff;
+  color: var(--color-tertiary);
+  position: relative;
+  padding: 2rem;
+  &__upper-border,
+  &__lower-border {
+    position: absolute;
+
+    width: 100%;
+    height: 50%;
+    border-radius: 15px;
+    z-index: -2;
+    background: linear-gradient(
+      90deg,
+      rgba(239, 94, 110, 1) 9%,
+      rgba(255, 107, 107, 1) 47%,
+      rgba(180, 43, 119, 1) 100%,
+      rgba(174, 38, 120, 1) 100%,
+      rgba(128, 0, 128, 1) 100%
+    );
+  }
+  &__upper-border {
+    top: -0.7rem;
+    left: -0.6rem;
+  }
+  &__lower-border {
+    bottom: -0.7rem;
+    right: -0.6rem;
+  }
+  &__circle {
+    margin: 0 auto;
+    height: 10rem;
+    width: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 360px;
+    border: 3px solid var(--color-tertiary);
+  }
+  &__letter {
+    font-size: 6rem;
+  }
+  &__name {
+    text-align: center;
+    margin-top: 1rem;
+  }
+}

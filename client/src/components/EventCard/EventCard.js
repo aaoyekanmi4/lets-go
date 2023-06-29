@@ -321,11 +321,11 @@ import "./EventCard.scss";
 //   "url": "http://ticketmaster.com/event/3B00506AA4EA161B"
 // }
 
-const EventCard = ({ image, dateTime, eventName, venue, category }) => {
+const EventCard = ({ imageUrl, dateTime, eventName, venue, category }) => {
   return (
     <Link className="EventCard" to="/contacts">
       <div className="EventCard__image-container">
-        <img src={image} className="EventCard__image" alt={eventName} />
+        <img src={imageUrl} className="EventCard__image" alt={eventName} />
       </div>
       <div className="EventCard__details">
         <div className="EventCard__month-date">
