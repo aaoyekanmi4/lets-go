@@ -3,6 +3,7 @@ import React from "react";
 import Header from "../../../components/Header/Header.js";
 import EventCard from "../../../components/EventCard/EventCard.js";
 import ContactCard from "../../../components/ContactCard/ContactCard.js";
+import GroupCard from "../../../components/GroupCard/GroupCard.js";
 
 import "./Home.scss";
 const Home = () => {
@@ -22,6 +23,7 @@ const Home = () => {
         email="ericdoes13@gmail.com"
         phone="6788022654"
       />
+      <GroupCard groupName="The Ballers we call" />
     </div>
   );
 };

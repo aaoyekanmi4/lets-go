@@ -33,6 +33,22 @@
     bottom: -0.7rem;
     right: -0.6rem;
   }
+  &__action-button {
+    position: absolute;
+    display: none;
+  }
+  &__pencil {
+    top: 1rem;
+    right: 5rem;
+    color: rgba(var(--color-black), 0.4);
+    font-size: 2rem;
+  }
+  &__trash {
+    top: 1rem;
+    right: 2rem;
+    color: red;
+    font-size: 2rem;
+  }
   &__circle {
     margin: 0 auto;
     height: 10rem;
@@ -64,5 +80,14 @@
   }
   &__contact-value {
     flex: 3 0 0;
+    text-decoration: none;
+    color: var(--color-tertiary);
+    &:hover {
+      text-decoration: underline;
+    }
   }
+}
+
+.ContactCard:hover .ContactCard__action-button {
+  display: block;
 }

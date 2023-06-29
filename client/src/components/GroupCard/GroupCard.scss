@@ -1,0 +1,16 @@
+.GroupCard {
+  height: auto;
+  display: inline-block;
+  background-color: white;
+  box-shadow: 3px 4px 5px grey;
+  color: var(--color-tertiary);
+  &__name {
+    padding: 2rem;
+    -webkit-text-stroke-width: 0.6px;
+    -webkit-text-stroke-color: var(--color-light);
+  }
+  &__details {
+    text-align: center;
+    border: 1px solid red;
+  }
+}
