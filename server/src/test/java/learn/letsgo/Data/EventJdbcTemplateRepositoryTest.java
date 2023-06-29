@@ -42,7 +42,6 @@ class EventJdbcTemplateRepositoryTest {
         assertNotNull(actual);
         assertEquals("concert", actual.getCategory());
         assertEquals(2, actual.getEventPosts().size());
-        assertEquals(1, actual.getAppUsers().size());
     }
 
     @Test
@@ -51,7 +50,6 @@ class EventJdbcTemplateRepositoryTest {
         assertNotNull(actual);
         assertEquals(3, actual.getVenue().getVenueId());
         assertEquals(4, actual.getEventId());
-
     }
 
     @Test

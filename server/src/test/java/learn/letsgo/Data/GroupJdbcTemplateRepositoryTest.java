@@ -4,11 +4,13 @@ import learn.letsgo.Models.Group;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class GroupJdbcTemplateRepositoryTest {
 
     @Autowired
@@ -36,6 +38,25 @@ class GroupJdbcTemplateRepositoryTest {
         assertEquals("The Adventurers", actual.getName());
         assertEquals(1, actual.getContacts().size());
     }
+
+    @Test
+    void shouldAddContactToGroup() {
+        int initialCount =  groupRepository.findById(1).getContacts().size();
+        boolean actual = groupRepository.addContactToGroup(1,1);
+        assertTrue(actual);
+        int resultCount = groupRepository.findById(1).getContacts().size();
+        assertEquals(1, resultCount - initialCount);
+    }
+
+    @Test
+   void shouldRemoveContactFromGroup() {
+        int initialCount =  groupRepository.findById(1).getContacts().size();
+        boolean actual = groupRepository.removeContactFromGroup(1,1);
+        assertTrue(actual);
+        int resultCount = groupRepository.findById(1).getContacts().size();
+        assertEquals(-1, resultCount - initialCount);
+    }
+
 
     @Test
     void shouldCreateGroup() {

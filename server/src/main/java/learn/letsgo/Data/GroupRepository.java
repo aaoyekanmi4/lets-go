@@ -13,5 +13,9 @@ public interface GroupRepository {
 
     boolean deleteById(int groupId);
 
-    List<Group> findAllByUserId(int userId);
+    List<Group> findAllByUserId(int appUserId);
+
+    boolean addContactToGroup(int contactId, int groupId);
+
+    boolean removeContactFromGroup(int contactId, int groupId);
 }

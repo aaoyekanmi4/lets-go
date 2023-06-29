@@ -66,13 +66,11 @@ class EventPostJdbcTemplateRepositoryTest {
     }
 
     EventPost makeEventPost() {
-        Event event = new Event();
-        event.setEventId(10);
         AppUser appUser = new AppUser(10, "JohnnyBravo", "password", "jb@gmail.com",
                 "4444444","Johnny", "Rivers", true, List.of("USER", "ADMIN"));
         EventPost post  = new EventPost();
-        post.setEvent(event);
-        post.setAppUser(appUser);
+        post.setEventId(2);
+        post.setAppUserId(1);
         post.setPostBody("Where is everyone?");
         post.setLikes(5);
         return post;

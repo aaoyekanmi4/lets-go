@@ -13,4 +13,8 @@ public interface AppUserRepository {
 
     @Transactional
     boolean update(AppUser user);
+
+    boolean addEventToUser(int eventId, int appUserId);
+
+    boolean removeEventFromUser(int eventId, int appUserId);
 }

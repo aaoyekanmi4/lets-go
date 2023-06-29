@@ -4,11 +4,13 @@ import learn.letsgo.Models.AppUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class AppUserJdbcTemplateRepositoryTest {
 
     @Autowired
@@ -47,6 +49,24 @@ class AppUserJdbcTemplateRepositoryTest {
         assertTrue(actual);
         AppUser updatedUser = appUserRepository.findByUsername("arit@dev10.com");
         assertEquals("5555555", updatedUser.getPhone());
+    }
+
+    @Test
+    void addEventToUser() {
+        int initialCount =  appUserRepository.findByUsername("eric@dev10.com").getEvents().size();
+        boolean actual = appUserRepository.addEventToUser(1,1);
+        assertTrue(actual);
+        int resultCount = appUserRepository.findByUsername("eric@dev10.com").getEvents().size();
+        assertEquals(1, resultCount - initialCount);
+    }
+
+    @Test
+    void removeEventFromUser() {
+        int initialCount =  appUserRepository.findByUsername("eric@dev10.com").getEvents().size();
+        boolean actual = appUserRepository.removeEventFromUser(1,1);
+        assertTrue(actual);
+        int resultCount = appUserRepository.findByUsername("eric@dev10.com").getEvents().size();
+        assertEquals(-1, resultCount - initialCount);
     }
 
     AppUser makeAppUser () {

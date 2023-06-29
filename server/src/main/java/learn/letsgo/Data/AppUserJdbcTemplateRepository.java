@@ -1,6 +1,12 @@
 package learn.letsgo.Data;
 import learn.letsgo.Data.Mappers.AppUserMapper;
+import learn.letsgo.Data.Mappers.ContactMapper;
+import learn.letsgo.Data.Mappers.EventMapper;
+import learn.letsgo.Data.Mappers.GroupMapper;
 import learn.letsgo.Models.AppUser;
+import learn.letsgo.Models.Contact;
+import learn.letsgo.Models.Event;
+import learn.letsgo.Models.Group;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,9 +36,16 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
                 + "from app_user "
                 + "where username = ?;";
 
-        return jdbcTemplate.query(sql, new AppUserMapper(roles), username)
+        AppUser result = jdbcTemplate.query(sql, new AppUserMapper(roles), username)
                 .stream()
                 .findFirst().orElse(null);
+
+        if (result != null) {
+            addEvents(result);
+            addGroups(result);
+            addContacts(result);
+        }
+        return result;
     }
 
     @Override
@@ -89,6 +102,17 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
         return updated;
     }
 
+    @Override
+    public boolean addEventToUser(int eventId, int appUserId) {
+        final String sql = "insert into saved_event(event_id, app_user_id) values (?,?);";
+        return jdbcTemplate.update(sql, eventId, appUserId) > 0;
+    }
+
+    @Override
+    public boolean removeEventFromUser(int eventId, int appUserId) {
+        return jdbcTemplate.update("delete from saved_event where app_user_id =? and event_id =?", appUserId, eventId) > 0;
+    }
+
     private void updateRoles(AppUser user) {
         // delete all roles, then re-add
         jdbcTemplate.update("delete from app_user_role where app_user_id = ?;", user.getAppUserId());
@@ -114,5 +138,34 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
                 + "where au.username = ?";
         return jdbcTemplate.query(sql, (rs, rowId) -> rs.getString("name"), username);
     }
-//    TODO: Add events, groups, contacts to user
+//    TODO: Add groups, contacts to user
+    private void addEvents (AppUser appUser) {
+        final String sql ="select e.event_id, e.category, e.event_name, e.image_url, e.description, e.event_date, "
+                + "e.source, e.source_id, e.event_link, e.venue_id, "
+                + "v.venue_name, v.address, v.city, v.state, v.country, v.zipcode "
+                + "from event e "
+                + "inner join venue v on e.venue_id = v.venue_id "
+                + "inner join saved_event se on se.event_id = e.event_id "
+                + "inner join app_user a on a.app_user_id = se.app_user_id "
+                + "where a.app_user_id= ?;";
+        List<Event> events = jdbcTemplate.query(sql, new EventMapper(), appUser.getAppUserId());
+        appUser.setEvents(events);
+    }
+
+    private void addGroups (AppUser appUser) {
+        final String sql ="select g.group_id, g.app_user_id, g.group_name "
+                + "from `group` g "
+                + "where g.app_user_id= ?;";
+        List<Group> groups = jdbcTemplate.query(sql, new GroupMapper(), appUser.getAppUserId());
+        appUser.setGroups(groups);
+    }
+
+    private void addContacts (AppUser appUser) {
+        final String sql ="select c.contact_id, c.app_user_id, c.email, "
+                + "c.phone, c.first_name, c.last_name "
+                + "from contact c "
+                + "where c.app_user_id= ?;";
+        List<Contact> contacts = jdbcTemplate.query(sql, new ContactMapper(), appUser.getAppUserId());
+        appUser.setContacts(contacts);
+    }
 }
