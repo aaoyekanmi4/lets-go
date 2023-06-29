@@ -1,9 +1,74 @@
 .Header {
   background-color: var(--color-primary);
   padding: 2rem 0rem;
+  &__mobile-button {
+    cursor: pointer;
+    position: absolute;
+    top: 2rem;
+    right: 4rem;
+    padding: 0.7rem;
+    background-color: transparent;
+    border: none;
+    border-radius: var(--br-small);
+    height: 5rem;
+    width: 5rem;
+    z-index: 4;
+  }
+  &__hamburger {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-tertiary);
+    position: relative;
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-tertiary);
+    }
+    &::before {
+      top: 1rem;
+    }
+    &::after {
+      top: -1rem;
+    }
+  }
+  &__mobile-links {
+    position: absolute;
+    top: 0;
+    padding-top: 10rem;
+    display: flex;
+    justify-content: space-between;
+
+    flex-direction: column;
+    width: 30rem;
+    height: 100%;
+    background-color: var(--color-secondary);
+    li {
+      margin-bottom: 2rem;
+    }
+    &--off-screen {
+      right: -50rem;
+      transition: right 400ms ease-in;
+    }
+    &--on-screen {
+      right: 0rem;
+      transition: right 400ms ease-in;
+    }
+  }
+  &__search-container-full {
+    width: 1rem;
+  }
   &__container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+  }
+  &__actions {
+    display: flex;
     align-items: center;
   }
   &__links {

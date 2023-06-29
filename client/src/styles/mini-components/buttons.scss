@@ -1,13 +1,13 @@
 .button-outline {
   text-decoration: none;
   padding: 1rem 1.5rem;
-  font-size: 1.8rem;
-  border-radius: 1.5rem;
+  font-size: var(--fs-400);
+  border-radius: var(--br-large);
   &--primary {
-    color: #800080;
-    border: 2px solid #800080;
+    color: var(--color-tertiary);
+    border: 2px solid var(--color-tertiary);
     &:hover {
-      background-color: #800080;
+      background-color: var(--color-tertiary);
       color: white;
       transition: background-color 300ms ease-in;
     }
@@ -20,10 +20,13 @@
   text-decoration: none;
   border: none;
   background-color: transparent;
+  &:hover {
+    text-decoration: underline;
+  }
   &--primary {
     color: var(--color-tertiary);
-    &:hover {
-      text-decoration: underline;
-    }
+  }
+  &--secondary {
+    color: var(--color-primary);
   }
 }

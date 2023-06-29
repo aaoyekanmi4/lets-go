@@ -1,0 +1,35 @@
+.SearchField {
+  width: 100%;
+  display: flex;
+  position: relative;
+  &__input {
+    border-radius: var(--br-small);
+    padding: 1rem 5rem 1rem 1rem;
+    border: 2px solid var(--color-tertiary);
+    height: 4rem;
+    &::placeholder {
+      font-size: 1.6rem;
+    }
+  }
+  &__button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    cursor: pointer;
+    padding: 0rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-secondary);
+    border: 2px solid var(--color-tertiary);
+    border-left: none;
+    &:active {
+      transform: translatey(0.05rem);
+    }
+  }
+  &__icon {
+    font-size: 1.5rem;
+    color: var(--color-light);
+  }
+}

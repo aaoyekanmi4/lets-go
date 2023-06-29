@@ -1,6 +1,7 @@
 :root {
   //font family
   --ff-logo: "Kavoon", cursive;
+  --fs-400: 1.8rem;
 
   //color
   --color-primary: #f7fff7;
@@ -9,6 +10,10 @@
 
   --color-dark: #22181c;
   --color-light: white;
+
+  //border-radius
+  --br-small: 5px;
+  --br-large: 1.5rem;
 }
 
 html {
@@ -27,7 +32,9 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   box-sizing: border-box;
-  font-size: 1.4rem;
+  font-size: var(--fs-400);
+  background-color: var(--color-primary);
+  overflow-x: hidden;
 }
 
 img {
