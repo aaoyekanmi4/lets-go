@@ -204,12 +204,12 @@ values
 (2, 'Three Amigos'),
 (3, 'Yahoos');
 
-insert into group_contact(group_id, contact_id)
+insert into group_contact (group_id, contact_id)
 values
-(2, 1),
-(3, 2),
-(1, 3);
+(2, 1), (2, 2), (1, 3);
 
 end //
 -- 4. Change the statement terminator back to the original.
 delimiter ;
+
+select * from `group`;

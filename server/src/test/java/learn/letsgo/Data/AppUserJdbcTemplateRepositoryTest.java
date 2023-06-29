@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,7 +63,7 @@ class AppUserJdbcTemplateRepositoryTest {
     @Test
     void removeEventFromUser() {
         int initialCount =  appUserRepository.findByUsername("eric@dev10.com").getEvents().size();
-        boolean actual = appUserRepository.removeEventFromUser(3,1);
+        boolean actual = appUserRepository.removeEventFromUser(1,1);
         assertTrue(actual);
         int resultCount = appUserRepository.findByUsername("eric@dev10.com").getEvents().size();
         assertEquals(-1, resultCount - initialCount);

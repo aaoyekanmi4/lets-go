@@ -32,6 +32,14 @@ class GroupJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldFindGroupById() {
+        Group actual = groupRepository.findById(1);
+        assertNotNull(actual);
+        assertEquals("The Adventurers", actual.getName());
+        assertEquals(1, actual.getContacts().size());
+    }
+
+    @Test
     void shouldAddContactToGroup() {
         int initialCount =  groupRepository.findById(1).getContacts().size();
         boolean actual = groupRepository.addContactToGroup(1,1);
@@ -41,21 +49,14 @@ class GroupJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldRemoveContactToGroup() {
-        int initialCount =  groupRepository.findById(3).getContacts().size();
-        boolean actual = groupRepository.removeContactFromGroup(2,3);
+   void shouldRemoveContactFromGroup() {
+        int initialCount =  groupRepository.findById(1).getContacts().size();
+        boolean actual = groupRepository.removeContactFromGroup(1,1);
         assertTrue(actual);
-        int resultCount = groupRepository.findById(3).getContacts().size();
+        int resultCount = groupRepository.findById(1).getContacts().size();
         assertEquals(-1, resultCount - initialCount);
     }
 
-    @Test
-    void shouldFindGroupById() {
-        Group actual = groupRepository.findById(1);
-        assertNotNull(actual);
-        assertEquals("The Adventurers", actual.getName());
-        assertEquals(1, actual.getContacts().size());
-    }
 
     @Test
     void shouldCreateGroup() {
