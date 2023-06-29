@@ -1,11 +1,14 @@
 import React from "react";
-
+import { FaBullhorn } from "react-icons/fa";
 import "./GroupCard.scss";
 
 const GroupCard = ({ groupName, contacts }) => {
   return (
     <div className="GroupCard">
-      <h2 className="GroupCard__name">{groupName}</h2>
+      <div className="GroupCard__content">
+        <h2 className="GroupCard__name">{groupName}</h2>
+        <FaBullhorn className="GroupCard__icon" />
+      </div>
     </div>
   );
 };

@@ -1,16 +1,32 @@
 .GroupCard {
+  margin-left: 5rem;
+  margin-bottom: 2rem;
   height: auto;
   display: inline-block;
-  background-color: white;
+  background-color: var(--color-dark);
   box-shadow: 3px 4px 5px grey;
-  color: var(--color-tertiary);
-  &__name {
+  color: var(--color-light);
+  &__content {
+    display: flex;
+    align-items: center;
     padding: 2rem;
-    -webkit-text-stroke-width: 0.6px;
-    -webkit-text-stroke-color: var(--color-light);
+  }
+  &__icon {
+    margin-left: 1.3rem;
+    font-size: 2rem;
+    transform: rotate(-10deg);
+  }
+  &__name {
   }
   &__details {
     text-align: center;
     border: 1px solid red;
   }
+}
+
+.GroupCard:hover .GroupCard__name {
+}
+
+.GroupCard:hover .GroupCard__icon {
+  transform: scale(1.4) rotate(-10deg);
 }
