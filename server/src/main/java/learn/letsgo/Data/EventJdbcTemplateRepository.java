@@ -52,7 +52,6 @@ public class EventJdbcTemplateRepository implements EventRepository {
 
         if (result != null) {
             addEventPosts(result);
-            addAppUsers(result);
         }
         return result;
     }
@@ -131,30 +130,5 @@ public class EventJdbcTemplateRepository implements EventRepository {
 
         List<EventPost> posts = jdbcTemplate.query(sql, new EventPostMapper(), event.getEventId());
         event.setEventPosts(posts);
-    }
-
-    @Transactional
-    private void addAppUsers(Event event) {
-        String getUserIdSQL = "select a.app_user_id "
-                + "from app_user a "
-                + "inner join saved_event se on se.app_user_id = a.app_user_id "
-                + "where se.event_id = ?";
-        int appUserId = jdbcTemplate.queryForObject(getUserIdSQL, Integer.class, event.getEventId());
-
-        String getRolesSQL = "select r.name "
-                + "from app_user_role ur "
-                + "inner join app_role r on ur.app_role_id = r.app_role_id "
-                + "inner join app_user au on ur.app_user_id = au.app_user_id "
-                + "where au.app_user_id = ?";
-        List<String> roles = jdbcTemplate.query(getRolesSQL, (rs, rowId) -> rs.getString("name"), appUserId);
-
-        final String sql = "select a.app_user_id, a.username, a.password_hash, "
-                + "a.email, a.phone, a.first_name, a.last_name, a.enabled "
-                + "from app_user a "
-                + "inner join saved_event se on se.app_user_id = a.app_user_id "
-                + "where se.event_id = ?";
-
-        List<AppUser> appUsers = jdbcTemplate.query(sql, new AppUserMapper(roles), event.getEventId());
-        event.setAppUsers(appUsers);
     }
 }

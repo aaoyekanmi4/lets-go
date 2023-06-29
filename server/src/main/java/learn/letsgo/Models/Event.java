@@ -16,8 +16,6 @@ public class Event {
     private String eventLink;
     private Venue venue;
 
-    private List<AppUser> appUsers = new ArrayList<>();
-
     private List<EventPost> eventPosts = new ArrayList<>();
 
     public Event(){
@@ -115,14 +113,6 @@ public class Event {
 
     public void setVenue(Venue venue) {
         this.venue = venue;
-    }
-
-    public List<AppUser> getAppUsers() {
-        return new ArrayList<>(appUsers);
-    }
-
-    public void setAppUsers(List<AppUser> appUsers) {
-        this.appUsers = appUsers;
     }
 
     public List<EventPost> getEventPosts() {
