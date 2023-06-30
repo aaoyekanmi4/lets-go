@@ -1,14 +1,25 @@
 .AddContacts {
   &__view {
-    background-color: red;
     width: 100%;
     display: flex;
     justify-content: flex-start;
     overflow-x: scroll;
+    padding: 1.5rem 0rem;
   }
   &__selected {
     margin-right: 5rem;
-    flex: 1 0 10rem;
+    text-align: center;
+    flex: 0 0 5rem;
+  }
+  &__selected-circle {
+    width: 3.7rem;
+    height: 3.7rem;
+    border-radius: 360px;
+    border: 2px solid var(--color-tertiary);
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &__result {
     margin-bottom: 1.5rem;
@@ -34,6 +45,15 @@
   &__icon {
     font-size: 1.2rem;
     color: white;
+  }
+  &__suggestions {
+    height: 30rem;
+    overflow-y: scroll;
+  }
+  &__detail-text {
+    color: rgba(var(--color-black), 0.5);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
   }
 }
 

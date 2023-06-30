@@ -25,6 +25,11 @@ const AddContacts = ({ data, onChange }) => {
     onChange("contacts", selectedContacts);
   }, [selectedContacts]);
 
+  //when search value changes, get filteredResults
+  useEffect(() => {
+    onSearch();
+  }, [searchValue]);
+
   //onSearch update the suggested contacts so we can render them
   const onSearch = () => {
     const suggestedContacts = allContacts.filter((contact) => {
@@ -34,7 +39,7 @@ const AddContacts = ({ data, onChange }) => {
     setSuggestedContacts(suggestedContacts);
   };
 
-  //when we check a suggested contact, add it to selected
+  //when we click a suggested contact, add it to selected
   const renderedSuggested = suggestedContacts.map((contact, index) => {
     return (
       <div className="AddContacts__result" key={index}>
@@ -69,7 +74,6 @@ const AddContacts = ({ data, onChange }) => {
           htmlFor={index}
         >
           <ImCheckmark className="AddContacts__icon" />
-          {/* <span className="AddedContact__circle"></span> */}
         </label>
       </div>
     );
@@ -78,7 +82,7 @@ const AddContacts = ({ data, onChange }) => {
   const renderedSelected = selectedContacts.map((contact, index) => {
     return (
       <div className="AddContacts__selected" key={index}>
-        <p>hi</p>
+        <p className="AddContacts__selected-circle">{contact.split("")[0]}</p>
         <p>{contact}</p>
       </div>
     );
@@ -86,7 +90,7 @@ const AddContacts = ({ data, onChange }) => {
 
   return (
     <div className="AddContacts">
-      <p>Add Contacts</p>
+      <p className="Form__label">Add Contacts*</p>
       <SearchField
         placeholder="Search contact..."
         onChange={setSearchValue}
@@ -94,7 +98,12 @@ const AddContacts = ({ data, onChange }) => {
         onSearch={onSearch}
       />
       <div className="AddContacts__view">{renderedSelected}</div>
-      <div className="AddContacts__suggestions">{renderedSuggested}</div>
+      <div className="AddContacts__suggestions">
+        <p className="AddContacts__detail-text">
+          {searchValue ? "Results" : "Suggested"}
+        </p>
+        {renderedSuggested}
+      </div>
     </div>
   );
 };
