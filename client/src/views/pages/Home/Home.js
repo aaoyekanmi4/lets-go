@@ -31,7 +31,7 @@ const Home = () => {
         contacts={[
           "Elizah Jenkins",
           "Matt Owen",
-          "Eric Baffour",
+          "Eric Baffour-Addo",
           "Seasoned Dunkin",
           "Ada Driver",
           "Rebeccah Soles",

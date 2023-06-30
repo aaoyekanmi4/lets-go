@@ -83,7 +83,7 @@ const AddContacts = ({ data, onChange }) => {
     return (
       <div className="AddContacts__selected" key={index}>
         <p className="AddContacts__selected-circle">{contact.split("")[0]}</p>
-        <p>{contact}</p>
+        <p className="AddContacts__selected-name">{contact}</p>
       </div>
     );
   });
