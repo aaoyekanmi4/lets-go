@@ -6,6 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface EventRepository {
+
+    List<Event> findAll();
+
     Event findById(int eventId);
 
     @Transactional

@@ -50,6 +50,27 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
 
     @Override
     @Transactional
+    public AppUser findById(int appUserId) {
+        List<String> roles = getRolesById(appUserId);
+
+        final String sql = "select app_user_id, username, password_hash, email, phone, first_name, last_name, enabled "
+                + "from app_user "
+                + "where app_user_id= ?;";
+
+        AppUser result = jdbcTemplate.query(sql, new AppUserMapper(roles), appUserId)
+                .stream()
+                .findFirst().orElse(null);
+
+        if (result != null) {
+            addEvents(result);
+            addGroups(result);
+            addContacts(result);
+        }
+        return result;
+    }
+
+    @Override
+    @Transactional
     public AppUser create(AppUser user) {
 
         final String sql = "insert into app_user (username, password_hash,email, phone, first_name, last_name) " +
@@ -138,7 +159,16 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
                 + "where au.username = ?";
         return jdbcTemplate.query(sql, (rs, rowId) -> rs.getString("name"), username);
     }
-//    TODO: Add groups, contacts to user
+
+    private List<String> getRolesById(int appUserId) {
+        final String sql = "select r.name "
+                + "from app_user_role ur "
+                + "inner join app_role r on ur.app_role_id = r.app_role_id "
+                + "inner join app_user au on ur.app_user_id = au.app_user_id "
+                + "where au.app_user_id = ?";
+        return jdbcTemplate.query(sql, (rs, rowId) -> rs.getString("name"), appUserId);
+    }
+
     private void addEvents (AppUser appUser) {
         final String sql ="select e.event_id, e.category, e.event_name, e.image_url, e.description, e.event_date, "
                 + "e.source, e.source_id, e.event_link, e.venue_id, "
