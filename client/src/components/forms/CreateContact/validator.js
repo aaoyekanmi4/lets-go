@@ -1,6 +1,6 @@
 import validator from "validator";
 
-//takes in formErrors
+//takes in a formErrors object that is constant being modified
 const validateField = (formValues, formErrors, fieldName) => {
   if (fieldName === "firstName") {
     if (!formValues.firstName) {

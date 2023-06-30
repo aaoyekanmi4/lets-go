@@ -24,6 +24,7 @@ const CreateContact = () => {
         validateAllFields(formValues, setFormErrors);
       }}
     >
+      <div className="Form__upper-style"></div>
       <h1 className="Form__header">Create Contact</h1>
       <TextInput
         type="text"
@@ -93,7 +94,9 @@ const CreateContact = () => {
           setFormErrors(errors);
         }}
       />
-      <button type="submit">Submit </button>
+      <button className="button-main button-main--primary" type="submit">
+        Submit
+      </button>
     </form>
   );
 };
