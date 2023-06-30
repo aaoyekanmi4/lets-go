@@ -1,0 +1,42 @@
+.AddContacts {
+  &__view {
+    background-color: red;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: scroll;
+  }
+  &__selected {
+    margin-right: 5rem;
+    flex: 1 0 10rem;
+  }
+  &__result {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__checkbox {
+    display: none;
+  }
+  &__circle {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    background-color: var(--color-light);
+    justify-content: center;
+    align-items: center;
+    border-radius: 360px;
+    border: 1px solid rgba(var(--color-black), 0.2);
+    &--selected {
+      background-color: #3944bc;
+    }
+  }
+  &__icon {
+    font-size: 1.2rem;
+    color: white;
+  }
+}
+
+.AddContacts__circle:hover {
+  border: 1px solid #3944bc;
+}
