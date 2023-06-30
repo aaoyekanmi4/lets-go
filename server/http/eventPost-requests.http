@@ -1,0 +1,56 @@
+@url=http://localhost:8080/api/event-post
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTY3NDI5fQ.j7yJrhC20PykEjjKTbmFpEAS7BnBcx4BOkf_kYReUpU
+
+###
+// findPostsByEventId (List EventPosts)
+// (PUBLIC)
+// /eventId
+GET {{url}}/1
+
+###
+
+// findPostByPostId (Single EventPost)
+// (PUBLIC)
+// /postId
+GET {{url}}/post/1
+
+###
+
+POST {{url}}
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+{
+  "eventId": 1,
+  "appUserId": 1,
+  "author": "eric@dev10.com",
+  "postDate": "2015-08-10T19:00:00",
+  "postBody": "Did you find cheaper tickets elsewhere?",
+  "likes": 1
+}
+
+###
+PUT {{url}}/5
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+{
+  "postId":5,
+  "eventId": 1,
+  "appUserId": 1,
+  "author": "eric@dev10.com",
+  "postDate": "2015-08-10T19:00:00",
+  "postBody": "Did you find cheaper tickets on Seat Geek?",
+  "likes": 1
+}
+
+###
+DELETE {{url}}/5
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+
+
+
+
+
