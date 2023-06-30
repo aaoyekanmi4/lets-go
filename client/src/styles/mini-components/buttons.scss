@@ -43,7 +43,7 @@
     background-color: var(--color-secondary);
     color: var(--color-light);
     &:hover {
-      background-color: #ff3939;
+      transform: scale(1.05);
     }
   }
 }

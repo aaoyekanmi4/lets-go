@@ -29,7 +29,7 @@ const CreateContact = () => {
       <TextInput
         type="text"
         id="first-name"
-        label="First Name"
+        label="First Name*"
         name="firstName"
         value={formValues.firstName}
         onChange={(e) => {
@@ -48,7 +48,7 @@ const CreateContact = () => {
       <TextInput
         type="text"
         id="last-name"
-        label="Last Name"
+        label="Last Name*"
         name="lastName"
         value={formValues.lastName}
         error={formErrors.lastName}
@@ -67,7 +67,7 @@ const CreateContact = () => {
       <TextInput
         type="text"
         id="email"
-        label="Email"
+        label="Email*"
         name="email"
         value={formValues.email}
         error={formErrors.email}
@@ -82,7 +82,7 @@ const CreateContact = () => {
       <TextInput
         type="text"
         id="phone"
-        label="Phone"
+        label="Phone*"
         name="phone"
         value={formValues.phone}
         error={formErrors.phone}

@@ -25,8 +25,10 @@ const ContactCard = ({ firstName, lastName, phone, email, groups }) => {
       <div className="ContactCard__lower-border"></div>
       <BsPencil className="ContactCard__action-button ContactCard__pencil" />
       <FaTrashCan className="ContactCard__action-button ContactCard__trash" />
-      <div className="ContactCard__circle">
-        <p className="ContactCard__letter">{firstName.split("")[0]}</p>
+      <div className="ContactCard__circle-gradient">
+        <div className="ContactCard__circle">
+          <p className="ContactCard__letter">{firstName.split("")[0]}</p>
+        </div>
       </div>
       <h2 className="ContactCard__name">{`${firstName} ${lastName}`}</h2>
       <div className="ContactCard__contact-method">

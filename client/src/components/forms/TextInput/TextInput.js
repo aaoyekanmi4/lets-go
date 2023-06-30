@@ -17,11 +17,7 @@ const TextInput = ({
       return "Form__input Form__input--error";
     }
 
-    if (!touched) {
-      return "Form__input Form__input--null";
-    }
-
-    return "Form__input Form__input--success";
+    return "Form__input Form__input--normal";
   };
 
   return (
