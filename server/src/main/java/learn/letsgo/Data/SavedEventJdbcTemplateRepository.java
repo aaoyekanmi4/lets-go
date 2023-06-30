@@ -20,9 +20,16 @@ public class SavedEventJdbcTemplateRepository implements SavedEventRepository {
     }
 
     @Override
+    public Integer getSavedEventId(int eventId, int appUserId)  {
+        return jdbcTemplate.queryForObject("select saved_event_id from saved_event where app_user_id =? and event_id =?;",
+                Integer.class, appUserId, eventId);
+
+    }
+
+    @Override
     @Transactional
     public boolean removeEventFromUser(int eventId, int appUserId) {
-        int savedEventId = jdbcTemplate.queryForObject("select saved_event_id from saved_event where app_user_id =? and event_id =?;",
+        Integer savedEventId = jdbcTemplate.queryForObject("select saved_event_id from saved_event where app_user_id =? and event_id =?;",
                 Integer.class, appUserId, eventId);
 
         jdbcTemplate.update("delete from group_saved_event  "

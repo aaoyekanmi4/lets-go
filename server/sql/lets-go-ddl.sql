@@ -59,7 +59,9 @@ create table `event` (
     venue_id int not null,
     constraint fk_event_venue_id
 		foreign key (venue_id)
-		references venue(venue_id)
+		references venue(venue_id),
+	constraint uq_source_source_id
+         unique (source, source_id)
 );
 
 create table saved_event (

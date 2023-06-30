@@ -26,7 +26,7 @@ public class EventService {
     }
 
     //TODO test save event
-    public Result<Event> save(Event event, int appUserId) {
+    public Result<Event> saveEventToUser(Event event, int appUserId) {
         Result<Event> result = validate(event);
         if (!result.isSuccess()) {
             return result;
@@ -59,6 +59,62 @@ public class EventService {
         boolean didRemoveEvent = savedEventRepository.removeEventFromUser(eventId, appUserId);
         if (!didRemoveEvent) {
             result.addMessage(ResultType.INVALID, "Could not remove event from saved events");
+        }
+        return result;
+    }
+
+    public Result<Void> addContactToEvent(int contactId, int eventId, int appUserId) {
+        Result<Void> result = new Result<>();
+        Integer savedEventId = savedEventRepository.getSavedEventId(eventId, appUserId);
+        if (savedEventId == null) {
+            result.addMessage(ResultType.NOT_FOUND, "Saved event could not be found from given eventId and userId");
+            return result;
+        }
+        boolean didAddContactToEvent = savedEventRepository.addContactToEvent(contactId, savedEventId);
+        if (!didAddContactToEvent) {
+            result.addMessage(ResultType.INVALID, "Could not add contact to event");
+        }
+        return result;
+    }
+
+    public Result<Void> removeContactFromEvent(int contactId, int eventId, int appUserId) {
+        Result<Void> result = new Result<>();
+        Integer savedEventId = savedEventRepository.getSavedEventId(eventId, appUserId);
+        if (savedEventId == null) {
+            result.addMessage(ResultType.NOT_FOUND, "Saved event could not be found from given eventId and userId");
+            return result;
+        }
+        boolean didRemoveContactFromEvent = savedEventRepository.removeContactFromEvent(contactId, savedEventId);
+        if (!didRemoveContactFromEvent) {
+            result.addMessage(ResultType.INVALID, "Could not remove contact from event");
+        }
+        return result;
+    }
+
+    public Result<Void> addGroupToEvent(int groupId, int eventId, int appUserId) {
+        Result<Void> result = new Result<>();
+        Integer savedEventId = savedEventRepository.getSavedEventId(eventId, appUserId);
+        if (savedEventId == null) {
+            result.addMessage(ResultType.NOT_FOUND, "Saved event could not be found from given eventId and userId");
+            return result;
+        }
+        boolean didAddGroupToEvent = savedEventRepository.addGroupToEvent(groupId, savedEventId);
+        if (!didAddGroupToEvent) {
+            result.addMessage(ResultType.INVALID, "Could not add group to event");
+        }
+        return result;
+    }
+
+    public Result<Void> removeGroupFromEvent(int groupId, int eventId, int appUserId) {
+        Result<Void> result = new Result<>();
+        Integer savedEventId = savedEventRepository.getSavedEventId(eventId, appUserId);
+        if (savedEventId == null) {
+            result.addMessage(ResultType.NOT_FOUND, "Saved event could not be found from given eventId and userId");
+            return result;
+        }
+        boolean didRemoveContactFromEvent = savedEventRepository.removeGroupFromEvent(groupId, savedEventId);
+        if (!didRemoveContactFromEvent) {
+            result.addMessage(ResultType.INVALID, "Could not remove group from event");
         }
         return result;
     }

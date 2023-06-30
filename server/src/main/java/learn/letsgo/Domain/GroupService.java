@@ -23,6 +23,11 @@ public class GroupService {
         return groupRepository.findAllByUserId(appUserId);
     }
 
+
+    public List<Group> findAllBySavedEventId(int savedEventId) {
+        return groupRepository.findAllBySavedEventId(savedEventId);
+    }
+
     public Group findById(int groupId) {
         return groupRepository.findById(groupId);
     }

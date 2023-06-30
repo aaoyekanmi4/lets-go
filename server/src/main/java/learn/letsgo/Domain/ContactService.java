@@ -2,6 +2,7 @@ package learn.letsgo.Domain;
 
 import learn.letsgo.Data.ContactRepository;
 import learn.letsgo.Models.Contact;
+import learn.letsgo.Models.Group;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,10 @@ public class ContactService {
 
     public List<Contact> findAllForUser(int appUserId) {
         return contactRepository.findAllByUserId(appUserId);
+    }
+
+    public List<Contact> findAllBySavedEventId(int savedEventId) {
+        return contactRepository.findAllBySavedEventId(savedEventId);
     }
 
     public Contact findContactById(int contactId) {
