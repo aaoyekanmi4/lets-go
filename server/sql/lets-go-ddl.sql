@@ -6,15 +6,15 @@ create table venue (
     address varchar(100) not null,
     city varchar(100) not null,
     state varchar(100) null,
-    country varchar(100) not null,
-    zipcode int null
+    country varchar(100) null,
+    zipcode int not null
 );
 
 create table `event` (
 	event_id int primary key auto_increment,
 	event_name varchar(100) not null,
-    category varchar(50) not null,
-    image_url varchar(250) not null,
+    category varchar(50) null,
+    image_url varchar(250) null,
     `description` text,
     event_date datetime not null,
     `source` varchar(50) null,

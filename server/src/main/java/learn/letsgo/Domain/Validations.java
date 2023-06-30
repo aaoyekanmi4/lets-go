@@ -1,7 +1,9 @@
 package learn.letsgo.Domain;
 
 import learn.letsgo.Data.EventRepository;
+import learn.letsgo.Data.VenueRepository;
 import learn.letsgo.Models.Event;
+import learn.letsgo.Models.Venue;
 
 import java.util.List;
 
@@ -19,5 +21,17 @@ public class Validations {
             }
         }
         return false;
+    }
+
+    public static Venue findVenueIfExists(Venue current, VenueRepository repository) {
+        List<Venue> venues = repository.findAll();
+        for (Venue venue: venues)
+            if (venue.getZipCode() == current.getZipCode()
+            && venue.getVenueName().equals(current.getVenueName())
+            && venue.getAddress().equals(current.getAddress())
+            && venue.getCity().equals(current.getCity())) {
+                return venue;
+            }
+        return null;
     }
 }

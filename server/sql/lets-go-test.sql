@@ -42,7 +42,7 @@ create table venue (
     address varchar(100) not null,
     city varchar(100) not null,
     state varchar(100) null,
-    country varchar(100) not null,
+    country varchar(100) null,
     zipcode int null
 );
 
@@ -189,7 +189,6 @@ values
 (1,2),
 (2,3),
 (3,1);
-
 
 insert into contact(app_user_id, email, phone, first_name, last_name)
 values 
