@@ -1,28 +1,30 @@
 @url=http://localhost:8080/api/event
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTY0MzIxfQ.kPEeFQeO9gvew7_pLFhtwmXVfF1YK8h1ZjASlU7nOrk
 
 // findByEventId (single Event) (PUBLIC)
 GET {{url}}/1
 
 ###
 
-// findAllEventsByUserId (list of Events) (PRIVATE:AUTH)
+// findAllEventsByUserId (list of Events) (PRIVATE)
 // /user/appUserId
 GET {{url}}/user/1 HTTP/1.1
-Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTUxNDkzfQ.Y7I__QWM43g1pix8qNpwNSrPy2zNTdnq2JrGHw7kW6k
+Authorization:Bearer {{token}}
 
 ###
 
-// findSavedEventForUser (single SavedEvent) (PRIVATE:AUTH)
+// findSavedEventForUser (single SavedEvent) (PRIVATE)
 // /user/eventId/appUserId
-GET {{url}}/user/7/1 HTTP/1.1
-Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTUxNDkzfQ.Y7I__QWM43g1pix8qNpwNSrPy2zNTdnq2JrGHw7kW6k
+GET {{url}}/user/3/1 HTTP/1.1
+Authorization:Bearer {{token}}
 
 ###
-// saveEventForUser (single Event) (PRIVATE:AUTH)
+
+// saveEventForUser (single Event) (PRIVATE)
 // /user/appUserId
 POST {{url}}/user/1
 Content-Type: application/json
-Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTUxOTc5fQ.0rvhMcY6c2gCnWm4LNgQAEyDiqvGhs93pua1zq-ndc8
+Authorization:Bearer {{token}}
 
 {
     "eventId": 2,
@@ -45,6 +47,43 @@ Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0
       "events": []
     }
 }
+
+###
+
+// removeEventFromUser (void) (PRIVATE)
+// /user/eventId/appUserId
+DELETE {{url}}/user/4/1
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+###
+
+// addContactToEvent (void) (PRIVATE)
+// /user/contact/contactId/eventId/appUserId
+
+POST {{url}}/user/contact/1/3/1
+Authorization:Bearer {{token}}
+
+###
+
+// removeContactFromEvent (void) (PRIVATE)
+// /user/contact/contactId/eventId/appUserId
+
+DELETE {{url}}/user/contact/1/3/1
+Authorization:Bearer {{token}}
+
+###
+
+// addGroupToEvent (void) (PRIVATE)
+// /user/group/groupId/eventId/appUserId
+POST {{url}}/user/group/2/3/1
+Authorization:Bearer {{token}}
+###
+
+// removeGroupFromEvent (void) (PRIVATE)
+// /user/group/groupId/eventId/appUserId
+DELETE {{url}}/user/group/2/3/1
+Authorization:Bearer {{token}}
 
 
 
