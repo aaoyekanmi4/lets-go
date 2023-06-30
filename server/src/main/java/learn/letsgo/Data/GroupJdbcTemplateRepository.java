@@ -32,6 +32,15 @@ public class GroupJdbcTemplateRepository implements GroupRepository{
     }
 
     @Override
+    public List<Group> findAllBySavedEventId(int savedEventId) {
+        final String sql = "select g.group_id, g.app_user_id, g.group_name "
+                + "from `group` g "
+                + "inner join group_saved_event gs on gs.group_id=g.group_id "
+                + "where gs.saved_event_id=?;";
+        return jdbcTemplate.query(sql, new GroupMapper(), savedEventId);
+    }
+
+    @Override
     public Group findById(int groupId) {
         final String sql = "select group_id, app_user_id, group_name "
                 + "from `group` "
@@ -82,6 +91,7 @@ public class GroupJdbcTemplateRepository implements GroupRepository{
     @Override
     @Transactional
     public boolean deleteById(int groupId) {
+        jdbcTemplate.update("delete from group_saved_event where group_id=?;", groupId);
        jdbcTemplate.update("delete from group_contact where group_id = ?;", groupId);
        return jdbcTemplate.update("delete from `group` where group_id = ?;", groupId) > 0;
     }

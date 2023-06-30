@@ -2,7 +2,7 @@ package learn.letsgo.Controller;
 
 import learn.letsgo.Domain.Result;
 import learn.letsgo.Models.AppUser;
-import learn.letsgo.Security.AppUserService;
+import learn.letsgo.Domain.AppUserService;
 import learn.letsgo.Security.JwtConverter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

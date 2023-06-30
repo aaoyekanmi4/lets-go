@@ -1,9 +1,13 @@
 package learn.letsgo.Models;
 
+import java.time.LocalDateTime;
+
 public class EventPost {
     private int postId;
     private int eventId;
     private int appUserId;
+    private String author;
+    private LocalDateTime postDate;
     private String postBody;
     private int likes;
 
@@ -11,9 +15,11 @@ public class EventPost {
 
     }
 
-    public EventPost(int eventId, int appUserID, String postBody, int likes) {
+    public EventPost(int eventId, int appUserId,  String author, LocalDateTime postDate, String postBody, int likes) {
         this.eventId = eventId;
         this.appUserId = appUserId;
+        this.author = author;
+        this.postDate = postDate;
         this.postBody = postBody;
         this.likes = likes;
     }
@@ -56,5 +62,21 @@ public class EventPost {
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public LocalDateTime getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(LocalDateTime postDate) {
+        this.postDate = postDate;
     }
 }

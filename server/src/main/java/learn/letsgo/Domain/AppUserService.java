@@ -1,11 +1,8 @@
-package learn.letsgo.Security;
+package learn.letsgo.Domain;
 
 import learn.letsgo.Data.AppUserRepository;
-import learn.letsgo.Domain.Result;
-import learn.letsgo.Domain.ResultType;
 import learn.letsgo.Models.AppUser;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

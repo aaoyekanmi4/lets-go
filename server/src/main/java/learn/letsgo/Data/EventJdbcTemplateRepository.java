@@ -27,6 +27,16 @@ public class EventJdbcTemplateRepository implements EventRepository {
     }
 
     @Override
+    public List<Event> findAll() {
+        final String sql = "select e.event_id, e.category, e.event_name, e.image_url, e.description, e.event_date, "
+                + "e.source, e.source_id, e.event_link, e.venue_id, "
+                + "v.venue_name, v.address, v.city, v.state, v.country, v.zipcode "
+                + "from event e "
+                + "inner join venue v on e.venue_id = v.venue_id;";
+        return jdbcTemplate.query(sql, new EventMapper());
+    }
+
+    @Override
     public List<Event> findAllByUserId(int appUserId) {
         final String sql = "select e.event_id, e.category, e.event_name, e.image_url, e.description, e.event_date, "
                 + "e.source, e.source_id, e.event_link, e.venue_id, "
@@ -124,7 +134,7 @@ public class EventJdbcTemplateRepository implements EventRepository {
 
     private void addEventPosts(Event event) {
         final String sql = "select ep.event_post_id, ep.event_id, ep.app_user_id, "
-                + "ep.post_body, ep.likes "
+                + "ep.author, ep.post_date, ep.post_body, ep.likes "
                 + "from event_post ep "
                 + "where ep.event_id = ?";
 

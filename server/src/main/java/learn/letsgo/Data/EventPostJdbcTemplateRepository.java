@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -22,14 +23,14 @@ public class EventPostJdbcTemplateRepository implements EventPostRepository{
 
     @Override
     public List<EventPost> findAllByEventId(int eventId) {
-        final String sql = "select event_post_id, event_id, app_user_id, post_body, likes "
+        final String sql = "select event_post_id, event_id, app_user_id, author, post_date, post_body, likes "
                 + "from event_post "
                 + "where event_id=?;";
         return jdbcTemplate.query(sql, new EventPostMapper(), eventId);
     }
     @Override
     public EventPost findById(int postId) {
-        final String sql = "select event_post_id, event_id, app_user_id, post_body, likes "
+        final String sql = "select event_post_id, event_id, app_user_id, author, post_date, post_body, likes "
                 + "from event_post "
                 + "where event_post_id=?;";
         return jdbcTemplate.query(sql, new EventPostMapper(), postId).stream()
@@ -38,16 +39,18 @@ public class EventPostJdbcTemplateRepository implements EventPostRepository{
 
     @Override
     public EventPost create(EventPost eventPost) {
-        final String sql = "insert into event_post (event_id, app_user_id, post_body, likes)"
-                + "values (?,?,?,?);";
+        final String sql = "insert into event_post (event_id, app_user_id, author, post_date, post_body, likes)"
+                + "values (?,?,?,?,?,?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, eventPost.getEventId());
             ps.setInt(2, eventPost.getAppUserId());
-            ps.setString(3, eventPost.getPostBody());
-            ps.setInt(4, eventPost.getLikes());
+            ps.setString(3, eventPost.getAuthor());
+            ps.setTimestamp(4, Timestamp.valueOf(eventPost.getPostDate()));
+            ps.setString(5, eventPost.getPostBody());
+            ps.setInt(6, eventPost.getLikes());
             return ps;
         }, keyHolder);
 
@@ -63,6 +66,8 @@ public class EventPostJdbcTemplateRepository implements EventPostRepository{
     final String sql = "update event_post set "
             + "event_id= ?, "
             + "app_user_id= ?, "
+            + "author= ?, "
+            + "post_date= ?, "
             + "post_body= ?, "
             + "likes= ? "
             + "where event_post_id = ?;";
@@ -70,6 +75,8 @@ public class EventPostJdbcTemplateRepository implements EventPostRepository{
         return jdbcTemplate.update(sql,
             eventPost.getEventId(),
             eventPost.getAppUserId(),
+            eventPost.getAuthor(),
+            eventPost.getPostDate(),
             eventPost.getPostBody(),
             eventPost.getLikes(),
             eventPost.getPostId()) > 0;
