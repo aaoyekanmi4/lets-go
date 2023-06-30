@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -70,6 +71,8 @@ class EventPostJdbcTemplateRepositoryTest {
                 "4444444","Johnny", "Rivers", true, List.of("USER", "ADMIN"));
         EventPost post  = new EventPost();
         post.setEventId(2);
+        post.setAuthor(appUser.getUsername());
+        post.setPostDate(LocalDateTime.now());
         post.setAppUserId(1);
         post.setPostBody("Where is everyone?");
         post.setLikes(5);

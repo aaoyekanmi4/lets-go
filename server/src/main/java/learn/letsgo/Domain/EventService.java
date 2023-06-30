@@ -54,14 +54,14 @@ public class EventService {
         return result;
     }
 
-    public Result<Void> removeEventFromUser(int eventId, int appUserId) {
-        Result<Void> result = new Result<>();
-        boolean didRemoveEvent = appUserRepository.removeEventFromUser(eventId, appUserId);
-        if (!didRemoveEvent) {
-            result.addMessage(ResultType.INVALID, "Could not remove event from saved events");
-        }
-        return result;
-    }
+//    public Result<Void> removeEventFromUser(int eventId, int appUserId) {
+//        Result<Void> result = new Result<>();
+//        boolean didRemoveEvent = appUserRepository.removeEventFromUser(eventId, appUserId);
+//        if (!didRemoveEvent) {
+//            result.addMessage(ResultType.INVALID, "Could not remove event from saved events");
+//        }
+//        return result;
+//    }
 
     public Result<Event> update(Event event) {
         Result<Event> result = validate(event);

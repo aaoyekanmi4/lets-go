@@ -92,6 +92,7 @@ public class ContactJdbcTemplateRepository implements ContactRepository{
     @Override
     @Transactional
     public boolean deleteById(int contactId) {
+        jdbcTemplate.update("delete from contact_saved_event where contact_id=?;", contactId);
         jdbcTemplate.update("delete from group_contact where contact_id = ?;", contactId);
         return jdbcTemplate.update("delete from contact where contact_id = ?;", contactId) > 0;
     }

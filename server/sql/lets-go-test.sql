@@ -43,7 +43,7 @@ create table venue (
     city varchar(100) not null,
     state varchar(100) null,
     country varchar(100) null,
-    zipcode int null
+    zipcode int not null
 );
 
 create table `event` (
@@ -51,7 +51,7 @@ create table `event` (
 	event_name varchar(100) not null,
     category varchar(50) null,
     image_url varchar(250) null,
-    `description` text null,
+    `description` text,
     event_date datetime not null,
     `source` varchar(50) null,
     source_id varchar(100) null,
@@ -63,10 +63,9 @@ create table `event` (
 );
 
 create table saved_event (
+    saved_event_id int primary key auto_increment,
 	event_id int not null,
     app_user_id int not null,
-	constraint pk_saved_event
-        primary key (app_user_id, event_id),
     constraint fk_saved_event_event_id
 		foreign key (event_id)
 		references `event`(event_id),
@@ -79,6 +78,8 @@ create table event_post (
 	event_post_id int primary key auto_increment,
 	event_id int not null,
     app_user_id int not null,
+    author varchar(50) not null, 
+	post_date datetime not null,
     post_body varchar(500) not null,
     likes int not null,
     constraint fk_event_post_event_id
@@ -125,10 +126,40 @@ create table group_contact (
 		references contact(contact_id)    
 );
 
+create table group_saved_event (
+	group_id int not null,
+    saved_event_id int not null,
+	constraint pk_group_saved_event
+        primary key (group_id, saved_event_id),
+    constraint fk_group_saved_event_group_id
+		foreign key (group_id)
+		references `group`(group_id),
+	constraint fk_group_saved_event_saved_event_id
+		foreign key (saved_event_id)
+		references saved_event(saved_event_id)  
+);
+
+create table contact_saved_event (
+	contact_id int not null,
+    saved_event_id int not null,
+    is_attending bit not null default 0,
+	constraint pk_contact_saved_event
+        primary key (contact_id, saved_event_id),
+    constraint fk_contact_saved_event_group_id
+		foreign key (contact_id)
+		references contact(contact_id),
+	constraint fk_contact_saved_event_saved_event_id
+		foreign key (saved_event_id)
+		references saved_event(saved_event_id)  
+);
+
 delimiter //
 create procedure set_known_good_state()
 begin
+	delete from group_saved_event;
+    delete from contact_saved_event;
 	delete from saved_event;
+    alter table saved_event auto_increment=1;
 	delete from group_contact;
     delete from contact;
     alter table contact auto_increment = 1;
@@ -178,22 +209,22 @@ insert into app_user_role
 		(2, 'sports', 'Knicks vs Spurs', 'www.coolpic.net/image/huge.jpg',  '', '2015-08-09T19:00:00', 'SeatGeek', '728901',"https://example.com", 2),
 		(3, 'sports', 'Bulls vs Spurs', 'www.coolpic4.net/image/large.jpg',  '', '2018-08-09T19:00:00', 'TicketMaster', '1034901',"https://example.com", 3);
 
-insert into event_post (event_post_id, event_id, app_user_id, post_body, likes)
+insert into event_post (event_post_id, event_id, app_user_id, author, post_date, post_body, likes)
 values 
-(1, 1, 1, 'Who is going to this concert?', 2),
-(2, 1, 2, "I'm going.", 5),
-(3, 2, 1, "Me too.", 3);
+(1, 1, 1, 'eric@dev10.com', '2015-08-09T19:00:00', 'Who is going to this concert?', 2),
+(2, 1, 2, 'jay@dev10.com', '2015-08-09T19:00:00', "I'm going.", 5),
+(3, 2, 1, "eric@dev10.com.", '2015-08-09T19:00:00', "Me too.", 3);
 
-insert into saved_event(event_id, app_user_id)
+insert into saved_event(saved_event_id, event_id, app_user_id)
 values
-(1,2),
-(2,3),
-(3,1);
+(1,1,2),
+(2,2,3),
+(3,3,1);
 
 insert into contact(app_user_id, email, phone, first_name, last_name)
 values 
 (1, 'blue@gmail.com', "2222222", 'Rick', 'James'),
-(1, 'red@gmail.com', "2222222"", 'Martha', 'Stewart'),
+(1, 'red@gmail.com', "2222222", 'Martha', 'Stewart'),
 (2, 'yellow@gmail.com', "2222222", 'Natalie', 'Portman');
 
 
@@ -207,8 +238,20 @@ insert into group_contact (group_id, contact_id)
 values
 (2, 1), (2, 2), (1, 3);
 
+insert into group_saved_event(group_id, saved_event_id)
+values
+(1,2),
+(2,1),
+(3,2);
+
+insert into contact_saved_event(contact_id, saved_event_id)
+values
+(1,2),
+(2,1),
+(3,2);
+
 end //
 -- 4. Change the statement terminator back to the original.
 delimiter ;
 
-select * from `group`;
+select * from event_post;

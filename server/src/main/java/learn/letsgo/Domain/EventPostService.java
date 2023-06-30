@@ -69,6 +69,10 @@ public class EventPostService {
             result.addMessage(ResultType.INVALID, "Post Body is required");
         }
 
+        if (Validations.isNullOrBlank(eventPost.getAuthor())) {
+            result.addMessage(ResultType.INVALID, "Author is required");
+        }
+
         return result;
     }
 }

@@ -130,8 +130,16 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
     }
 
     @Override
+    @Transactional
     public boolean removeEventFromUser(int eventId, int appUserId) {
-        return jdbcTemplate.update("delete from saved_event where app_user_id =? and event_id =?", appUserId, eventId) > 0;
+        int savedEventId = jdbcTemplate.queryForObject("select saved_event_id from saved_event where app_user_id =? and event_id =?;",
+                Integer.class, eventId, appUserId);
+
+        jdbcTemplate.update("delete from group_saved_event  "
+                + "where saved_event_id =?;", savedEventId);
+        jdbcTemplate.update("delete from contact_saved_event "
+        + "where saved_event_id =?;", savedEventId);
+        return jdbcTemplate.update("delete from saved_event where saved_event_id=?;", savedEventId) > 0;
     }
 
     private void updateRoles(AppUser user) {

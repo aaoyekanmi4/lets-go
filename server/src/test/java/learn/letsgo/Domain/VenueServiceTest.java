@@ -86,7 +86,7 @@ class VenueServiceTest {
 
     @Test
     void shouldNotUpdateNonExistingVenue() {
-        Venue venue = new Venue("The Karaoke Bar", "", "New York", "NY",
+        Venue venue = new Venue("The Karaoke Bar", "444 Bourbon St", "New Orleans", "LA",
                 "United States", 123456);
         venue.setVenueId(6);
         when(venueRepository.update(venue)).thenReturn(false);

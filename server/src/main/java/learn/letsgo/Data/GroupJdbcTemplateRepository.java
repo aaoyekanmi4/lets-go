@@ -82,6 +82,7 @@ public class GroupJdbcTemplateRepository implements GroupRepository{
     @Override
     @Transactional
     public boolean deleteById(int groupId) {
+        jdbcTemplate.update("delete from group_saved_event where group_id=?;", groupId);
        jdbcTemplate.update("delete from group_contact where group_id = ?;", groupId);
        return jdbcTemplate.update("delete from `group` where group_id = ?;", groupId) > 0;
     }

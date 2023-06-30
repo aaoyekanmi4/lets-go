@@ -134,7 +134,7 @@ public class EventJdbcTemplateRepository implements EventRepository {
 
     private void addEventPosts(Event event) {
         final String sql = "select ep.event_post_id, ep.event_id, ep.app_user_id, "
-                + "ep.post_body, ep.likes "
+                + "ep.author, ep.post_date, ep.post_body, ep.likes "
                 + "from event_post ep "
                 + "where ep.event_id = ?";
 
