@@ -16,4 +16,6 @@ public interface ContactRepository {
     boolean deleteById(int contactId);
 
     List<Contact> findAllByUserId(int appUserId);
+
+    List<Contact> findAllBySavedEventId(int savedEventId);
 }

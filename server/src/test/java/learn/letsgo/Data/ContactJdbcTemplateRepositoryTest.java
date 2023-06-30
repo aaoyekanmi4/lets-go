@@ -1,6 +1,7 @@
 package learn.letsgo.Data;
 
 import learn.letsgo.Models.Contact;
+import learn.letsgo.Models.Group;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,13 @@ class ContactJdbcTemplateRepositoryTest {
     void shouldFindAllContactsByUserId() {
         List<Contact> contacts = contactRepository.findAllByUserId(1);
         assertEquals(2, contacts.size());
+    }
+
+    @Test
+    void shouldFindAllBySavedEventId() {
+        List<Contact> contacts= contactRepository.findAllBySavedEventId(1);
+        assertNotNull(contacts);
+        assertEquals(1, contacts.size());
     }
 
     @Test

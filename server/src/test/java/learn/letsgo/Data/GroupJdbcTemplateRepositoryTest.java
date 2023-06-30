@@ -32,6 +32,13 @@ class GroupJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldFindAllBySavedEventId() {
+        List<Group> groups= groupRepository.findAllBySavedEventId(1);
+        assertNotNull(groups);
+        assertEquals(1, groups.size());
+    }
+
+    @Test
     void shouldFindGroupById() {
         Group actual = groupRepository.findById(1);
         assertNotNull(actual);
@@ -56,7 +63,6 @@ class GroupJdbcTemplateRepositoryTest {
         int resultCount = groupRepository.findById(1).getContacts().size();
         assertEquals(-1, resultCount - initialCount);
     }
-
 
     @Test
     void shouldCreateGroup() {

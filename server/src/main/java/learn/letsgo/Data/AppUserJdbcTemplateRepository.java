@@ -123,25 +123,6 @@ public class AppUserJdbcTemplateRepository implements AppUserRepository {
         return updated;
     }
 
-    @Override
-    public boolean addEventToUser(int eventId, int appUserId) {
-        final String sql = "insert into saved_event(event_id, app_user_id) values (?,?);";
-        return jdbcTemplate.update(sql, eventId, appUserId) > 0;
-    }
-
-    @Override
-    @Transactional
-    public boolean removeEventFromUser(int eventId, int appUserId) {
-        int savedEventId = jdbcTemplate.queryForObject("select saved_event_id from saved_event where app_user_id =? and event_id =?;",
-                Integer.class, eventId, appUserId);
-
-        jdbcTemplate.update("delete from group_saved_event  "
-                + "where saved_event_id =?;", savedEventId);
-        jdbcTemplate.update("delete from contact_saved_event "
-        + "where saved_event_id =?;", savedEventId);
-        return jdbcTemplate.update("delete from saved_event where saved_event_id=?;", savedEventId) > 0;
-    }
-
     private void updateRoles(AppUser user) {
         // delete all roles, then re-add
         jdbcTemplate.update("delete from app_user_role where app_user_id = ?;", user.getAppUserId());

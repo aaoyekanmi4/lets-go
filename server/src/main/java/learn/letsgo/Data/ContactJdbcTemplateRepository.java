@@ -31,6 +31,15 @@ public class ContactJdbcTemplateRepository implements ContactRepository{
     }
 
     @Override
+    public List<Contact> findAllBySavedEventId(int savedEventId) {
+        final String sql = "select c.contact_id, c.first_name, c.last_name, c.email, c.phone, c.app_user_id "
+                + "from contact c "
+                + "inner join contact_saved_event cs on cs.contact_id=c.contact_id "
+                + "where cs.saved_event_id=?;";
+        return jdbcTemplate.query(sql, new ContactMapper(), savedEventId);
+    }
+
+    @Override
     public Contact findById(int contactId) {
         final String sql = "select contact_id, first_name, last_name,email, phone, app_user_id "
                 + "from contact where contact_id=?;";

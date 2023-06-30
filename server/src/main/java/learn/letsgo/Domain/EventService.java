@@ -1,7 +1,7 @@
 package learn.letsgo.Domain;
 
-import learn.letsgo.Data.AppUserRepository;
 import learn.letsgo.Data.EventRepository;
+import learn.letsgo.Data.SavedEventRepository;
 import learn.letsgo.Models.Event;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +10,11 @@ import java.util.List;
 @Service
 public class EventService {
     private final EventRepository eventRepository;
-    private final AppUserRepository appUserRepository;
+    private final SavedEventRepository savedEventRepository;
 
-    public EventService(EventRepository eventRepository, AppUserRepository appUserRepository) {
+    public EventService(EventRepository eventRepository, SavedEventRepository savedEventRepository) {
         this.eventRepository = eventRepository;
-        this.appUserRepository = appUserRepository;
+        this.savedEventRepository = savedEventRepository;
     }
 
     public List<Event> findAllByUserId(int appUserId) {
@@ -32,7 +32,7 @@ public class EventService {
             return result;
         }
         if (Validations.eventExistsInDatabase(event, eventRepository)) {
-            boolean didAddEventToUser = appUserRepository.addEventToUser(event.getEventId(), appUserId);
+            boolean didAddEventToUser = savedEventRepository.addEventToUser(event.getEventId(), appUserId);
             if (!didAddEventToUser) {
                 result.addMessage(ResultType.INVALID, "Could not add event to saved events");
                 return result;
@@ -41,7 +41,7 @@ public class EventService {
         } else {
             Event newEvent = eventRepository.create(event);
             if (newEvent != null) {
-                boolean didAddEventToUser = appUserRepository.addEventToUser(newEvent.getEventId(), appUserId);
+                boolean didAddEventToUser = savedEventRepository.addEventToUser(newEvent.getEventId(), appUserId);
                 if (!didAddEventToUser) {
                     result.addMessage(ResultType.INVALID, "Could not add event to saved events");
                     return result;
@@ -54,14 +54,14 @@ public class EventService {
         return result;
     }
 
-//    public Result<Void> removeEventFromUser(int eventId, int appUserId) {
-//        Result<Void> result = new Result<>();
-//        boolean didRemoveEvent = appUserRepository.removeEventFromUser(eventId, appUserId);
-//        if (!didRemoveEvent) {
-//            result.addMessage(ResultType.INVALID, "Could not remove event from saved events");
-//        }
-//        return result;
-//    }
+    public Result<Void> removeEventFromUser(int eventId, int appUserId) {
+        Result<Void> result = new Result<>();
+        boolean didRemoveEvent = savedEventRepository.removeEventFromUser(eventId, appUserId);
+        if (!didRemoveEvent) {
+            result.addMessage(ResultType.INVALID, "Could not remove event from saved events");
+        }
+        return result;
+    }
 
     public Result<Event> update(Event event) {
         Result<Event> result = validate(event);

@@ -61,24 +61,6 @@ class AppUserJdbcTemplateRepositoryTest {
         assertEquals("5555555", updatedUser.getPhone());
     }
 
-    @Test
-    void addEventToUser() {
-        int initialCount =  appUserRepository.findByUsername("eric@dev10.com").getEvents().size();
-        boolean actual = appUserRepository.addEventToUser(1,1);
-        assertTrue(actual);
-        int resultCount = appUserRepository.findByUsername("eric@dev10.com").getEvents().size();
-        assertEquals(1, resultCount - initialCount);
-    }
-
-    @Test
-    void removeEventFromUser() {
-        int initialCount =  appUserRepository.findByUsername("eric@dev10.com").getEvents().size();
-        boolean actual = appUserRepository.removeEventFromUser(1,1);
-        assertTrue(actual);
-        int resultCount = appUserRepository.findByUsername("eric@dev10.com").getEvents().size();
-        assertEquals(-1, resultCount - initialCount);
-    }
-
     AppUser makeAppUser () {
         AppUser appUser = new AppUser(10, "bill@dev10.com",
                 "password", "bill@dev10.com", "4444444",
