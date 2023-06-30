@@ -9,10 +9,6 @@ import useWindowSize from "../../hooks/useWindowSize.js";
 import "./Header.scss";
 
 const Header = () => {
-  console.log(moment("2016-03-18T14:00:00Z").format("MMM"));
-  console.log(moment("2016-03-18T14:00:00Z").date());
-  console.log(moment("2016-03-18T14:00:00Z").format("dddd, MMMM Do YYYY"));
-  console.log(moment("2016-03-18T14:00:00Z").format("h:mm a"));
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const windowSize = useWindowSize();

@@ -1,10 +1,26 @@
 .Form {
+  padding: 3rem;
+  margin-left: 20rem;
+  background-color: var(--color-light);
+  max-width: 50rem;
+  border: 2px solid var(--color-secondary);
+  color: var(--color-dark);
   &__header {
+    margin-bottom: 2rem;
   }
   &__group {
+    display: flex;
+    flex-direction: column;
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
   }
   &__input {
   }
   &__label {
+    margin-bottom: 0.2rem;
+  }
+  &__error {
+    color: red;
   }
 }

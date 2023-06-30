@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import TextInput from "../TextInput/TextInput.js";
 import { defaultCreateContactValues } from "../defaultValues.js";
+import { validateField, validateAllFields } from "./validator.js";
 import "../form.scss";
 
 const CreateContact = () => {
@@ -16,7 +17,13 @@ const CreateContact = () => {
   };
 
   return (
-    <form className="CreateContact Form">
+    <form
+      className="CreateContact Form"
+      onSubmit={(e) => {
+        e.preventDefault();
+        validateAllFields(formValues, setFormErrors);
+      }}
+    >
       <h1 className="Form__header">Create Contact</h1>
       <TextInput
         type="text"
@@ -26,6 +33,14 @@ const CreateContact = () => {
         value={formValues.firstName}
         onChange={(e) => {
           onInputChange("firstName", e.target.value);
+        }}
+        onBlur={() => {
+          const errors = validateField(
+            formValues,
+            { ...formErrors },
+            "firstName"
+          );
+          setFormErrors(errors);
         }}
         error={formErrors.firstName}
       />
@@ -39,6 +54,14 @@ const CreateContact = () => {
         onChange={(e) => {
           onInputChange("lastName", e.target.value);
         }}
+        onBlur={() => {
+          const errors = validateField(
+            formValues,
+            { ...formErrors },
+            "lastName"
+          );
+          setFormErrors(errors);
+        }}
       />
       <TextInput
         type="text"
@@ -49,6 +72,10 @@ const CreateContact = () => {
         error={formErrors.email}
         onChange={(e) => {
           onInputChange("email", e.target.value);
+        }}
+        onBlur={() => {
+          const errors = validateField(formValues, { ...formErrors }, "email");
+          setFormErrors(errors);
         }}
       />
       <TextInput
@@ -61,7 +88,12 @@ const CreateContact = () => {
         onChange={(e) => {
           onInputChange("phone", e.target.value);
         }}
+        onBlur={() => {
+          const errors = validateField(formValues, { ...formErrors }, "phone");
+          setFormErrors(errors);
+        }}
       />
+      <button type="submit">Submit </button>
     </form>
   );
 };
