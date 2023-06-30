@@ -6,6 +6,7 @@ import ContactCard from "../../../components/ContactCard/ContactCard.js";
 import GroupCard from "../../../components/GroupCard/GroupCard.js";
 import CreateContact from "../../../components/forms/CreateContact/CreateContact.js";
 import CreateGroup from "../../../components/forms/CreateGroup/CreateGroup.js";
+import EventList from "../../../components/EventList/EventList.js";
 
 import "./Home.scss";
 const Home = () => {
@@ -37,6 +38,7 @@ const Home = () => {
           "Rebeccah Soles",
         ]}
       />
+      <EventList />
     </div>
   );
 };
