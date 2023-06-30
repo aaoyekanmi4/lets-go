@@ -122,4 +122,21 @@ public class Event {
     public void setEventPosts(List<EventPost> eventPosts) {
         this.eventPosts = eventPosts;
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventId=" + eventId +
+                ", eventName='" + eventName + '\'' +
+                ", category='" + category + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", dateTime=" + dateTime +
+                ", source='" + source + '\'' +
+                ", sourceId='" + sourceId + '\'' +
+                ", eventLink='" + eventLink + '\'' +
+                ", venue=" + venue +
+                ", eventPosts=" + eventPosts +
+                '}';
+    }
 }

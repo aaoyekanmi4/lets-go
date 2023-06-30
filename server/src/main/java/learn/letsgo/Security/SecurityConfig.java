@@ -35,6 +35,9 @@ public class SecurityConfig {
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/refresh_token").authenticated()
                 .antMatchers("/api/create_account").permitAll()
+                .antMatchers("/api/event/user/*").authenticated()
+                .antMatchers("/api/event/user/*/*").authenticated()
+                .antMatchers("/api/event/*").permitAll()
                 // if we get to this point, let's deny all requests
                 .antMatchers("/**").denyAll()
                 .and()

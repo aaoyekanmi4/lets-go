@@ -1,0 +1,18 @@
+@url=http://localhost:8080/api/event
+
+// findByEventId (PUBLIC)
+GET {{url}}/1
+
+###
+
+// findAllEventsByUserId (PRIVATE:AUTH)
+// /user/appUserId
+GET {{url}}/user/2 HTTP/1.1
+Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiamF5QGRldjEwLmNvbSIsImFwcF91c2VyX2lkIjoyLCJhdXRob3JpdGllcyI6IlVTRVIiLCJleHAiOjE2ODgxNDY1Mjd9.ckNZP8DDd00Bry-ghNPKy1_fw6a2T8SvKkNriMTBeFY
+
+###
+
+// findSavedEventForUser (PRIVATE:AUTH)
+// /user/eventId/appUserId
+GET {{url}}/user/1/2 HTTP/1.1
+Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiamF5QGRldjEwLmNvbSIsImFwcF91c2VyX2lkIjoyLCJhdXRob3JpdGllcyI6IlVTRVIiLCJleHAiOjE2ODgxNDY1Mjd9.ckNZP8DDd00Bry-ghNPKy1_fw6a2T8SvKkNriMTBeFY

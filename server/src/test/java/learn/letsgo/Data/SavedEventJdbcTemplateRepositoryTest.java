@@ -1,5 +1,7 @@
 package learn.letsgo.Data;
 
+import learn.letsgo.Models.Event;
+import learn.letsgo.Models.SavedEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +72,14 @@ class SavedEventJdbcTemplateRepositoryTest {
         int resultCount = appUserRepository.findByUsername("arit@dev10.com").getEvents().size();
         System.out.println(resultCount);
         assertEquals(-1, resultCount - initialCount);
+    }
+
+    @Test
+    void shouldFindSavedEventForUser() {
+        SavedEvent actual = savedEventRepository.findSavedEventForUser(1, 2);
+        assertNotNull(actual);
+        System.out.println(actual);
+        assertEquals(2, actual.getAppUserId());
+        assertEquals(1, actual.getGroups().size());
     }
 }

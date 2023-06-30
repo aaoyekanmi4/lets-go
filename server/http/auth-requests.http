@@ -4,7 +4,7 @@ POST {{url}}/authenticate HTTP/1.1
 Content-Type: application/json
 
 {
-  "username":"arit@dev10.com",
+  "username":"jay@dev10.com",
   "password":"P@ssw0rd!"
 }
 
@@ -25,6 +25,6 @@ Content-Type: application/json
 ###
 
 POST {{url}}/refresh_token HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg3OTU3MjgxfQ.B2WA0lRoEOn_n8Vds9FddgqtYbiZwajvfdxfbmwUjt8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTM3Mjk0fQ.5j10pHu-xCu5Rq5rajAULBA7FiK07sx6JqO8rEYqXTE
 
 

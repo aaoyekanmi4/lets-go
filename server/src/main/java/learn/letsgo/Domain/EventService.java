@@ -3,6 +3,7 @@ package learn.letsgo.Domain;
 import learn.letsgo.Data.EventRepository;
 import learn.letsgo.Data.SavedEventRepository;
 import learn.letsgo.Models.Event;
+import learn.letsgo.Models.SavedEvent;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,9 @@ public class EventService {
         return eventRepository.findById(eventId);
     }
 
+    public SavedEvent findSavedEventForUser(int eventId, int appUserId) {
+        return savedEventRepository.findSavedEventForUser(eventId, appUserId);
+    }
     //TODO test save event
     public Result<Event> saveEventToUser(Event event, int appUserId) {
         Result<Event> result = validate(event);
