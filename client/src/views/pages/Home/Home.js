@@ -5,6 +5,7 @@ import EventCard from "../../../components/EventCard/EventCard.js";
 import ContactCard from "../../../components/ContactCard/ContactCard.js";
 import GroupCard from "../../../components/GroupCard/GroupCard.js";
 import CreateContact from "../../../components/forms/CreateContact/CreateContact.js";
+import CreateGroup from "../../../components/forms/CreateGroup/CreateGroup.js";
 
 import "./Home.scss";
 const Home = () => {
@@ -26,6 +27,16 @@ const Home = () => {
       />
       <GroupCard groupName="The Ballers we call" />
       <CreateContact />
+      <CreateGroup
+        contacts={[
+          "Elizah Jenkins",
+          "Matt Owen",
+          "Eric Baffour",
+          "Seasoned Dunkin",
+          "Ada Driver",
+          "Rebeccah Soles",
+        ]}
+      />
     </div>
   );
 };
