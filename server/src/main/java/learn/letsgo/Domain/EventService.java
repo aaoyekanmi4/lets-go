@@ -35,8 +35,10 @@ public class EventService {
         if (!result.isSuccess()) {
             return result;
         }
-        if (Validations.eventExistsInDatabase(event, eventRepository)) {
-            boolean didAddEventToUser = savedEventRepository.addEventToUser(event.getEventId(), appUserId);
+        Event existingEvent = Validations.findEventIfExists(event, eventRepository);
+        System.out.println(existingEvent);
+        if (existingEvent != null) {
+            boolean didAddEventToUser = savedEventRepository.addEventToUser(existingEvent.getEventId(), appUserId);
             if (!didAddEventToUser) {
                 result.addMessage(ResultType.INVALID, "Could not add event to saved events");
                 return result;

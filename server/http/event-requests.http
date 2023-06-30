@@ -1,18 +1,51 @@
 @url=http://localhost:8080/api/event
 
-// findByEventId (PUBLIC)
+// findByEventId (single Event) (PUBLIC)
 GET {{url}}/1
 
 ###
 
-// findAllEventsByUserId (PRIVATE:AUTH)
+// findAllEventsByUserId (list of Events) (PRIVATE:AUTH)
 // /user/appUserId
-GET {{url}}/user/2 HTTP/1.1
-Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiamF5QGRldjEwLmNvbSIsImFwcF91c2VyX2lkIjoyLCJhdXRob3JpdGllcyI6IlVTRVIiLCJleHAiOjE2ODgxNDY1Mjd9.ckNZP8DDd00Bry-ghNPKy1_fw6a2T8SvKkNriMTBeFY
+GET {{url}}/user/1 HTTP/1.1
+Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTUxNDkzfQ.Y7I__QWM43g1pix8qNpwNSrPy2zNTdnq2JrGHw7kW6k
 
 ###
 
-// findSavedEventForUser (PRIVATE:AUTH)
+// findSavedEventForUser (single SavedEvent) (PRIVATE:AUTH)
 // /user/eventId/appUserId
-GET {{url}}/user/1/2 HTTP/1.1
-Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiamF5QGRldjEwLmNvbSIsImFwcF91c2VyX2lkIjoyLCJhdXRob3JpdGllcyI6IlVTRVIiLCJleHAiOjE2ODgxNDY1Mjd9.ckNZP8DDd00Bry-ghNPKy1_fw6a2T8SvKkNriMTBeFY
+GET {{url}}/user/7/1 HTTP/1.1
+Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTUxNDkzfQ.Y7I__QWM43g1pix8qNpwNSrPy2zNTdnq2JrGHw7kW6k
+
+###
+// saveEventForUser (single Event) (PRIVATE:AUTH)
+// /user/appUserId
+POST {{url}}/user/1
+Content-Type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTUxOTc5fQ.0rvhMcY6c2gCnWm4LNgQAEyDiqvGhs93pua1zq-ndc8
+
+{
+    "eventId": 2,
+    "eventName": "Janet Jackson Live!",
+    "category": "concert",
+    "imageUrl": "https://chairnerd.global.ssl.fastly.net/images/performers/8741/555bce1815140ad65ab0b1066467ae7d/huge.jpg",
+    "description": "",
+    "dateTime": "2012-03-09T19:00:00",
+    "source": "TicketMaster",
+    "sourceId": "721901",
+    "eventLink": "https://example.com",
+    "venue": {
+      "venueId": 1,
+      "venueName": "The Wine Cellar",
+      "address": "2222 Fifth St.",
+      "city": "New York",
+      "state": "NY",
+      "country": "United States",
+      "zipCode": 29292,
+      "events": []
+    }
+}
+
+
+
+
