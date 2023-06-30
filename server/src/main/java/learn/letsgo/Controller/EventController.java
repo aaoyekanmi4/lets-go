@@ -44,11 +44,12 @@ public class EventController {
         return ErrorResponse.build(result);
     }
 
-    @DeleteMapping("/user//{agencyId}")
-    public ResponseEntity<Void> deleteById(@PathVariable int agencyId) {
-        if (agencyService.deleteById(agencyId)) {
+    @DeleteMapping("/user/{eventId}/{appUserId}")
+    public ResponseEntity<?> removeEventFromUser(@PathVariable int eventId, @PathVariable int appUserId) {
+        Result<Void> result = eventService.removeEventFromUser(eventId, appUserId);
+        if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ErrorResponse.build(result);
     }
 }
