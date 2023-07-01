@@ -1,5 +1,5 @@
 @url=http://localhost:8080/api/event
-@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTY0MzIxfQ.kPEeFQeO9gvew7_pLFhtwmXVfF1YK8h1ZjASlU7nOrk
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTcyMjAyfQ.w_rpb7SZrpIQMW-7ctkFDjldYghnV1Hs9v6a8T-msUQ
 
 // findByEventId (single Event) (PUBLIC)
 GET {{url}}/1
@@ -15,7 +15,7 @@ Authorization:Bearer {{token}}
 
 // findSavedEventForUser (single SavedEvent) (PRIVATE)
 // /user/eventId/appUserId
-GET {{url}}/user/3/1 HTTP/1.1
+GET {{url}}/user/1/2 HTTP/1.1
 Authorization:Bearer {{token}}
 
 ###

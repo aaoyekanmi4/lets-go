@@ -1,0 +1,66 @@
+@url=http://localhost:8080/api/contact
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTczMTQyfQ.-lt0Gc-WTaknzV_WB6FCAmsKCuVLpULSXeAsfMlF0XI
+
+###
+// findContactId (single Contact)
+// (PRIVATE)
+// /contactId
+GET {{url}}/1
+Authorization:Bearer {{token}}
+
+###
+// findContactsByUserId (List Contacts)
+// (PRIVATE)
+// /user/appUserId
+GET {{url}}/user/1
+Authorization:Bearer {{token}}
+
+###
+// findContactsByEventId (List Contacts)
+// (PRIVATE)
+// /event/savedEventId
+GET {{url}}/event/1
+Authorization:Bearer {{token}}
+
+###
+// createContact (single Contact)
+// (PRIVATE)
+
+POST {{url}}
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+{
+  "appUserId": 1,
+  "email": "indigo@gmail.com",
+  "phone": "2222222",
+  "firstName": "Queen",
+  "lastName": "Latifah"
+}
+
+###
+// updateContact (single Contact)
+// (PRIVATE)
+// /contactId
+
+PUT {{url}}/4
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+{
+  "contactId": 4,
+  "appUserId": 1,
+  "email": "indigo@gmail.com",
+  "phone": "2222222",
+  "firstName": "Halle",
+  "lastName": "Berry"
+}
+
+###
+// deleteContact (single Contact)
+// (PRIVATE)
+// /contactId
+DELETE {{url}}/4
+Content-Type: application/json
+Authorization:Bearer {{token}}
+

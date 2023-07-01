@@ -43,6 +43,10 @@ public class SecurityConfig {
                 .antMatchers("/api/event/user/*").authenticated()
                 .antMatchers("/api/event/user/*/*").authenticated()
                 .antMatchers("/api/event/user/group/*/*/*").authenticated()
+                .antMatchers("/api/contact").authenticated()
+                .antMatchers("/api/contact/*").authenticated()
+                .antMatchers("/api/contact/user/*").authenticated()
+                .antMatchers("/api/contact/event/*").authenticated()
                 .antMatchers("/api/event/*").permitAll()
                 // if we get to this point, let's deny all requests
                 .antMatchers("/**").denyAll()
