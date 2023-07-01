@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .antMatchers("/api/event/user/contact/*/*/*").authenticated()
                 .antMatchers("/api/event/user/group/*/*/*").authenticated()
                 .antMatchers("/api/event/user/*").authenticated()
+                .antMatchers("/api/event/saved/*").authenticated()
                 .antMatchers("/api/event/user/*/*").authenticated()
                 .antMatchers("/api/event/user/group/*/*/*").authenticated()
                 .antMatchers("/api/contact").authenticated()
