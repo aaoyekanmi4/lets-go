@@ -2,21 +2,28 @@
 
 @token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTc5OTQwfQ.Q2n_0dzZOWfQgZeez9pPrDjOURly0_kTiR0vrusQfKY
 
-// findAllVenues (List Venues)
-//(PUBLIC)
+// FUNCTION: findAllVenues
+// RETURNS: List of Venues
+// PATH: /
+// ACCESS: PUBLIC
+
 GET {{url}}
 
 ###
 
-// findVenueById (single Venue)
-// (PUBLIC)
-// /venueId
+// FUNCTION: findVenueById
+// RETURNS: a Venue
+// PATH: /:venueId
+// ACCESS: PUBLIC
 
 GET {{url}}/1
 
 ###
-// upsertVenue (single Venue)
-// (PRIVATE)
+
+// FUNCTION: upsertVenue
+// RETURNS: a Venue
+// PATH: /
+// ACCESS: AUTH
 
 POST {{url}}
 Content-Type: application/json
@@ -32,9 +39,11 @@ Authorization:Bearer {{token}}
 }
 
 ###
-// updateVenue (single Venue)
-// (PRIVATE)
-// /venueId
+
+// FUNCTION: updateVenue
+// RETURNS: a Venue
+// PATH: /:venueId
+// ACCESS: AUTH
 
 PUT {{url}}/4
 Content-Type: application/json

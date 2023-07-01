@@ -2,19 +2,29 @@
 @token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTY3NDI5fQ.j7yJrhC20PykEjjKTbmFpEAS7BnBcx4BOkf_kYReUpU
 
 ###
-// findPostsByEventId (List EventPosts)
-// (PUBLIC)
-// /eventId
+
+// FUNCTION: findPostsByEventId
+// RETURNS: List of EventPosts
+// PATH: /:eventId
+// ACCESS: PUBLIC
+
 GET {{url}}/1
 
 ###
 
-// findPostByPostId (Single EventPost)
-// (PUBLIC)
-// /postId
+// FUNCTION: findPostById
+// RETURNS: an EventPost
+// PATH: /:eventPostId;
+// ACCESS: PUBLIC
+
 GET {{url}}/post/1
 
 ###
+
+// FUNCTION: createEventPost
+// RETURNS: an EventPost
+// PATH: /
+// ACCESS: AUTH
 
 POST {{url}}
 Content-Type: application/json
@@ -30,6 +40,12 @@ Authorization:Bearer {{token}}
 }
 
 ###
+
+// FUNCTION: updateEventPost
+// RETURNS: an EventPost
+// PATH: /:eventPostId
+// ACCESS: AUTH
+
 PUT {{url}}/5
 Content-Type: application/json
 Authorization:Bearer {{token}}
@@ -45,6 +61,12 @@ Authorization:Bearer {{token}}
 }
 
 ###
+
+// FUNCTION: deleteEventPost
+// RETURNS: void
+// PATH: /:eventPostId
+// ACCESS: AUTH
+
 DELETE {{url}}/5
 Content-Type: application/json
 Authorization:Bearer {{token}}

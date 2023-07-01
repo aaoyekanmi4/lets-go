@@ -2,29 +2,41 @@
 @token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTc1ODg3fQ.xZmrEg4DhmvIHoSayZz5ZvsIcHKl5RQpimUWdwRQtRg
 
 ###
-// findGroupId (single Group)
-// (PRIVATE)
-// /groupId
+
+// FUNCTION: findGroupById
+// RETURNS: a Group
+// PATH: /:group
+// ACCESS: AUTH
+
 GET {{url}}/5
 Authorization:Bearer {{token}}
 
 ###
-// findGroupsByUserId (List Groups)
-// (PRIVATE)
-// /user/appUserId
+
+// FUNCTION: findGroupsByUserId
+// RETURNS: List of Groups
+// PATH: /user/:appUserId
+// ACCESS: AUTH
+
 GET {{url}}/user/1
 Authorization:Bearer {{token}}
 
 ###
-// findGroupsByEventId (List Groups)
-// (PRIVATE)
-// /event/savedEventId
+
+// FUNCTION: findGroupsByEventId
+// RETURNS: List of Groups
+// PATH: /event/:savedEventId
+// ACCESS: AUTH
+
 GET {{url}}/event/1
 Authorization:Bearer {{token}}
 
 ###
-// createGroup (single Group)
-// (PRIVATE)
+
+// FUNCTION: createGroup
+// RETURNS: a Group
+// PATH: /
+// ACCESS: AUTH
 
 POST {{url}}
 Content-Type: application/json
@@ -36,9 +48,11 @@ Authorization:Bearer {{token}}
 }
 
 ###
-// updateGroup (single Group)
-// (PRIVATE)
-// /groupId
+
+// FUNCTION: updateGroup
+// RETURNS: a Group
+// PATH: /:groupId
+// ACCESS: AUTH
 
 PUT {{url}}/4
 Content-Type: application/json
@@ -51,23 +65,32 @@ Authorization:Bearer {{token}}
 }
 
 ###
-// deleteGroup (single Group)
-// (PRIVATE)
-// /groupId
+
+// FUNCTION: deleteGroup
+// RETURNS: void
+// PATH: /:groupId
+// ACCESS: AUTH
+
 DELETE {{url}}/4
 Content-Type: application/json
 Authorization:Bearer {{token}}
 
 ###
 
-// addContactToGroup (void) (PRIVATE)
-// /contactId/groupId
+// FUNCTION: addContactToGroup
+// RETURNS: void
+// PATH: /:contactId/:groupId
+// ACCESS: AUTH
+
 POST {{url}}/2/5
 Authorization:Bearer {{token}}
 
 ###
 
-// removeContactFromGroup(void) (PRIVATE)
-// /user/group/groupId/eventId/appUserId
+// FUNCTION: removeContactFromGroup
+// RETURNS: void
+// PATH: /:contactId/:groupId
+// ACCESS: AUTH
+
 DELETE {{url}}/2/5
 Authorization:Bearer {{token}}
