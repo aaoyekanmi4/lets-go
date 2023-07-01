@@ -1,0 +1,117 @@
+@url=http://localhost:8080/api/event
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTcyMjAyfQ.w_rpb7SZrpIQMW-7ctkFDjldYghnV1Hs9v6a8T-msUQ
+
+// FUNCTION: findEventById
+// RETURNS: an Event
+// PATH: /:eventId
+// ACCESS: PUBLIC
+
+GET {{url}}/1
+
+###
+
+// FUNCTION: findAllEventsByUserId
+// RETURNS: List of Events
+// PATH: /user/:appUserId
+// ACCESS: AUTH
+
+GET {{url}}/user/1 HTTP/1.1
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: findSavedEventForUser
+// RETURNS: a SavedEvent (has groups and contacts attached)
+// PATH: /user/:eventId/:appUserId
+// ACCESS: AUTH
+
+GET {{url}}/user/1/2 HTTP/1.1
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: saveEventForUser
+// RETURNS: an Event
+// PATH: /user/:appUserId
+// ACCESS: AUTH
+
+POST {{url}}/user/1
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+{
+    "eventId": 2,
+    "eventName": "Janet Jackson Live!",
+    "category": "concert",
+    "imageUrl": "https://chairnerd.global.ssl.fastly.net/images/performers/8741/555bce1815140ad65ab0b1066467ae7d/huge.jpg",
+    "description": "",
+    "dateTime": "2012-03-09T19:00:00",
+    "source": "TicketMaster",
+    "sourceId": "721901",
+    "eventLink": "https://example.com",
+    "venue": {
+      "venueId": 1,
+      "venueName": "The Wine Cellar",
+      "address": "2222 Fifth St.",
+      "city": "New York",
+      "state": "NY",
+      "country": "United States",
+      "zipCode": 29292,
+      "events": []
+    }
+}
+
+###
+
+// FUNCTION: removeEventFromUser
+// RETURNS: void
+// PATH: /user/:eventId/:appUserId
+// ACCESS: AUTH
+
+DELETE {{url}}/user/4/1
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: addContactToEvent
+// RETURNS: void
+// PATH: /user/contact/:contactId/:eventId/:appUserId
+// ACCESS: AUTH
+
+POST {{url}}/user/contact/1/3/1
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: removeContactFromEvent
+// RETURNS: void
+// PATH: /user/contact/:contactId/:eventId/:appUserId
+// ACCESS: AUTH
+
+DELETE {{url}}/user/contact/1/3/1
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: addGroupToEvent
+// RETURNS: void
+// PATH: /user/group/:groupId/:eventId/:appUserId
+// ACCESS: AUTH
+
+POST {{url}}/user/group/2/3/1
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: removeGroupFromEvent
+// RETURNS: void
+// PATH: /user/group/:groupId/:eventId/:appUserId
+// ACCESS: AUTH
+
+DELETE {{url}}/user/group/2/3/1
+Authorization:Bearer {{token}}
+
+
+
+

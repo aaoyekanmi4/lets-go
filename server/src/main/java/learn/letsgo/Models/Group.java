@@ -8,7 +8,7 @@ public class Group {
     private int appUserId;
     private String name;
 
-    private List<Contact> contacts;
+    private List<Contact> contacts = new ArrayList<>();
 
     public Group(){
 
@@ -50,5 +50,15 @@ public class Group {
 
     public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "groupId=" + groupId +
+                ", appUserId=" + appUserId +
+                ", name='" + name + '\'' +
+                ", contacts=" + contacts +
+                '}';
     }
 }

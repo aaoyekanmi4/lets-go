@@ -1,0 +1,83 @@
+@url=http://localhost:8080/api/contact
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTc1NDcyfQ.IWyHKtCVBUx9JV3Npcl3QXIPXytggckdjb0I1w3W77k
+
+###
+
+// FUNCTION: findContactById
+// RETURNS: a Contact
+// PATH: /:contactId
+// ACCESS: AUTH
+
+GET {{url}}/1
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: findContactsByUserId
+// RETURNS: List of Contacts
+// PATH: /user/:appUserId
+// ACCESS: AUTH
+
+GET {{url}}/user/1
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: findContactsByEventId
+// RETURNS: List of Contacts
+// PATH: /event/:savedEventId
+// ACCESS: AUTH
+
+GET {{url}}/event/1
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: createContact
+// RETURNS: a Contact
+// PATH: /
+// ACCESS: AUTH
+
+POST {{url}}
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+{
+  "appUserId": 1,
+  "email": "indigo@gmail.com",
+  "phone": "2222222",
+  "firstName": "Queen",
+  "lastName": "Latifah"
+}
+
+###
+
+// FUNCTION: updateContact
+// RETURNS: a Contact
+// PATH: /:contactId
+// ACCESS: AUTH
+
+PUT {{url}}/4
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+{
+  "contactId": 4,
+  "appUserId": 1,
+  "email": "indigo@gmail.com",
+  "phone": "2222222",
+  "firstName": "Halle",
+  "lastName": "Berry"
+}
+
+###
+
+// FUNCTION: deleteContact
+// RETURNS: void
+// PATH: /:contactId
+// ACCESS: AUTH
+
+DELETE {{url}}/4
+Content-Type: application/json
+Authorization:Bearer {{token}}
+

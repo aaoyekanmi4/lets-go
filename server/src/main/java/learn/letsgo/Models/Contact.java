@@ -80,4 +80,17 @@ public class Contact {
     public void setGroups(List<Group> groups) {
         this.groups = groups;
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "contactId=" + contactId +
+                ", appUserId=" + appUserId +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", groups=" + groups +
+                '}';
+    }
 }
