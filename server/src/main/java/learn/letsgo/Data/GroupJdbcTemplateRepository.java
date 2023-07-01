@@ -4,6 +4,7 @@ import learn.letsgo.Data.Mappers.ContactMapper;
 import learn.letsgo.Data.Mappers.GroupMapper;
 import learn.letsgo.Models.Contact;
 import learn.letsgo.Models.Group;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -100,6 +102,27 @@ public class GroupJdbcTemplateRepository implements GroupRepository{
     public boolean addContactToGroup(int contactId, int groupId) {
        final String sql = "insert into group_contact(group_id, contact_id) values (?,?);";
        return jdbcTemplate.update(sql, groupId, contactId) > 0;
+    }
+
+    @Override
+    @Transactional
+    public boolean batchAddContactsToGroup(List<Integer> contactIds, int groupId) {
+        final String sql = "insert into group_contact (contact_id, group_id)"
+                + "values (?,?);";
+        int[] insertedRows = jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                ps.setInt(1, contactIds.get(i));
+                ps.setInt(2,groupId);
+            }
+
+            @Override
+            public int getBatchSize() {
+                return contactIds.size();
+            }
+        });
+        return insertedRows.length == contactIds.size();
     }
 
     @Override

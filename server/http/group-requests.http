@@ -1,5 +1,5 @@
 @url=http://localhost:8080/api/group
-@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTc1ODg3fQ.xZmrEg4DhmvIHoSayZz5ZvsIcHKl5RQpimUWdwRQtRg
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MjQwMTMxfQ.ERDwYaX8Wln2DgF-47o9W9RkWMcjVfgcbJBoPrYUd3s
 
 ###
 
@@ -87,10 +87,23 @@ Authorization:Bearer {{token}}
 
 ###
 
+// FUNCTION: batchAddContactsToGroup
+// RETURNS: void
+// PATH: /:groupId
+// ACCESS: AUTH
+
+POST {{url}}/5
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+[3,5]
+
+###
+
 // FUNCTION: removeContactFromGroup
 // RETURNS: void
 // PATH: /:contactId/:groupId
 // ACCESS: AUTH
 
-DELETE {{url}}/2/5
+DELETE {{url}}/5/5
 Authorization:Bearer {{token}}

@@ -1,5 +1,5 @@
 @url=http://localhost:8080/api/event
-@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTcyMjAyfQ.w_rpb7SZrpIQMW-7ctkFDjldYghnV1Hs9v6a8T-msUQ
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MjQzMTE5fQ.0Wm3luIlk_3FKvJ-UJ4KkYcgxO_Xk-RNeYacsLGOQu4
 
 // FUNCTION: findEventById
 // RETURNS: an Event
@@ -11,7 +11,7 @@ GET {{url}}/1
 ###
 
 // FUNCTION: findAllEventsByUserId
-// RETURNS: List of Events
+// RETURNS: List of SavedEvents
 // PATH: /user/:appUserId
 // ACCESS: AUTH
 
@@ -25,10 +25,18 @@ Authorization:Bearer {{token}}
 // PATH: /user/:eventId/:appUserId
 // ACCESS: AUTH
 
-GET {{url}}/user/1/2 HTTP/1.1
+GET {{url}}/user/3/1 HTTP/1.1
 Authorization:Bearer {{token}}
 
 ###
+
+// FUNCTION: findSavedEventForUser
+// RETURNS: a SavedEvent (has groups and contacts attached)
+// PATH: /saved/:savedEventId
+// ACCESS: AUTH
+
+GET {{url}}/saved/3
+Authorization:Bearer {{token}}
 
 // FUNCTION: saveEventForUser
 // RETURNS: an Event
@@ -91,8 +99,6 @@ Authorization:Bearer {{token}}
 
 DELETE {{url}}/user/contact/1/3/1
 Authorization:Bearer {{token}}
-
-###
 
 // FUNCTION: addGroupToEvent
 // RETURNS: void

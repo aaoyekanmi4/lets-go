@@ -23,6 +23,31 @@ public class SavedEventJdbcTemplateRepository implements SavedEventRepository {
         this.eventRepository = eventRepository;
     }
 
+    public List<SavedEvent> findAll(int appUserId) {
+        final String sql = "select se.saved_event_id, se.app_user_id, se.event_id "
+                + "from saved_event se "
+                + "where se.app_user_id =?;";
+
+        List<SavedEvent> result = jdbcTemplate.query(sql, new SavedEventMapper(eventRepository),  appUserId);
+
+        return result;
+    }
+
+    public SavedEvent findById(int savedEventId) {
+        final String sql = "select se.saved_event_id, se.app_user_id, se.event_id "
+                + "from saved_event se "
+                + "where se.saved_event_id=?;";
+        SavedEvent result = jdbcTemplate.query(sql, new SavedEventMapper(eventRepository), savedEventId).stream()
+                .findFirst()
+                .orElse(null);
+
+        if (result != null) {
+            addGroups(result);
+            addContacts(result);
+        }
+        return result;
+    }
+
     public SavedEvent findSavedEventForUser(int eventId, int appUserId) {
         final String sql = "select se.saved_event_id, se.app_user_id, se.event_id "
                 + "from saved_event se "

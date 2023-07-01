@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -23,6 +25,19 @@ class SavedEventJdbcTemplateRepositoryTest {
     @BeforeEach
     void setup() {
         knownGoodState.set();
+    }
+
+    @Test
+    void shouldFindAllForUser() {
+        List<SavedEvent> actual = savedEventRepository.findAll(1);
+        assertNotNull(actual);
+        assertEquals(1, actual.size());
+    }
+
+    @Test
+    void shouldFindAllById() {
+        SavedEvent actual = savedEventRepository.findById(1);
+        assertNotNull(actual);
     }
 
     @Test
@@ -46,7 +61,6 @@ class SavedEventJdbcTemplateRepositoryTest {
         assertTrue(actual);
         boolean repeat = savedEventRepository.removeContactFromEvent(2,1);
         assertFalse(repeat);
-
     }
 
     @Test

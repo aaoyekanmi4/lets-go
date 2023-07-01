@@ -2,6 +2,7 @@ package learn.letsgo.Controller;
 
 import learn.letsgo.Domain.EventService;
 import learn.letsgo.Domain.Result;
+import learn.letsgo.Domain.SavedEventService;
 import learn.letsgo.Models.Event;
 import learn.letsgo.Models.SavedEvent;
 import org.springframework.http.HttpStatus;
@@ -15,19 +16,26 @@ import java.util.List;
 @RequestMapping("/api/event")
 public class EventController {
     private final EventService eventService;
+    private final SavedEventService savedEventService;
 
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService, SavedEventService savedEventService) {
         this.eventService = eventService;
-    }
-
-    @GetMapping("/user/{appUserId}")
-    public List<Event> findAllByUserId(@PathVariable int appUserId) {
-        return eventService.findAllByUserId(appUserId);
+        this.savedEventService = savedEventService;
     }
 
     @GetMapping("/{eventId}")
     public Event findById(@PathVariable int eventId) {
         return eventService.findById(eventId);
+    }
+
+    @GetMapping("/saved/{savedEventId}")
+    public SavedEvent findBySavedId(@PathVariable int savedEventId) {
+        return savedEventService.findById(savedEventId);
+    }
+
+    @GetMapping("/user/{appUserId}")
+    public List<SavedEvent> findAllSaved(@PathVariable int appUserId) {
+        return savedEventService.findAll(appUserId);
     }
 
     @GetMapping("/user/{eventId}/{appUserId}")

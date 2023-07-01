@@ -79,6 +79,23 @@ public class GroupService {
         return result;
     }
 
+    public Result<Void> batchAddContactsToGroup(List<Integer> contactIds, int groupId) {
+
+        Result<Void> result = new Result<>();
+        for (Integer num : contactIds) {
+            result = validateAddContact(num, groupId);
+            if (!result.isSuccess()) {
+                return result;
+            }
+        }
+
+        boolean didAddContacts = groupRepository.batchAddContactsToGroup(contactIds, groupId);
+        if (!didAddContacts) {
+            result.addMessage(ResultType.INVALID, "Could not add all contacts to group");
+        }
+        return result;
+    }
+
     public Result<Void> removeContactFromGroup(int contactId, int groupId) {
         Result<Void> result = new Result<>();
         boolean didRemoveContact = groupRepository.removeContactFromGroup(contactId, groupId);

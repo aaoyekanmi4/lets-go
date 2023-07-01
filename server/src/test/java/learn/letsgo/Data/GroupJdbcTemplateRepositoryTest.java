@@ -1,5 +1,6 @@
 package learn.letsgo.Data;
 
+import learn.letsgo.Models.Contact;
 import learn.letsgo.Models.Group;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,6 +54,12 @@ class GroupJdbcTemplateRepositoryTest {
         assertTrue(actual);
         int resultCount = groupRepository.findById(1).getContacts().size();
         assertEquals(1, resultCount - initialCount);
+    }
+
+    @Test
+    void shouldBatchAddContactsToGroup() {
+        boolean actual = groupRepository.batchAddContactsToGroup(List.of(1,3), 1);
+        assertTrue(actual);
     }
 
     @Test

@@ -73,6 +73,15 @@ public class GroupController {
         return ErrorResponse.build(result);
     }
 
+    @PostMapping("/{groupId}")
+    public ResponseEntity<?> batchAddContactsToGroup (@RequestBody List<Integer> contactIds, @PathVariable int groupId) {
+        Result<Void> result = groupService.batchAddContactsToGroup(contactIds, groupId);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
+
     @DeleteMapping("/{contactId}/{groupId}")
     public ResponseEntity<?> removeContactFromGroup(@PathVariable int contactId,
                                                   @PathVariable int groupId) {
