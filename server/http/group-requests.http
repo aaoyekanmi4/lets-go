@@ -1,0 +1,73 @@
+@url=http://localhost:8080/api/group
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTc1ODg3fQ.xZmrEg4DhmvIHoSayZz5ZvsIcHKl5RQpimUWdwRQtRg
+
+###
+// findGroupId (single Group)
+// (PRIVATE)
+// /groupId
+GET {{url}}/5
+Authorization:Bearer {{token}}
+
+###
+// findGroupsByUserId (List Groups)
+// (PRIVATE)
+// /user/appUserId
+GET {{url}}/user/1
+Authorization:Bearer {{token}}
+
+###
+// findGroupsByEventId (List Groups)
+// (PRIVATE)
+// /event/savedEventId
+GET {{url}}/event/1
+Authorization:Bearer {{token}}
+
+###
+// createGroup (single Group)
+// (PRIVATE)
+
+POST {{url}}
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+{
+  "appUserId": 1,
+  "name": "Immediate Family"
+}
+
+###
+// updateGroup (single Group)
+// (PRIVATE)
+// /groupId
+
+PUT {{url}}/4
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+{
+  "groupId": 4,
+  "appUserId": 1,
+  "name": "Cosplay Friends"
+}
+
+###
+// deleteGroup (single Group)
+// (PRIVATE)
+// /groupId
+DELETE {{url}}/4
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+###
+
+// addContactToGroup (void) (PRIVATE)
+// /contactId/groupId
+POST {{url}}/2/5
+Authorization:Bearer {{token}}
+
+###
+
+// removeContactFromGroup(void) (PRIVATE)
+// /user/group/groupId/eventId/appUserId
+DELETE {{url}}/2/5
+Authorization:Bearer {{token}}

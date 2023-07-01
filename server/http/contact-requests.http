@@ -1,5 +1,5 @@
 @url=http://localhost:8080/api/contact
-@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTczMTQyfQ.-lt0Gc-WTaknzV_WB6FCAmsKCuVLpULSXeAsfMlF0XI
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTc1NDcyfQ.IWyHKtCVBUx9JV3Npcl3QXIPXytggckdjb0I1w3W77k
 
 ###
 // findContactId (single Contact)
