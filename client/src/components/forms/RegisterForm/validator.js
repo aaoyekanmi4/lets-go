@@ -1,11 +1,12 @@
 import validator from "validator";
-
 import {
   validateFirstName,
   validateLastName,
   validateEmail,
   validatePhone,
-} from "../validators.js";
+  validateUsername,
+  validatePassword,
+} from "../validators";
 
 //takes in a formErrors object that is constantly being modified
 //so since being used to update formErrors state, pass in a brand new
@@ -25,6 +26,14 @@ const validateField = (formValues, formErrors, fieldName) => {
 
   if (fieldName === "phone") {
     return validatePhone(formValues, formErrors);
+  }
+
+  if (fieldName === "username") {
+    return validateUsername(formValues, formErrors);
+  }
+
+  if (fieldName === "password") {
+    return validatePassword(formValues, formErrors);
   }
 };
 

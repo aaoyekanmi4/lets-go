@@ -1,10 +1,21 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import Header from "../../../components/Header/Header.js";
+
+import RegisterForm from "../../../components/forms/RegisterForm/RegisterForm.js";
+import "./Register.scss";
 
 const Register = () => {
   return (
     <div className="Register">
       <Header />
+      <main className="Entry__main">
+        <RegisterForm />
+        <Link className="Entry__link Form__link-text" to="/login">
+          Already registered? Login
+        </Link>
+      </main>
     </div>
   );
 };

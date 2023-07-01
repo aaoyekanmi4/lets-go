@@ -1,9 +1,7 @@
 import validator from "validator";
 
 import {
-  validateFirstName,
-  validateLastName,
-  validateEmail,
+validateUsername
   validatePhone,
 } from "../validators.js";
 
@@ -11,8 +9,8 @@ import {
 //so since being used to update formErrors state, pass in a brand new
 //form Errors object
 const validateField = (formValues, formErrors, fieldName) => {
-  if (fieldName === "firstName") {
-    return validateFirstName(formValues, formErrors);
+  if (fieldName === "username") {
+    return validateUsername(formValues, formErrors);
   }
 
   if (fieldName === "lastName") {

@@ -1,8 +1,6 @@
 .Form {
   padding: 3rem;
-  margin-left: 20rem;
   background-color: var(--color-light);
-  max-width: 40rem;
   border: 2px solid rgba(var(--color-black), 0.1);
   color: var(--color-dark);
   position: relative;
@@ -18,7 +16,7 @@
   &__header {
     text-align: center;
     margin-bottom: 2.3rem;
-    color: var(--color-secondary);
+    color: var(--color-tertiary);
   }
   &__group {
     display: flex;
@@ -29,12 +27,26 @@
       margin-bottom: 4rem;
     }
   }
+  &__double-group {
+    display: flex;
+    margin-bottom: 2.7rem;
+    & > *:not(:first-child) {
+      margin-left: 4rem;
+    }
+
+    .Form__group {
+      &:last-of-type {
+        margin-bottom: 2.7rem;
+      }
+    }
+  }
   &__input {
     border: none;
     border-bottom: 2px solid transparent;
     color: var(--color-dark);
     font-size: 2rem;
     transition: border-bottom 200ms ease-in;
+    width: 100%;
     &--normal {
       border-bottom: 2px solid var(--color-tertiary);
     }
@@ -49,10 +61,12 @@
   }
   &__error {
     position: absolute;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     top: 100%;
     left: 0;
-    font-weight: bold;
     color: red;
+  }
+  &__link-text {
+    color: var(--color-tertiary);
   }
 }

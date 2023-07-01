@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 import TextInput from "../TextInput/TextInput.js";
-import { validateField, validateAllFields } from "./validator.js";
+import { validateField } from "./validator.js";
+import { validateAllFields } from "../validators.js";
 import AddContacts from "../../AddContacts/AddContacts.js";
+import "./CreateGroup.scss";
 import "../form.scss";
 
 const CreateGroup = ({ contacts }) => {
@@ -25,7 +27,7 @@ const CreateGroup = ({ contacts }) => {
       className="CreateGroup Form"
       onSubmit={(e) => {
         e.preventDefault();
-        validateAllFields(formValues, setFormErrors);
+        validateAllFields(validateField, formValues, setFormErrors);
       }}
     >
       <div className="Form__upper-style"></div>

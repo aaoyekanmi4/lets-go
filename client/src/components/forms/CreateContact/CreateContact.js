@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import TextInput from "../TextInput/TextInput.js";
 import { defaultCreateContactValues } from "../defaultValues.js";
-import { validateField, validateAllFields } from "./validator.js";
+import { validateField } from "./validator.js";
+import { validateAllFields } from "../validators.js";
+import "./CreateContact.scss";
 import "../form.scss";
 
 const CreateContact = () => {
@@ -21,7 +23,7 @@ const CreateContact = () => {
       className="CreateContact Form"
       onSubmit={(e) => {
         e.preventDefault();
-        validateAllFields(formValues, setFormErrors);
+        validateAllFields(validateField, formValues, setFormErrors);
       }}
     >
       <div className="Form__upper-style"></div>
