@@ -31,7 +31,6 @@ public class SecurityConfig {
         // the order of the antMatchers() method calls is important
         // as they're evaluated in the order that they're added
         http.authorizeRequests()
-                // new...
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/refresh_token").authenticated()
                 .antMatchers("/api/create_account").permitAll()
@@ -49,6 +48,10 @@ public class SecurityConfig {
                 .antMatchers("/api/group").authenticated()
                 .antMatchers("/api/group/*").authenticated()
                 .antMatchers("/api/group/*/*").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/venue").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/venue/*").permitAll()
+                .antMatchers( "/api/venue").authenticated()
+                .antMatchers( "/api/venue/*").authenticated()
                 .antMatchers("/api/event/*").permitAll()
                 // if we get to this point, let's deny all requests
                 .antMatchers("/**").denyAll()
