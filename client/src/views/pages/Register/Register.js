@@ -1,9 +1,10 @@
 import React from "react";
+import Header from "../../../components/Header/Header.js";
 
 const Register = () => {
   return (
     <div className="Register">
-      <p>Register</p>
+      <Header />
     </div>
   );
 };
