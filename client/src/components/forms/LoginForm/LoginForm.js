@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
+import { loginUser } from "../../../actions";
 import TextInput from "../TextInput/TextInput.js";
 import { defaultLoginValues } from "../defaultValues.js";
 import "./LoginForm.scss";
 import "../form.scss";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+
   const [formValues, setFormValues] = useState(defaultLoginValues);
 
   const [formErrors, setFormErrors] = useState({});
@@ -16,13 +20,13 @@ const LoginForm = () => {
     });
   };
 
+  const onFormSubmit = async (e) => {
+    e.preventDefault();
+    await dispatch(loginUser(formValues));
+  };
+
   return (
-    <form
-      className="LoginForm Form"
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
+    <form className="LoginForm Form" onSubmit={onFormSubmit}>
       <div className="Form__upper-style"></div>
       <h1 className="Form__header">Login</h1>
       <TextInput
@@ -34,6 +38,9 @@ const LoginForm = () => {
         onChange={(e) => {
           onInputChange("username", e.target.value);
         }}
+        onBlur={() => {
+          return;
+        }}
       />
       <TextInput
         type="text"
@@ -43,6 +50,9 @@ const LoginForm = () => {
         value={formValues.password}
         onChange={(e) => {
           onInputChange("password", e.target.value);
+        }}
+        onBlur={() => {
+          return;
         }}
       />
       <button className="button-main button-main--primary" type="submit">

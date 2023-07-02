@@ -10,6 +10,9 @@ import SavedEvents from "./views/pages/SavedEvents/SavedEvents.js";
 import UserAccount from "./views/pages/UserAccount/UserAccount.js";
 import EventResults from "./views/pages/EventResults/EventResults.js";
 
+import { loginUser } from "../src/actions/user.js";
+loginUser({ username: "eric@dev10.com", password: "P@ssw0rd!" })();
+
 const App = () => {
   return (
     <BrowserRouter>

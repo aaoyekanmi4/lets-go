@@ -13,7 +13,6 @@ const CreateGroup = ({ contacts }) => {
     contacts: [],
   });
 
-  console.log(formValues);
   const [formErrors, setFormErrors] = useState({});
 
   const onInputChange = (fieldName, fieldValue) => {
