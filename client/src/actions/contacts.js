@@ -24,9 +24,24 @@ const getContacts = () => {
         type: types.GET_CONTACTS,
         payload: response.data,
       });
+
+      dispatch(removeGetContactsErrors());
     } catch (e) {
-      console.log(e);
+      dispatch(sendGetContactsErrors());
     }
+  };
+};
+
+const sendGetContactsErrors = () => {
+  return {
+    type: types.SEND_GET_CONTACTS_ERRORS,
+    payload: ["We're having trouble finding your contacts. Try again later"],
+  };
+};
+
+const removeGetContactsErrors = () => {
+  return {
+    type: types.REMOVE_GET_CONTACTS_ERRORS,
   };
 };
 

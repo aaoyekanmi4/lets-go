@@ -109,6 +109,7 @@ const AddContacts = ({ data, onChange, error }) => {
         value={searchValue}
         onSearch={onSearch}
       />
+      <span className="AddContacts__error">{error}</span>
       <div className="AddContacts__view">{renderedSelected}</div>
       <div className="AddContacts__suggestions">
         <p className="AddContacts__detail-text">
@@ -116,7 +117,6 @@ const AddContacts = ({ data, onChange, error }) => {
         </p>
         {renderedSuggested}
       </div>
-      <span className="AddContacts__error">{error}</span>
     </div>
   );
 };

@@ -54,14 +54,6 @@ const Header = () => {
                 className="button-text button-text--secondary"
                 to="/contacts"
               >
-                My Account
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="button-text button-text--secondary"
-                to="/contacts"
-              >
                 My Events
               </Link>
             </li>
@@ -150,12 +142,6 @@ const Header = () => {
             </li>
             <li>
               <TextButtonDropdown buttonName="My Personals">
-                <Link
-                  className="button-text button-text--primary"
-                  to="/contacts"
-                >
-                  My Account
-                </Link>
                 <Link
                   className="button-text button-text--primary"
                   to="/contacts"
