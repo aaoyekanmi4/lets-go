@@ -35,12 +35,6 @@ const createUser = (userData) => {
   };
 };
 
-const logoutUser = () => {
-  return {
-    type: types.LOGOUT_USER,
-  };
-};
-
 const loginUser = (loginData) => {
   return async (dispatch) => {
     try {
@@ -65,6 +59,12 @@ const loginUser = (loginData) => {
     } catch (e) {
       console.log(e);
     }
+  };
+};
+
+const logoutUser = () => {
+  return {
+    type: types.LOGOUT_USER,
   };
 };
 
