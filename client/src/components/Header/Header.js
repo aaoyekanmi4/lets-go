@@ -1,19 +1,31 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
 import Logo from "../Logo/Logo.js";
 import TextButtonDropdown from "../TextButtonDropdown/TextButtonDropdown.js";
 import SearchField from "../SearchField/SearchField.js";
+import { logoutUser } from "../../actions";
 import useWindowSize from "../../hooks/useWindowSize.js";
 import "./Header.scss";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => {
+    return state.user;
+  });
+
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const windowSize = useWindowSize();
 
-  const getMobileMenu = () => {
+  const onSignOut = () => {
+    dispatch(logoutUser());
+  };
+
+  const getMobileMenuLoggedIn = () => {
     return (
       <>
         <nav className="Header__mobile-nav">
@@ -70,11 +82,46 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link
+              <button
                 className="button-text button-text--secondary"
-                to="/contacts"
+                onClick={onSignOut}
               >
                 Sign Out
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </>
+    );
+  };
+
+  const getMobileMenuLoggedOut = () => {
+    return (
+      <>
+        <nav className="Header__mobile-nav">
+          <button
+            className="Header__mobile-button"
+            onClick={() => {
+              setShowMobileMenu(!showMobileMenu);
+            }}
+          >
+            <span className="Header__hamburger"></span>
+          </button>
+          <ul
+            className={`Header__mobile-links ${
+              showMobileMenu
+                ? "Header__mobile-links--on-screen"
+                : "Header__mobile-links--off-screen"
+            }`}
+          >
+            <li>
+              <div className="Header__search-container-mobile">
+                <SearchField placeholder="Search Events..." />
+              </div>
+            </li>
+            <li>
+              <Link className="button-text button-text--secondary" to="/login">
+                Sign In
               </Link>
             </li>
           </ul>
@@ -83,7 +130,15 @@ const Header = () => {
     );
   };
 
-  const getFullMenu = () => {
+  const getMobileMenu = () => {
+    if (user) {
+      return getMobileMenuLoggedIn();
+    }
+
+    return getMobileMenuLoggedOut();
+  };
+
+  const getFullMenuLoggedIn = () => {
     return (
       <>
         <nav className="Header__nav">
@@ -122,17 +177,47 @@ const Header = () => {
               </TextButtonDropdown>
             </li>
             <li className="Header__link">
-              <Link
+              <button
                 className="button-outline button-outline--primary"
-                to="/contacts"
+                onClick={onSignOut}
               >
                 Sign Out
-              </Link>
+              </button>
             </li>
           </ul>
         </nav>
       </>
     );
+  };
+
+  const getFullMenuLoggedOut = () => {
+    return (
+      <nav className="Header__nav">
+        <ul className="Header__links">
+          <li>
+            <div className="Header__search-container-full">
+              <SearchField placeholder="Search Events..." />
+            </div>
+          </li>
+          <li>
+            <Link
+              className="button-outline button-outline--primary"
+              to="/login"
+            >
+              Sign In
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    );
+  };
+
+  const getFullMenu = () => {
+    if (user) {
+      return getFullMenuLoggedIn();
+    }
+
+    return getFullMenuLoggedOut();
   };
 
   return (

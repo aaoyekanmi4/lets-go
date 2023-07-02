@@ -20,7 +20,7 @@ const createUser = (userData) => {
           },
         }
       );
-
+      console.log("finished creating user");
       const jwtToken = response.data.jwt_token;
 
       dispatch({
@@ -28,9 +28,10 @@ const createUser = (userData) => {
         payload: makeUserFromJwt(jwtToken),
       });
 
+      dispatch(clearBackendRegisterErrors());
+
       dispatch(setRefreshTokenTimer());
     } catch (e) {
-      console.log(e);
       if (e.response.status === 403) {
         dispatch(
           sendBackendRegisterErrors(["You don't have access to this resource"])
@@ -44,6 +45,12 @@ const sendBackendRegisterErrors = (errorsArray) => {
   return {
     type: types.SEND_BACKEND_REGISTER_ERRORS,
     payload: errorsArray,
+  };
+};
+
+const clearBackendRegisterErrors = () => {
+  return {
+    type: types.CLEAR_BACKEND_REGISTER_ERRORS,
   };
 };
 
@@ -67,10 +74,27 @@ const loginUser = (loginData) => {
         payload: makeUserFromJwt(jwtToken),
       });
 
+      dispatch(clearBackendLoginErrors());
+
       dispatch(setRefreshTokenTimer());
     } catch (e) {
-      console.log(e);
+      if (e.response.status === 403) {
+        dispatch(sendBackendLoginErrors(["Incorrect username or password"]));
+      } else dispatch(sendBackendLoginErrors(e.response.data));
     }
+  };
+};
+
+const sendBackendLoginErrors = (errorsArray) => {
+  return {
+    type: types.SEND_BACKEND_LOGIN_ERRORS,
+    payload: errorsArray,
+  };
+};
+
+const clearBackendLoginErrors = () => {
+  return {
+    type: types.CLEAR_BACKEND_LOGIN_ERRORS,
   };
 };
 
@@ -154,4 +178,10 @@ const makeUserFromJwt = (jwtToken) => {
   };
 };
 
-export { loginUser, createUser, logoutUser };
+export {
+  loginUser,
+  createUser,
+  logoutUser,
+  clearBackendRegisterErrors,
+  clearBackendLoginErrors,
+};

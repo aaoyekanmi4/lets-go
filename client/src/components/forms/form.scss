@@ -25,6 +25,9 @@
     font-size: 1.9rem;
     margin-bottom: 1.5rem;
   }
+  &__backend-error:not(:last-child) {
+    margin-bottom: 0.4rem;
+  }
   &__group {
     display: flex;
     flex-direction: column;

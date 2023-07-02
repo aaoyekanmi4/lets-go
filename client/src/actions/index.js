@@ -1,3 +1,15 @@
-import { loginUser, createUser, logoutUser } from "./user.js";
+import {
+  loginUser,
+  createUser,
+  logoutUser,
+  clearBackendRegisterErrors,
+  clearBackendLoginErrors,
+} from "./user.js";
 
-export { loginUser, createUser, logoutUser };
+export {
+  loginUser,
+  createUser,
+  logoutUser,
+  clearBackendRegisterErrors,
+  clearBackendLoginErrors,
+};

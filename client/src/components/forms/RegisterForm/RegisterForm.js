@@ -5,12 +5,13 @@ import TextInput from "../TextInput/TextInput.js";
 import { defaultRegisterValues } from "../defaultValues.js";
 import { validateField } from "./validator.js";
 import { validateAllFields } from "../validators.js";
-import { createUser } from "../../../actions";
+import { createUser, clearBackendRegisterErrors } from "../../../actions";
 import ErrorsContainer from "../ErrorsContainer/ErrorsContainer.js";
 import "./RegisterForm.scss";
 import "../form.scss";
 
 const RegisterForm = () => {
+  console.log("dssss");
   const dispatch = useDispatch();
 
   const backendErrors = useSelector((state) => {
@@ -31,7 +32,6 @@ const RegisterForm = () => {
     }
 
     if (Object.values(formErrors).length) {
-      //setBackendErrors([]);
       setIsFrontendValidated(false);
       return;
     }
@@ -53,6 +53,8 @@ const RegisterForm = () => {
     validateAllFields(validateField, formValues, setFormErrors);
 
     setIsFrontendValidated(true);
+
+    dispatch(clearBackendRegisterErrors());
   };
 
   return (

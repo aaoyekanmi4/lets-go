@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import Header from "../../../components/Header/Header.js";
 import EventCard from "../../../components/EventCard/EventCard.js";
 import ContactCard from "../../../components/ContactCard/ContactCard.js";
@@ -26,6 +26,7 @@ const Home = () => {
         email="ericdoes13@gmail.com"
         phone="6788022654"
       />
+      <Link to="/login">Login</Link>
       <GroupCard groupName="The Ballers we call" />
       <CreateContact />
       <CreateGroup

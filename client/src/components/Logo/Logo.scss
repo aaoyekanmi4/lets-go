@@ -1,5 +1,8 @@
 .Logo {
-  display: flex;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 1.5rem;
+  display: inline-flex;
   align-items: center;
   &__icon {
     margin-left: 0.4rem;

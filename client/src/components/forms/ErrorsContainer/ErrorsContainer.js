@@ -6,7 +6,7 @@ const ErrorsContainer = ({ errorsArray }) => {
   }
 
   const errorsList = errorsArray.map((error, index) => {
-    return <p className="" key={index}>{`o ${error}`}</p>;
+    return <p className="Form__backend-error" key={index}>{`o ${error}`}</p>;
   });
 
   return <div className="Form__backend-errors">{errorsList}</div>;

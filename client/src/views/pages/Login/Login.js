@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import Logo from "../../../components/Logo/Logo.js";
 import Header from "../../../components/Header/Header.js";
 import LoginForm from "../../../components/forms/LoginForm/LoginForm.js";
 import "./Login.scss";

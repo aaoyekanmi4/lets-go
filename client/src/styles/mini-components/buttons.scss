@@ -3,7 +3,8 @@
   text-decoration: none;
   padding: 1rem 1.5rem;
   font-size: var(--fs-400);
-
+  background-color: transparent;
+  cursor: pointer;
   &--primary {
     color: var(--color-tertiary);
     border: 2px solid var(--color-tertiary);
