@@ -5,7 +5,6 @@ import java.util.List;
 
 public class EmailMessage {
 
-    private String subject;
     private List<String> recipients = new ArrayList<>();
     private SavedEvent savedEvent;
     private String eventDetailUrl;
@@ -21,20 +20,12 @@ public class EmailMessage {
         this.savedEvent = savedEvent;
     }
 
-    public String getClientEventDetailURL() {
+    public String getEventDetailUrl() {
         return eventDetailUrl;
     }
 
-    public void setClientEventDetailURL(String eventDetailUrl) {
+    public void setEventDetailURL(String eventDetailUrl) {
         this.eventDetailUrl = eventDetailUrl;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
     }
 
     public List<String> getRecipients() {

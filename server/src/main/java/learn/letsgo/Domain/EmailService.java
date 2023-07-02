@@ -1,26 +1,109 @@
 package learn.letsgo.Domain;
+
+import learn.letsgo.Data.AppUserRepository;
+import learn.letsgo.Models.AppUser;
+import learn.letsgo.Models.EmailMessage;
+import learn.letsgo.Models.Event;
+import learn.letsgo.Models.Venue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class EmailService {
+
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendEmail(List<String> recipients, String subject, String body) {
-        String[] to = new String[recipients.size()];
-        recipients.toArray(to);
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject(subject);
-        //TODO helper function to make body with event params
-        message.setText(body);
+    private final AppUserRepository userRepository;
 
-        mailSender.send(message);
+    private static final String DATE_TIME_FORMATTER = "EEE • MMM dd • hh:mm";
+
+    public EmailService(AppUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public void sendEmail(EmailMessage emailMessage) throws MessagingException {
+
+        String templateStr = readFile("./email_templates/inviteTemplate.html");
+
+        Event event = emailMessage.getSavedEvent().getEvent();
+
+        int appUserId = emailMessage.getSavedEvent().getAppUserId();
+
+        String imageUrl = event.getImageUrl();
+
+        String eventTitle = event.getEventName();
+
+        String formattedDateTime = formatDateTime(event.getDateTime());
+
+        String venueName = event.getVenue().getVenueName();
+
+        String formattedFullAddress = formatFullAddress(event.getVenue());
+
+        String userFullName = getUserFullName(appUserId);
+
+        String eventDetailUrl = emailMessage.getEventDetailUrl();
+        System.out.println(eventDetailUrl);
+
+        String body = String.format(templateStr, imageUrl, eventTitle, formattedDateTime,
+                venueName, formattedFullAddress, userFullName, eventDetailUrl);
+
+
+        String[] to = new String[emailMessage.getRecipients().size()];
+        emailMessage.getRecipients().toArray(to);
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+
+            message.setSubject(String.format("A friend is inviting you to: %s", eventTitle));
+            MimeMessageHelper helper;
+            helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setText(body, true);
+
+            mailSender.send(message);
+        } catch (MessagingException ex) {
+            Logger.getLogger(EmailService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private String readFile(String pathName) {
+        String emailTemplate = "";
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathName))) {
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+                emailTemplate += line;
+            }
+        } catch (IOException ex) {
+            // will skip and empty String will be returned instead
+        }
+        return emailTemplate;
+    }
+
+    private String formatDateTime(LocalDateTime eventDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER);
+        String formattedDateTime = eventDate.format(formatter);
+        return formattedDateTime;
+    }
+
+    private String formatFullAddress(Venue venue) {
+        return String.format("%s, %s, %s %s", venue.getAddress(), venue.getCity(),
+                venue.getState(), venue.getZipCode());
+    }
+
+    private String getUserFullName(int appUserId) {
+        AppUser user = userRepository.findById(appUserId);
+        return user.getFirstName() + " " + user.getLastName();
     }
 }
