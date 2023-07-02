@@ -49,6 +49,7 @@ public class AppUserService implements UserDetailsService {
             appUser = repository.create(appUser);
             result.setPayload(appUser);
         } catch (DuplicateKeyException e) {
+            e.getMessage();
             result.addMessage(ResultType.INVALID, "The provided username already exists");
         }
 
