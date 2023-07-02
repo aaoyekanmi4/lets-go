@@ -2,7 +2,6 @@ package learn.letsgo.Domain;
 
 import learn.letsgo.Data.ContactRepository;
 import learn.letsgo.Models.Contact;
-import learn.letsgo.Models.Group;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,14 +68,14 @@ public class ContactService {
             return result;
         }
 
-        if (Validations.isNullOrBlank(contact.getEmail())) {
+        if (Helpers.isNullOrBlank(contact.getEmail())) {
             result.addMessage(ResultType.INVALID, "Email is required");
         }
-        if (Validations.isNullOrBlank(contact.getFirstName())
-                || Validations.isNullOrBlank(contact.getLastName())) {
+        if (Helpers.isNullOrBlank(contact.getFirstName())
+                || Helpers.isNullOrBlank(contact.getLastName())) {
             result.addMessage(ResultType.INVALID, "First and last name are required");
         }
-        if (Validations.isNullOrBlank(contact.getPhone())) {
+        if (Helpers.isNullOrBlank(contact.getPhone())) {
             result.addMessage(ResultType.INVALID, "Phone number is required");
         }
 

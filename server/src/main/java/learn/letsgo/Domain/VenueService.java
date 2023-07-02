@@ -28,7 +28,7 @@ public class VenueService {
         if (!result.isSuccess()) {
             return result;
         }
-        Venue existingVenue = Validations.findVenueIfExists(venue, venueRepository);
+        Venue existingVenue = Helpers.findVenueIfExists(venue, venueRepository);
         if (existingVenue != null) {
             result.setPayload(existingVenue);
             return result;
@@ -58,13 +58,13 @@ public class VenueService {
             result.addMessage(ResultType.INVALID, "Venue cannot be null");
             return result;
         }
-        if (Validations.isNullOrBlank(venue.getAddress())) {
+        if (Helpers.isNullOrBlank(venue.getAddress())) {
             result.addMessage(ResultType.INVALID, "Address is required");
         }
-        if (Validations.isNullOrBlank(venue.getCity())) {
+        if (Helpers.isNullOrBlank(venue.getCity())) {
             result.addMessage(ResultType.INVALID, "City is required");
         }
-        if (Validations.isNullOrBlank(venue.getVenueName())) {
+        if (Helpers.isNullOrBlank(venue.getVenueName())) {
             result.addMessage(ResultType.INVALID, "Venue name is required");
         }
         if (venue.getZipCode() == 0) {

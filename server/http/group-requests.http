@@ -91,7 +91,7 @@ Authorization:Bearer {{token}}
 // RETURNS: void
 // PATH: /:groupId
 // ACCESS: AUTH
-
+// POST BODY: array of ContactIds
 POST {{url}}/5
 Content-Type: application/json
 Authorization:Bearer {{token}}

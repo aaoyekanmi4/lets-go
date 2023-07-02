@@ -112,7 +112,7 @@ public class GroupService {
             return result;
         }
 
-        if (Validations.isNullOrBlank(group.getName())) {
+        if (Helpers.isNullOrBlank(group.getName())) {
             result.addMessage(ResultType.INVALID, "Name is required");
         }
         return result;

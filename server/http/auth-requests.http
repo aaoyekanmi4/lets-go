@@ -1,5 +1,10 @@
 @url=http://localhost:8080/api
 
+POST {{url}}/message/sendEmail
+Content-Type: application/json
+
+
+###
 // FUNCTION: authenticateUser
 // RETURNS: JWT token
 // PATH: /authenticate
@@ -9,7 +14,7 @@ POST {{url}}/authenticate HTTP/1.1
 Content-Type: application/json
 
 {
-  "username":"eric@dev10.com",
+  "username":"arit@dev10.com",
   "password":"P@ssw0rd!"
 }
 
