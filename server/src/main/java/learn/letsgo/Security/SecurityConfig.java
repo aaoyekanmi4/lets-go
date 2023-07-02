@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/refresh_token").authenticated()
                 .antMatchers("/api/create_account").permitAll()
-                .antMatchers("/api/message/*").permitAll()
+                .antMatchers("/api/message/*").authenticated()
                 .antMatchers(HttpMethod.GET,"/api/event-post/post/*").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/event-post/*").permitAll()
                 .antMatchers("/api/event-post").authenticated()
