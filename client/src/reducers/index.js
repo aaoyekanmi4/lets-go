@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
 
-import User from "./User.js";
+import user from "./user.js";
+import backendRegisterErrors from "./backendRegisterErrors.js";
 
 export default combineReducers({
-  user: User,
+  user,
+  backendRegisterErrors,
 });

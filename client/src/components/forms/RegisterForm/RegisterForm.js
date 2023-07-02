@@ -1,16 +1,45 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import TextInput from "../TextInput/TextInput.js";
 import { defaultRegisterValues } from "../defaultValues.js";
 import { validateField } from "./validator.js";
 import { validateAllFields } from "../validators.js";
+import { createUser } from "../../../actions";
+import ErrorsContainer from "../ErrorsContainer/ErrorsContainer.js";
 import "./RegisterForm.scss";
 import "../form.scss";
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
+
+  const backendErrors = useSelector((state) => {
+    return state.backendRegisterErrors || [];
+  });
+
   const [formValues, setFormValues] = useState(defaultRegisterValues);
 
   const [formErrors, setFormErrors] = useState({});
+
+  const [isFrontendValidated, setIsFrontendValidated] = useState(false);
+
+  //sends form data to backend if frontend has been validated and
+  // there are no errors with user inputted data
+  useEffect(() => {
+    if (!isFrontendValidated) {
+      return;
+    }
+
+    if (Object.values(formErrors).length) {
+      //setBackendErrors([]);
+      setIsFrontendValidated(false);
+      return;
+    }
+
+    setIsFrontendValidated(false);
+
+    dispatch(createUser(formValues));
+  }, [isFrontendValidated]);
 
   const onInputChange = (fieldName, fieldValue) => {
     setFormValues((prevState) => {
@@ -18,16 +47,19 @@ const RegisterForm = () => {
     });
   };
 
+  const runFrontendValidation = (e) => {
+    e.preventDefault();
+
+    validateAllFields(validateField, formValues, setFormErrors);
+
+    setIsFrontendValidated(true);
+  };
+
   return (
-    <form
-      className="RegisterForm Form"
-      onSubmit={(e) => {
-        e.preventDefault();
-        validateAllFields(validateField, formValues, setFormErrors);
-      }}
-    >
+    <form className="RegisterForm Form" onSubmit={runFrontendValidation}>
       <div className="Form__upper-style"></div>
       <h1 className="Form__header">Register</h1>
+      <ErrorsContainer errorsArray={backendErrors} />
       <div className="Form__double-group">
         <TextInput
           type="text"

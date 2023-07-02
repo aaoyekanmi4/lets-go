@@ -31,7 +31,19 @@ const createUser = (userData) => {
       dispatch(setRefreshTokenTimer());
     } catch (e) {
       console.log(e);
+      if (e.response.status === 403) {
+        dispatch(
+          sendBackendRegisterErrors(["You don't have access to this resource"])
+        );
+      } else dispatch(sendBackendRegisterErrors(e.response.data));
     }
+  };
+};
+
+const sendBackendRegisterErrors = (errorsArray) => {
+  return {
+    type: types.SEND_BACKEND_REGISTER_ERRORS,
+    payload: errorsArray,
   };
 };
 
