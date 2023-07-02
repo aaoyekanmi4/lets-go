@@ -4,7 +4,7 @@ import { ImCheckmark } from "react-icons/im";
 import SearchField from "../SearchField/SearchField.js";
 import "./AddContacts.scss";
 
-const AddContacts = ({ data, onChange }) => {
+const AddContacts = ({ data, onChange, error }) => {
   const [allContacts, setAllContacts] = useState(data);
 
   const [suggestedContacts, setSuggestedContacts] = useState(
@@ -104,6 +104,7 @@ const AddContacts = ({ data, onChange }) => {
         </p>
         {renderedSuggested}
       </div>
+      <span className="AddContacts__error">{error}</span>
     </div>
   );
 };

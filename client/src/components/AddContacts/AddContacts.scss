@@ -1,4 +1,5 @@
 .AddContacts {
+  position: relative;
   &__view {
     width: 100%;
     display: flex;
@@ -60,8 +61,15 @@
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
   }
-}
+  &__error {
+    color: red;
+    position: absolute;
+    left: 0;
+    top: 94%;
+    font-size: 1.5rem;
+  }
 
-.AddContacts__circle:hover {
-  border: 1px solid #3944bc;
+  .AddContacts__circle:hover {
+    border: 1px solid #3944bc;
+  }
 }

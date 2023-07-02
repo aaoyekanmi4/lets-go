@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import TextInput from "../TextInput/TextInput.js";
+import ErrorsContainer from "../ErrorsContainer/ErrorsContainer.js";
 import { validateField } from "./validator.js";
 import { validateAllFields } from "../validators.js";
 import AddContacts from "../../AddContacts/AddContacts.js";
@@ -11,11 +12,11 @@ import "./CreateGroupForm.scss";
 import "../form.scss";
 
 const CreateGroupForm = ({ contacts }) => {
+  const navigate = useNavigate();
+
   const user = useSelector((state) => {
     return state.user;
   });
-
-  const navigate = useNavigate();
 
   const [formValues, setFormValues] = useState({
     name: "",
@@ -28,6 +29,7 @@ const CreateGroupForm = ({ contacts }) => {
 
   const [backendErrors, setBackendErrors] = useState([]);
 
+  console.log(backendErrors);
   useEffect(() => {
     const run = async () => {
       if (!isFrontendValidated) {
@@ -42,7 +44,8 @@ const CreateGroupForm = ({ contacts }) => {
       setIsFrontendValidated(false);
 
       const response = await createGroup(
-        { ...formValues, appUserId: user.appUserId },
+        { name: formValues.name, appUserId: user.appUserId },
+        formValues.contacts,
         user.jwtToken
       );
 
@@ -71,14 +74,10 @@ const CreateGroupForm = ({ contacts }) => {
   };
 
   return (
-    <form
-      className="CreateGroupForm Form"
-      onSubmit={(e) => {
-        runFrontendValidation();
-      }}
-    >
+    <form className="CreateGroupForm Form" onSubmit={runFrontendValidation}>
       <div className="Form__upper-style"></div>
       <h1 className="Form__header">Create Group</h1>
+      <ErrorsContainer errorsArray={backendErrors} />
       <TextInput
         type="text"
         id="group-name"
@@ -95,7 +94,11 @@ const CreateGroupForm = ({ contacts }) => {
         error={formErrors.name}
       />
 
-      <AddContacts data={contacts} onChange={onInputChange} />
+      <AddContacts
+        data={contacts}
+        error={formErrors.contacts}
+        onChange={onInputChange}
+      />
 
       <button className="button-main button-main--primary" type="submit">
         Submit
