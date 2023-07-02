@@ -29,10 +29,10 @@ POST {{url}}/create_account HTTP/1.1
 Content-Type: application/json
 
 {
-  "username":"fredo@dev10.com",
+  "username":"bluto@dev10.com",
   "password":"P@ssw0rd!",
-  "email": "fredo@dev10.com",
-  "phone":"4434433222",
+  "email": "bluto@dev10.com",
+  "phone":"44349433222",
   "firstName": "Fredo",
   "lastName":"Marisco"
 }

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -49,8 +50,13 @@ public class AppUserService implements UserDetailsService {
             appUser = repository.create(appUser);
             result.setPayload(appUser);
         } catch (DuplicateKeyException e) {
-            e.getMessage();
-            result.addMessage(ResultType.INVALID, "The provided username already exists");
+            String errorMsg = e.getMessage();
+            String[] parts = errorMsg.split(" ");
+            String end = parts[parts.length -1].split("\\.")[1];
+            String field  = end.substring(0, end.length()-1);
+            field = field.equals("phone") ? "phone number" : field;
+
+            result.addMessage(ResultType.INVALID, String.format("The %s entered is taken by another user.", field));
         }
 
         return result;
