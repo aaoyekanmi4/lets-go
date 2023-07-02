@@ -12,7 +12,22 @@ import EventResults from "./views/pages/EventResults/EventResults.js";
 
 import { loginUser } from "../src/actions/user.js";
 loginUser({ username: "eric@dev10.com", password: "P@ssw0rd!" })();
+const goo = () => {
+  let dog = 0;
+  let intervalId;
+  intervalId = setInterval(() => {
+    dog++;
+    if (dog === 4) {
+      clearInterval(intervalId);
+    }
+    console.log(dog);
+  }, 5000);
 
+  console.log(dog);
+};
+
+goo();
+setInterval(() => {});
 const App = () => {
   return (
     <BrowserRouter>

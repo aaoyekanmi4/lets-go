@@ -1,3 +1,3 @@
-import { loginUser, createUser } from "./user.js";
+import { loginUser, createUser, logoutUser } from "./user.js";
 
-export { loginUser, createUser };
+export { loginUser, createUser, logoutUser };
