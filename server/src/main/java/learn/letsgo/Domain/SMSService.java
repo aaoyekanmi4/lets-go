@@ -13,14 +13,42 @@ public class SMSService {
         this.userRepository = userRepository;
     }
 
-    public String createTextBody(SMSMessage message) {
+    public Result<String> createTextBody(SMSMessage message) {
+        Result<String> result = validate(message);
+        if (!result.isSuccess()) {
+            return result;
+        }
         int appUserId = message.getSavedEvent().getAppUserId();
         String userFullName = Helpers.getUserFullName(userRepository, appUserId);
+        if (Helpers.isNullOrBlank(userFullName)) {
+            result.addMessage(ResultType.NOT_FOUND, "User not found.");
+            return result;
+        }
         String eventName = message.getSavedEvent().getEvent().getEventName();
         String eventDetailUrl = message.getEventDetailUrl();
         String body = String.format("Let's Go! \uD83C\uDF9F️: %s wants to go to \'%s\' with you.\n"
                 + " Check out the link below for more details.\n"
                 + " %s", userFullName, eventName, eventDetailUrl);
-        return body;
+        result.setPayload(body);
+        return result;
+    }
+
+    private Result<String> validate(SMSMessage message) {
+        Result<String> result = new Result<>();
+        if (message == null) {
+            result.addMessage(ResultType.INVALID, "Message cannot not be null");
+            return result;
+        }
+        if (message.getSavedEvent().getAppUserId() == 0) {
+            result.addMessage(ResultType.INVALID, "Message must contain a valid user id");
+        }
+        if (Helpers.isNullOrBlank(message.getSavedEvent().getEvent().getEventName())) {
+            result.addMessage(ResultType.INVALID, "Event name is required");
+        }
+
+        if (Helpers.isNullOrBlank(message.getEventDetailUrl())) {
+            result.addMessage(ResultType.INVALID, "Link to event in app is required");
+        }
+        return result;
     }
 }

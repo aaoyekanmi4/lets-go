@@ -36,8 +36,11 @@ public class EmailService {
         this.userRepository = userRepository;
     }
 
-    public void sendEmail(EmailMessage emailMessage) {
-
+    public Result<Void> sendEmail(EmailMessage emailMessage) {
+        Result<Void> result = validate(emailMessage);
+        if (!result.isSuccess()) {
+            return result;
+        }
         String templateStr = readFile("./email_templates/inviteTemplate.html");
 
         Event event = emailMessage.getSavedEvent().getEvent();
@@ -55,6 +58,10 @@ public class EmailService {
         String formattedFullAddress = formatFullAddress(event.getVenue());
 
         String userFullName = Helpers.getUserFullName(userRepository, appUserId);
+        if (Helpers.isNullOrBlank(userFullName)) {
+            result.addMessage(ResultType.NOT_FOUND, "User not found.");
+            return result;
+        }
 
         String eventDetailUrl = emailMessage.getEventDetailUrl();
         System.out.println(eventDetailUrl);
@@ -77,6 +84,7 @@ public class EmailService {
         } catch (MessagingException ex) {
             Logger.getLogger(EmailService.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return result;
     }
 
     private String readFile(String pathName) {
@@ -106,5 +114,23 @@ public class EmailService {
         String[] to = new String[recipients.size()];
         recipients.toArray(to);
         return to;
+    }
+
+    private Result<Void> validate(EmailMessage emailMessage) {
+        Result<Void> result = new Result<>();
+        if (emailMessage == null) {
+            result.addMessage(ResultType.INVALID, "Message cannot be null");
+            return result;
+        }
+        if (emailMessage.getSavedEvent() == null) {
+            result.addMessage(ResultType.INVALID, "Event for message cannot be null");
+        }
+        if (Helpers.isNullOrBlank(emailMessage.getEventDetailUrl())) {
+            result.addMessage(ResultType.INVALID, "Link to app saved event cannot be null");
+        }
+        if (emailMessage.getRecipients() == null || emailMessage.getRecipients().size() == 0) {
+            result.addMessage(ResultType.INVALID, "Recipients are required");
+        }
+        return result;
     }
 }

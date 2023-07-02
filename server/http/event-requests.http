@@ -1,5 +1,5 @@
 @url=http://localhost:8080/api/event
-@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MzE0ODI3fQ.Pi8pF9aQobrB9CsCdFjXoQk3V_2M_8jQrGQen8ws4Us
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MzI0MTgyfQ.RpJ67YEZqOcC3N2C5JrYakYdoF7NuxXzmvoBzCEZWNg
 
 // FUNCTION: findEventById
 // RETURNS: an Event
@@ -15,7 +15,7 @@ GET {{url}}/1
 // PATH: /user/:appUserId
 // ACCESS: AUTH
 
-GET {{url}}/user/1 HTTP/1.1
+GET {{url}}/user/3 HTTP/1.1
 Authorization:Bearer {{token}}
 
 ###
@@ -25,7 +25,7 @@ Authorization:Bearer {{token}}
 // PATH: /user/:eventId/:appUserId
 // ACCESS: AUTH
 
-GET {{url}}/user/3/1 HTTP/1.1
+GET {{url}}/user/4/3 HTTP/1.1
 Authorization:Bearer {{token}}
 
 ###
@@ -38,12 +38,13 @@ Authorization:Bearer {{token}}
 GET {{url}}/saved/3
 Authorization:Bearer {{token}}
 
+###
 // FUNCTION: saveEventForUser
 // RETURNS: an Event
 // PATH: /user/:appUserId
 // ACCESS: AUTH
 
-POST {{url}}/user/1
+POST {{url}}/user/3
 Content-Type: application/json
 Authorization:Bearer {{token}}
 

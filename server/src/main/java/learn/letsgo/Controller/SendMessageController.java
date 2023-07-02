@@ -4,6 +4,7 @@ import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import learn.letsgo.Domain.EmailService;
+import learn.letsgo.Domain.Result;
 import learn.letsgo.Domain.SMSService;
 import learn.letsgo.Models.EmailMessage;
 import learn.letsgo.Models.SMSMessage;
@@ -35,19 +36,25 @@ public class SendMessageController {
     }
 
     @PostMapping("/sendSMS")
-    public ResponseEntity<String> sendSMS(@RequestBody SMSMessage message) {
+    public ResponseEntity<?> sendSMS(@RequestBody SMSMessage message) {
 
         Twilio.init(twilioAccountSid, twilioAuthToken);
-        String body = smsService.createTextBody(message);
-        Message.creator(new PhoneNumber(message.getRecipient()),
-                new PhoneNumber(twilioPhoneFrom), body).create();
+        Result<String> result = smsService.createTextBody(message);
+        if (result.isSuccess()) {
+            Message.creator(new PhoneNumber(message.getRecipient()),
+                    new PhoneNumber(twilioPhoneFrom), result.getPayload()).create();
 
-        return new ResponseEntity<String>("Message sent successfully", HttpStatus.OK);
+            return new ResponseEntity<>("Message sent successfully", HttpStatus.OK);
+        }
+        return ErrorResponse.build(result);
     }
 
     @PostMapping("/sendEmail")
-    public ResponseEntity<String> sendEmail(@RequestBody EmailMessage emailMsg) {
-        emailService.sendEmail(emailMsg);
-        return new ResponseEntity<String>("Message sent successfully", HttpStatus.OK);
+    public ResponseEntity<?> sendEmail(@RequestBody EmailMessage emailMsg) {
+        Result<Void> result = emailService.sendEmail(emailMsg);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>("Message sent successfully", HttpStatus.OK);
+        }
+        return ErrorResponse.build(result);
     }
 }
