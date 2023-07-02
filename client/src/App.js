@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "./views/pages/Home/Home.js";
@@ -11,11 +11,20 @@ import Groups from "./views/pages/Groups/Groups.js";
 import CreateGroup from "./views/pages/CreateGroup/CreateGroup.js";
 import SavedEvents from "./views/pages/SavedEvents/SavedEvents.js";
 import EventResults from "./views/pages/EventResults/EventResults.js";
+import { getContacts } from "./actions";
 
 const App = () => {
+  const dispatch = useDispatch();
+
   const user = useSelector((state) => {
     return state.user;
   });
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getContacts());
+    }
+  }, [user]);
 
   return (
     <BrowserRouter>

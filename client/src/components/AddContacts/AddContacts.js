@@ -34,44 +34,54 @@ const AddContacts = ({ data, onChange, error }) => {
   //update the suggested contacts so we can render them
   const onSearch = () => {
     const suggestedContacts = allContacts.filter((contact) => {
-      return contact.toLowerCase().includes(searchValue.toLowerCase());
+      const contactName = `${contact.firstName} ${contact.lastName}`;
+
+      return contactName.toLowerCase().includes(searchValue.toLowerCase());
     });
 
     setSuggestedContacts(suggestedContacts);
   };
 
-  const renderedSuggested = suggestedContacts.map((contact, index) => {
+  const isContactSelected = (contactId) => {
+    return selectedContacts.some((contact) => {
+      return contact.contactId === contactId;
+    });
+  };
+
+  const renderedSuggested = suggestedContacts.map((contact) => {
+    const { contactId, firstName, lastName } = contact;
+
     return (
-      <div className="AddContacts__result" key={index}>
+      <div className="AddContacts__result" key={contactId}>
         <div className="AddContacts__pic-name">
           <input
             className="AddContacts__checkbox"
             type="checkbox"
             name="contact"
-            id={index}
+            id={contactId}
             value={contact}
-            checked={selectedContacts.includes(contact)}
+            checked={isContactSelected(contactId)}
             onChange={(e) => {
               if (e.target.checked) {
-                setSelectedContacts([...selectedContacts, e.target.value]);
+                setSelectedContacts([...selectedContacts, contact]);
               } else {
                 setSelectedContacts(
                   selectedContacts.filter((contact) => {
-                    return contact != e.target.value;
+                    return contact.contactId != contactId;
                   })
                 );
               }
             }}
           />
-          {contact}
+          {`${firstName} ${lastName}`}
         </div>
         <label
           className={`AddContacts__circle ${
-            selectedContacts.includes(contact)
+            isContactSelected(contactId)
               ? "AddContacts__circle--selected"
               : null
           }`}
-          htmlFor={index}
+          htmlFor={contactId}
         >
           <ImCheckmark className="AddContacts__icon" />
         </label>
@@ -82,8 +92,10 @@ const AddContacts = ({ data, onChange, error }) => {
   const renderedSelected = selectedContacts.map((contact, index) => {
     return (
       <div className="AddContacts__selected" key={index}>
-        <p className="AddContacts__selected-circle">{contact.split("")[0]}</p>
-        <p className="AddContacts__selected-name">{contact}</p>
+        <p className="AddContacts__selected-circle">
+          {contact.firstName.split("")[0]}
+        </p>
+        <p className="AddContacts__selected-name">{`${contact.firstName} ${contact.lastName}`}</p>
       </div>
     );
   });

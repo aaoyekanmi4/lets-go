@@ -55,7 +55,7 @@ const validatePhone = (formValues, formErrors) => {
 };
 
 const validateContacts = (formValues, formErrors) => {
-  if (formValues.contacts.length !== 2) {
+  if (formValues.contacts.length < 2) {
     formErrors["contacts"] = "Must add at least 2 contacts";
   } else {
     delete formErrors["contacts"];

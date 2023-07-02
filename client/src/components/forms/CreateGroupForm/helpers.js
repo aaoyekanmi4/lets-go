@@ -2,6 +2,7 @@ import axios from "axios";
 
 import baseUrls from "../../../baseUrls.js";
 import getBackendErrorMessages from "../../../getBackendErrorMessages.js";
+
 const createGroup = async (groupData, contacts, jwtToken) => {
   try {
     const groupResponse = await axios.post(
@@ -10,7 +11,7 @@ const createGroup = async (groupData, contacts, jwtToken) => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${jwtToken}d`,
+          Authorization: `Bearer ${jwtToken}`,
         },
       }
     );
@@ -26,6 +27,7 @@ const createGroup = async (groupData, contacts, jwtToken) => {
         },
       }
     );
+
     return {
       status: 201,
     };

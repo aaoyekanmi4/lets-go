@@ -29,7 +29,6 @@ const CreateGroupForm = ({ contacts }) => {
 
   const [backendErrors, setBackendErrors] = useState([]);
 
-  console.log(backendErrors);
   useEffect(() => {
     const run = async () => {
       if (!isFrontendValidated) {
@@ -45,7 +44,7 @@ const CreateGroupForm = ({ contacts }) => {
 
       const response = await createGroup(
         { name: formValues.name, appUserId: user.appUserId },
-        formValues.contacts,
+        formValues.contacts.map((contact) => contact.contactId),
         user.jwtToken
       );
 
