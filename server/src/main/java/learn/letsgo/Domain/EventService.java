@@ -35,7 +35,7 @@ public class EventService {
         if (!result.isSuccess()) {
             return result;
         }
-        Event existingEvent = Validations.findEventIfExists(event, eventRepository);
+        Event existingEvent = Helpers.findEventIfExists(event, eventRepository);
         System.out.println(existingEvent);
         if (existingEvent != null) {
             boolean didAddEventToUser = savedEventRepository.addEventToUser(existingEvent.getEventId(), appUserId);
@@ -148,7 +148,7 @@ public class EventService {
             result.addMessage(ResultType.INVALID, "Event cannot be null");
             return result;
         }
-        if (Validations.isNullOrBlank(event.getEventName())) {
+        if (Helpers.isNullOrBlank(event.getEventName())) {
             result.addMessage(ResultType.INVALID, "Event name is required");
         }
         if (event.getDateTime() == null) {

@@ -1,13 +1,15 @@
 package learn.letsgo.Domain;
 
+import learn.letsgo.Data.AppUserRepository;
 import learn.letsgo.Data.EventRepository;
 import learn.letsgo.Data.VenueRepository;
+import learn.letsgo.Models.AppUser;
 import learn.letsgo.Models.Event;
 import learn.letsgo.Models.Venue;
 
 import java.util.List;
 
-public class Validations {
+public class Helpers {
 
     public static boolean isNullOrBlank(String value) {
         return value == null || value.isBlank();
@@ -33,5 +35,10 @@ public class Validations {
                 return venue;
             }
         return null;
+    }
+
+    public static String getUserFullName(AppUserRepository userRepository, int appUserId) {
+        AppUser user = userRepository.findById(appUserId);
+        return user.getFirstName() + " " + user.getLastName();
     }
 }

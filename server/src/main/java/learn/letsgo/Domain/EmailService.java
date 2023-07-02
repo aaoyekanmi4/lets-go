@@ -18,6 +18,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,13 +30,13 @@ public class EmailService {
 
     private final AppUserRepository userRepository;
 
-    private static final String DATE_TIME_FORMATTER = "EEE • MMM dd • hh:mm";
+    private static final String DATE_TIME_FORMATTER = "EEE • MMM dd • hh:mm a";
 
     public EmailService(AppUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public void sendEmail(EmailMessage emailMessage) throws MessagingException {
+    public void sendEmail(EmailMessage emailMessage) {
 
         String templateStr = readFile("./email_templates/inviteTemplate.html");
 
@@ -53,7 +54,7 @@ public class EmailService {
 
         String formattedFullAddress = formatFullAddress(event.getVenue());
 
-        String userFullName = getUserFullName(appUserId);
+        String userFullName = Helpers.getUserFullName(userRepository, appUserId);
 
         String eventDetailUrl = emailMessage.getEventDetailUrl();
         System.out.println(eventDetailUrl);
@@ -61,9 +62,8 @@ public class EmailService {
         String body = String.format(templateStr, imageUrl, eventTitle, formattedDateTime,
                 venueName, formattedFullAddress, userFullName, eventDetailUrl);
 
+        String[] to = convertRecipientsToStrArr(emailMessage.getRecipients());
 
-        String[] to = new String[emailMessage.getRecipients().size()];
-        emailMessage.getRecipients().toArray(to);
         try {
             MimeMessage message = mailSender.createMimeMessage();
 
@@ -102,8 +102,9 @@ public class EmailService {
                 venue.getState(), venue.getZipCode());
     }
 
-    private String getUserFullName(int appUserId) {
-        AppUser user = userRepository.findById(appUserId);
-        return user.getFirstName() + " " + user.getLastName();
+    private String[] convertRecipientsToStrArr(List<String> recipients) {
+        String[] to = new String[recipients.size()];
+        recipients.toArray(to);
+        return to;
     }
 }
