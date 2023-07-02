@@ -1,4 +1,5 @@
 const defaultCreateContactValues = {
+  appUserId: "",
   firstName: "",
   lastName: "",
   email: "",

@@ -1,16 +1,58 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import TextInput from "../TextInput/TextInput.js";
+import ErrorsContainer from "../ErrorsContainer/ErrorsContainer.js";
 import { defaultCreateContactValues } from "../defaultValues.js";
 import { validateField } from "./validator.js";
 import { validateAllFields } from "../validators.js";
-import "./CreateContact.scss";
+import { createContact } from "./helpers.js";
+import "./CreateContactForm.scss";
 import "../form.scss";
 
-const CreateContact = () => {
+const CreateContactForm = () => {
+  const navigate = useNavigate();
+
+  const user = useSelector((state) => {
+    return state.user;
+  });
+
   const [formValues, setFormValues] = useState(defaultCreateContactValues);
 
   const [formErrors, setFormErrors] = useState({});
+
+  const [isFrontendValidated, setIsFrontendValidated] = useState(false);
+
+  const [backendErrors, setBackendErrors] = useState([]);
+
+  useEffect(() => {
+    const run = async () => {
+      if (!isFrontendValidated) {
+        return;
+      }
+
+      if (Object.values(formErrors).length) {
+        setIsFrontendValidated(false);
+        return;
+      }
+
+      setIsFrontendValidated(false);
+
+      const response = await createContact(
+        { ...formValues, appUserId: user.appUserId },
+        user.jwtToken
+      );
+
+      if (response.status === 201) {
+        navigate(`/contacts/${user.appUserId}`);
+      } else {
+        setBackendErrors(response.errorMessages);
+      }
+    };
+
+    run();
+  }, [isFrontendValidated]);
 
   const onInputChange = (fieldName, fieldValue) => {
     setFormValues((prevState) => {
@@ -18,16 +60,19 @@ const CreateContact = () => {
     });
   };
 
+  const runFrontendValidation = (e) => {
+    e.preventDefault();
+
+    validateAllFields(validateField, formValues, setFormErrors);
+
+    setIsFrontendValidated(true);
+  };
+
   return (
-    <form
-      className="CreateContact Form"
-      onSubmit={(e) => {
-        e.preventDefault();
-        validateAllFields(validateField, formValues, setFormErrors);
-      }}
-    >
+    <form className="CreateContactForm Form" onSubmit={runFrontendValidation}>
       <div className="Form__upper-style"></div>
       <h1 className="Form__header">Create Contact</h1>
+      <ErrorsContainer errorsArray={backendErrors} />
       <TextInput
         type="text"
         id="first-name"
@@ -103,4 +148,4 @@ const CreateContact = () => {
   );
 };
 
-export default CreateContact;
+export default CreateContactForm;

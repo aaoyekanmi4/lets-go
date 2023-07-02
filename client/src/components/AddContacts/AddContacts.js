@@ -20,7 +20,8 @@ const AddContacts = ({ data, onChange }) => {
     setSuggestedContacts(data.slice(0, 20));
   }, [data]);
 
-  //when selectedContacts change, update contacts values into in parent createGroup form
+  //when selectedContacts change, update the contacts values the in parent createGroupForm
+  //component
   useEffect(() => {
     onChange("contacts", selectedContacts);
   }, [selectedContacts]);
@@ -30,7 +31,7 @@ const AddContacts = ({ data, onChange }) => {
     onSearch();
   }, [searchValue]);
 
-  //onSearch update the suggested contacts so we can render them
+  //update the suggested contacts so we can render them
   const onSearch = () => {
     const suggestedContacts = allContacts.filter((contact) => {
       return contact.toLowerCase().includes(searchValue.toLowerCase());
@@ -39,7 +40,6 @@ const AddContacts = ({ data, onChange }) => {
     setSuggestedContacts(suggestedContacts);
   };
 
-  //when we click a suggested contact, add it to selected
   const renderedSuggested = suggestedContacts.map((contact, index) => {
     return (
       <div className="AddContacts__result" key={index}>

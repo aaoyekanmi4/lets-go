@@ -86,9 +86,15 @@ const loginUser = (loginData) => {
 };
 
 const sendBackendLoginErrors = (errorsArray) => {
+  let payload = errorsArray;
+
+  if (!errorsArray) {
+    payload = ["Something went wrong. Try again later"];
+  }
+
   return {
     type: types.SEND_BACKEND_LOGIN_ERRORS,
-    payload: errorsArray,
+    payload: payload,
   };
 };
 
