@@ -1,11 +1,11 @@
 .GroupCard {
   display: block;
-  background-color: var(--color-dark);
+  background-color: var(--color-light);
   border-top: 1px solid blue;
   border-left: 1px solid blue;
   font-size: 2rem;
   cursor: pointer;
-  color: var(--color-light);
+  color: var(--color-tertiary);
   position: relative;
   &::after {
     content: "";
@@ -21,7 +21,7 @@
     top: 0;
     left: 0;
     width: 101.5%;
-    height: 104%;
+    height: 106%;
     z-index: -1;
   }
   &__content {
@@ -35,6 +35,8 @@
     transform: translatey(-0.8rem) rotate(-10deg);
   }
   &__name {
+    letter-spacing: 0.3rem;
+    overflow-wrap: anywhere;
   }
   &__details {
     text-align: center;

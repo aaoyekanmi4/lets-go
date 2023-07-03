@@ -59,7 +59,18 @@ const Contacts = () => {
             <AiOutlinePlus className="GeneralLayout__add-icon" />
           </Link>
 
-          <div className="Contacts__container">{renderedContacts}</div>
+          <div
+            className="Contacts__container"
+            style={
+              renderedContacts.length >= 4
+                ? {
+                    gridTemplateColumns: "repeat(auto-fit, minmax(23rem, 1fr))",
+                  }
+                : { gridTemplateColumns: "repeat(auto-fit, 26rem" }
+            }
+          >
+            {renderedContacts}
+          </div>
         </div>
       </main>
     </div>
@@ -67,3 +78,5 @@ const Contacts = () => {
 };
 
 export default Contacts;
+// grid-template-columns: repeat(auto-fit, 23rem);
+// justify-content: center;

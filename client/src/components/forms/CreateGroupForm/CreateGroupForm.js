@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { getGroups } from "../../../actions";
 import TextInput from "../TextInput/TextInput.js";
 import ErrorsContainer from "../ErrorsContainer/ErrorsContainer.js";
 import { validateField } from "./validator.js";
@@ -12,6 +13,8 @@ import "./CreateGroupForm.scss";
 import "../form.scss";
 
 const CreateGroupForm = ({ contacts }) => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const user = useSelector((state) => {
@@ -49,6 +52,8 @@ const CreateGroupForm = ({ contacts }) => {
       );
 
       if (response.status === 201) {
+        await dispatch(getGroups());
+
         navigate(`/groups/${user.appUserId}`);
       } else {
         setBackendErrors(response.errorMessages);
