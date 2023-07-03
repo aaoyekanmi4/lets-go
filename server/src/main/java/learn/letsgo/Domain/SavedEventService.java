@@ -30,14 +30,8 @@ public class SavedEventService {
         return savedEventRepository.findById(savedEventId);
     }
 
-    public Result<Void> addContactToEvent(int contactId, int eventId, int appUserId) {
-        Result<Void> result = new Result<>();
-        Integer savedEventId = savedEventRepository.getSavedEventId(eventId, appUserId);
-        if (savedEventId == null) {
-            result.addMessage(ResultType.NOT_FOUND, "Saved event could not be found from given eventId and userId");
-            return result;
-        }
-        result = validateCanBridgeContactToSavedEvent(contactId, savedEventId, true);
+    public Result<Void> addContactToEvent(int contactId, int savedEventId) {
+        Result<Void> result = validateCanBridgeContactToSavedEvent(contactId, savedEventId, true);
         if (!result.isSuccess()) {
             return result;
         }
@@ -48,14 +42,8 @@ public class SavedEventService {
         return result;
     }
 
-    public Result<Void> removeContactFromEvent(int contactId, int eventId, int appUserId) {
-        Result<Void> result = new Result<>();
-        Integer savedEventId = savedEventRepository.getSavedEventId(eventId, appUserId);
-        if (savedEventId == null) {
-            result.addMessage(ResultType.NOT_FOUND, "Saved event could not be found from given eventId and userId");
-            return result;
-        }
-        result = validateCanBridgeContactToSavedEvent(contactId, savedEventId, false);
+    public Result<Void> removeContactFromEvent(int contactId, int savedEventId) {
+        Result<Void> result = validateCanBridgeContactToSavedEvent(contactId, savedEventId, false);
         if (!result.isSuccess()) {
             return result;
         }
@@ -66,14 +54,8 @@ public class SavedEventService {
         return result;
     }
 
-    public Result<Void> addGroupToEvent(int groupId, int eventId, int appUserId) {
-        Result<Void> result = new Result<>();
-        Integer savedEventId = savedEventRepository.getSavedEventId(eventId, appUserId);
-        if (savedEventId == null) {
-            result.addMessage(ResultType.NOT_FOUND, "Saved event could not be found from given eventId and userId");
-            return result;
-        }
-        result = validateCanBridgeGroupToSavedEvent(groupId, savedEventId, true);
+    public Result<Void> addGroupToEvent(int groupId, int savedEventId) {
+        Result<Void> result = validateCanBridgeGroupToSavedEvent(groupId, savedEventId, true);
         if (!result.isSuccess()) {
             return result;
         }
@@ -84,14 +66,8 @@ public class SavedEventService {
         return result;
     }
 
-    public Result<Void> removeGroupFromEvent(int groupId, int eventId, int appUserId) {
-        Result<Void> result = new Result<>();
-        Integer savedEventId = savedEventRepository.getSavedEventId(eventId, appUserId);
-        if (savedEventId == null) {
-            result.addMessage(ResultType.NOT_FOUND, "Saved event could not be found from given eventId and userId");
-            return result;
-        }
-        result = validateCanBridgeGroupToSavedEvent(groupId, savedEventId, false);
+    public Result<Void> removeGroupFromEvent(int groupId, int savedEventId) {
+        Result<Void> result = validateCanBridgeGroupToSavedEvent(groupId, savedEventId, false);
         if (!result.isSuccess()) {
             return result;
         }
@@ -116,15 +92,20 @@ public class SavedEventService {
 
         SavedEvent savedEvent = savedEventRepository.findById(savedEventId);
 
-        boolean alreadyHasGroup = savedEvent.getGroups()
-                .stream().map(currGroup -> currGroup.getGroupId()).anyMatch(id -> id == groupId);
-        System.out.println(alreadyHasGroup);
-        if (alreadyHasGroup && isAdding) {
-            result.addMessage(ResultType.INVALID,
-                    String.format("Group id %s already in this saved event", groupId));
-        } else if (!alreadyHasGroup && !isAdding) {
-            result.addMessage(ResultType.INVALID,
-                    String.format("Group with id %s not in this saved event for removal", groupId));
+        if (savedEvent == null) {
+            result.addMessage(ResultType.NOT_FOUND,
+                    String.format("Could not find savedEvent with savedEventId: %s", savedEventId));
+        } else {
+            boolean alreadyHasGroup = savedEvent.getGroups()
+                    .stream().map(currGroup -> currGroup.getGroupId()).anyMatch(id -> id == groupId);
+            System.out.println(alreadyHasGroup);
+            if (alreadyHasGroup && isAdding) {
+                result.addMessage(ResultType.INVALID,
+                        String.format("Group id %s already in this saved event", groupId));
+            } else if (!alreadyHasGroup && !isAdding) {
+                result.addMessage(ResultType.INVALID,
+                        String.format("Group with id %s not in this saved event for removal", groupId));
+            }
         }
         return result;
     }
@@ -142,16 +123,22 @@ public class SavedEventService {
 
         SavedEvent savedEvent = savedEventRepository.findById(savedEventId);
 
-        boolean alreadyHasContact = savedEvent.getContacts()
-                .stream().map(currContact -> currContact.getContactId()).anyMatch(id -> id == contactId);
+        if (savedEvent == null) {
+            result.addMessage(ResultType.NOT_FOUND,
+                    String.format("Could not find savedEvent with savedEventId: %s", savedEventId));
+        } else {
+            boolean alreadyHasContact = savedEvent.getContacts()
+                    .stream().map(currContact -> currContact.getContactId()).anyMatch(id -> id == contactId);
 
-        if (alreadyHasContact && isAdding) {
-            result.addMessage(ResultType.INVALID,
-                    String.format("Contact id %s already in this saved event", contactId));
-        } else if (!alreadyHasContact && !isAdding) {
-            result.addMessage(ResultType.INVALID,
-                    String.format("Contact with id %s not in this saved event for removal", contactId));
+            if (alreadyHasContact && isAdding) {
+                result.addMessage(ResultType.INVALID,
+                        String.format("Contact id %s already in this saved event", contactId));
+            } else if (!alreadyHasContact && !isAdding) {
+                result.addMessage(ResultType.INVALID,
+                        String.format("Contact with id %s not in this saved event for removal", contactId));
+            }
         }
         return result;
     }
+
 }

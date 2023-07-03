@@ -41,6 +41,6 @@ Content-Type: application/json
 // ACCESS: AUTH
 
 POST {{url}}/refresh_token HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTc5OTQwfQ.Q2n_0dzZOWfQgZeez9pPrDjOURly0_kTiR0vrusQfKY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4NDE4NjMyfQ.DO4ulYu8pALBpZDkr5_30uivN2yg-oviVxT_H2m79Gk
 
 

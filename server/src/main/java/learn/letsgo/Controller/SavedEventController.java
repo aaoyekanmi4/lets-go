@@ -31,44 +31,40 @@ public class SavedEventController {
         return savedEventService.findAll(appUserId);
     }
 
-    @PostMapping("/user/contact/{contactId}/{eventId}/{appUserId}")
+    @PostMapping("/user/contact/{contactId}/{savedEventId}")
     public ResponseEntity<?> addContactToEvent (@PathVariable int contactId,
-                                                @PathVariable int eventId,
-                                                @PathVariable int appUserId) {
-        Result<Void> result = savedEventService.addContactToEvent(contactId, eventId, appUserId);
+                                                @PathVariable int savedEventId) {
+        Result<Void> result = savedEventService.addContactToEvent(contactId, savedEventId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return ErrorResponse.build(result);
     }
 
-    @DeleteMapping("/user/contact/{contactId}/{eventId}/{appUserId}")
+    @DeleteMapping("/user/contact/{contactId}/{savedEventId}")
     public ResponseEntity<?> removeContactFromEvent(@PathVariable int contactId,
-                                                    @PathVariable int eventId,
-                                                    @PathVariable int appUserId) {
-        Result<Void> result = savedEventService.removeContactFromEvent(contactId, eventId, appUserId);
+                                                    @PathVariable int savedEventId) {
+        Result<Void> result = savedEventService.removeContactFromEvent(contactId, savedEventId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return ErrorResponse.build(result);
     }
 
-    @PostMapping("/user/group/{groupId}/{eventId}/{appUserId}")
+    @PostMapping("/user/group/{groupId}/{savedEventId}")
     public ResponseEntity<?> addGroupToEvent (@PathVariable int groupId,
-                                              @PathVariable int eventId,
-                                              @PathVariable int appUserId) {
-        Result<Void> result = savedEventService.addGroupToEvent(groupId, eventId, appUserId);
+                                              @PathVariable int savedEventId) {
+        Result<Void> result = savedEventService.addGroupToEvent(groupId, savedEventId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return ErrorResponse.build(result);
     }
 
-    @DeleteMapping("/user/group/{groupId}/{eventId}/{appUserId}")
+    @DeleteMapping("/user/group/{groupId}/{savedEventId}")
     public ResponseEntity<?> removeGroupFromEvent(@PathVariable int groupId,
-                                                  @PathVariable int eventId,
-                                                  @PathVariable int appUserId) {
-        Result<Void> result = savedEventService.removeGroupFromEvent(groupId, eventId, appUserId);
+                                                  @PathVariable int savedEventId) {
+        Result<Void> result = savedEventService.removeGroupFromEvent(groupId, savedEventId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

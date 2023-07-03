@@ -1,0 +1,61 @@
+@url=http://localhost:8080/api/event
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4NDE5NTk4fQ.QeAgnL9sLmGjPIqrFyGVl6c0qh_IfD2qjH5P6mLaukI
+
+// FUNCTION: findAllSavedEventsByUserId
+// RETURNS: List of SavedEvents
+// PATH: /user/:appUserId
+// ACCESS: AUTH
+
+GET {{url}}/user/3 HTTP/1.1
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: findSavedEventForUser
+// RETURNS: a SavedEvent (has groups and contacts attached)
+// PATH: /saved/:savedEventId
+// ACCESS: AUTH
+
+GET {{url}}/saved/3
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: addContactToEvent
+// RETURNS: void
+// PATH: /user/contact/:contactId/:savedEventId
+// ACCESS: AUTH
+
+POST {{url}}/user/contact/2/3
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: removeContactFromEvent
+// RETURNS: void
+// PATH: /user/contact/:contactId/:savedEventId
+// ACCESS: AUTH
+
+DELETE {{url}}/user/contact/2/3
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: addGroupToEvent
+// RETURNS: void
+// PATH: /user/group/:groupId/:savedEventId
+// ACCESS: AUTH
+
+POST {{url}}/user/group/3/3
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: removeGroupFromEvent
+// RETURNS: void
+// PATH: /user/group/:groupId/:savedEventId
+// ACCESS: AUTH
+
+DELETE {{url}}/user/group/3/3
+Authorization:Bearer {{token}}
+
