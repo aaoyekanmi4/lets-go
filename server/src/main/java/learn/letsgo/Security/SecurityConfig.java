@@ -31,6 +31,8 @@ public class SecurityConfig {
         // the order of the antMatchers() method calls is important
         // as they're evaluated in the order that they're added
         http.authorizeRequests()
+                .antMatchers("/seatgeek/*").permitAll()
+                .antMatchers("/ticketmaster/*").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/refresh_token").authenticated()
                 .antMatchers("/api/create_account").permitAll()
