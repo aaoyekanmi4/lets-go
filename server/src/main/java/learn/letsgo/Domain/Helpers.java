@@ -8,6 +8,8 @@ import learn.letsgo.Models.Event;
 import learn.letsgo.Models.Venue;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Helpers {
 
@@ -39,6 +41,17 @@ public class Helpers {
 
     public static String getUserFullName(AppUserRepository userRepository, int appUserId) {
         AppUser user = userRepository.findById(appUserId);
+        if (user == null) {
+            return null;
+        }
         return user.getFirstName() + " " + user.getLastName();
+    }
+
+    public static boolean isValidEmail(String email) {
+        //RFC-5322
+        String emailRegex = "^[a-zA-Z0-9_!#$%&amp;'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 }

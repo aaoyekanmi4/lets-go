@@ -67,7 +67,7 @@ public class GroupService {
     }
 
     public Result<Void> addContactToGroup(int contactId, int groupId) {
-        Result<Void> result = validateAddContact(contactId, groupId);
+        Result<Void> result = validateCanPerformBridgeAction(contactId, groupId, true);
         if (!result.isSuccess()) {
             return result;
         }
@@ -83,7 +83,7 @@ public class GroupService {
 
         Result<Void> result = new Result<>();
         for (Integer num : contactIds) {
-            result = validateAddContact(num, groupId);
+            result = validateCanPerformBridgeAction(num, groupId, true);
             if (!result.isSuccess()) {
                 return result;
             }
@@ -97,7 +97,11 @@ public class GroupService {
     }
 
     public Result<Void> removeContactFromGroup(int contactId, int groupId) {
-        Result<Void> result = new Result<>();
+        Result<Void> result = validateCanPerformBridgeAction(contactId, groupId, false);
+        if (!result.isSuccess()) {
+            return result;
+        }
+
         boolean didRemoveContact = groupRepository.removeContactFromGroup(contactId, groupId);
         if (!didRemoveContact) {
             result.addMessage(ResultType.INVALID, "Could not remove contact from group");
@@ -118,8 +122,7 @@ public class GroupService {
         return result;
     }
 
-    //TODO Test this
-    private Result<Void> validateAddContact(int contactId, int groupId) {
+    private Result<Void> validateCanPerformBridgeAction(int contactId, int groupId, boolean isAdding) {
 
         Result<Void> result = new Result<>();
 
@@ -140,10 +143,13 @@ public class GroupService {
             boolean containsContact = groupToAddContact.getContacts()
                     .stream().map(contact -> contact.getContactId()).anyMatch(id -> id == contactId);
 
-            if (containsContact) {
+            if (containsContact && isAdding) {
                 result.addMessage(ResultType.INVALID,
-                        String.format("Contact already in group", contactId));
-            };
+                        String.format("Contact with id %s already in group", contactId));
+            } else if (!containsContact && !isAdding) {
+                result.addMessage(ResultType.INVALID,
+                        String.format("Contact with id %s not in group so cannot be removed", contactId));
+            }
         }
         return result;
     }

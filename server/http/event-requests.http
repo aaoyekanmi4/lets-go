@@ -1,5 +1,5 @@
 @url=http://localhost:8080/api/event
-@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MzI0MTgyfQ.RpJ67YEZqOcC3N2C5JrYakYdoF7NuxXzmvoBzCEZWNg
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4Mzk2MjM3fQ.PzrFwtEmIe2sRJ0ASBNpTjJJrgvwFWfmKpM9t9vXhpE
 
 // FUNCTION: findEventById
 // RETURNS: an Event

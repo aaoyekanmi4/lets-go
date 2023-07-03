@@ -1,9 +1,5 @@
 @url=http://localhost:8080/api
 
-POST {{url}}/message/sendEmail
-Content-Type: application/json
-
-
 ###
 // FUNCTION: authenticateUser
 // RETURNS: JWT token

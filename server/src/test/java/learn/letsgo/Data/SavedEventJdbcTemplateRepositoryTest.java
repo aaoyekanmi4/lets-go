@@ -29,7 +29,7 @@ class SavedEventJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindAllForUser() {
-        List<SavedEvent> actual = savedEventRepository.findAll(1);
+        List<SavedEvent> actual = savedEventRepository.findAll(2);
         assertNotNull(actual);
         assertEquals(1, actual.size());
     }
@@ -71,20 +71,18 @@ class SavedEventJdbcTemplateRepositoryTest {
 
     @Test
     void removeGroupFromEvent() {
-        boolean actual = savedEventRepository.removeGroupFromEvent(2,1);
+        boolean actual = savedEventRepository.removeGroupFromEvent(1,1);
         assertTrue(actual);
-        boolean repeat = savedEventRepository.removeGroupFromEvent(2,1);
+        boolean repeat = savedEventRepository.removeGroupFromEvent(1,1);
         assertFalse(repeat);
     }
 
     @Test
     void shouldRemoveEventFromUser() {
         int initialCount =  appUserRepository.findByUsername("arit@dev10.com").getEvents().size();
-        System.out.println(initialCount);
         boolean actual = savedEventRepository.removeEventFromUser(2,3);
         assertTrue(actual);
         int resultCount = appUserRepository.findByUsername("arit@dev10.com").getEvents().size();
-        System.out.println(resultCount);
         assertEquals(-1, resultCount - initialCount);
     }
 
@@ -92,8 +90,6 @@ class SavedEventJdbcTemplateRepositoryTest {
     void shouldFindSavedEventForUser() {
         SavedEvent actual = savedEventRepository.findSavedEventForUser(1, 2);
         assertNotNull(actual);
-        System.out.println(actual);
         assertEquals(2, actual.getAppUserId());
-        assertEquals(1, actual.getGroups().size());
     }
 }

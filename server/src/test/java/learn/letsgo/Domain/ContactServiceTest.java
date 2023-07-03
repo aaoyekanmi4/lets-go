@@ -46,6 +46,16 @@ class ContactServiceTest {
     }
 
     @Test
+    void shouldNotAdWithInvalidEmail() {
+        Contact contact = new Contact(1, "HowAboutNow?",
+                "+18324493289", "Rick'", "James");
+        contact.setContactId(1);
+        Result<Contact> actual = contactService.create(contact);
+        assertEquals(ResultType.INVALID, actual.getStatus());
+        assertEquals("User must enter a valid email", actual.getMessages().get(0));
+    }
+
+    @Test
     void shouldNotAddWithMissingName() {
         Contact contact1 = new Contact(1, "blue@red.com",
                 "2222222", "", "James");

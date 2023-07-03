@@ -29,7 +29,7 @@ public class SavedEventJdbcTemplateRepository implements SavedEventRepository {
                 + "where se.app_user_id =?;";
 
         List<SavedEvent> result = jdbcTemplate.query(sql, new SavedEventMapper(eventRepository),  appUserId);
-
+        System.out.println(result);
         return result;
     }
 
@@ -55,10 +55,12 @@ public class SavedEventJdbcTemplateRepository implements SavedEventRepository {
         SavedEvent result = jdbcTemplate.query(sql, new SavedEventMapper(eventRepository),  appUserId, eventId).stream()
                 .findFirst()
                 .orElse(null);
+
         if (result != null) {
             addGroups(result);
             addContacts(result);
         }
+        System.out.println(result);
         return result;
     }
 
@@ -116,10 +118,12 @@ public class SavedEventJdbcTemplateRepository implements SavedEventRepository {
         final String sql = "select g.group_id, g.app_user_id, g.group_name "
                 + "from `group` g "
                 + "inner join group_saved_event gs on g.group_id =  gs.group_id "
-                + "where gs.saved_event_id = ?";
+                + "where gs.saved_event_id = ?;";
 
         List<Group> groups = jdbcTemplate.query(sql, new GroupMapper(), savedEvent.getSavedEventId());
+
         savedEvent.setGroups(groups);
+        System.out.println(savedEvent);
     }
 
     private void addContacts(SavedEvent savedEvent) {

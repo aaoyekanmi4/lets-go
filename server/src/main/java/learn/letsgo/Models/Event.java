@@ -3,6 +3,7 @@ package learn.letsgo.Models;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Event {
     private int eventId;
@@ -138,5 +139,18 @@ public class Event {
                 ", venue=" + venue +
                 ", eventPosts=" + eventPosts +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return eventId == event.eventId && Objects.equals(eventName, event.eventName) && Objects.equals(category, event.category) && Objects.equals(imageUrl, event.imageUrl) && Objects.equals(description, event.description) && Objects.equals(dateTime, event.dateTime) && Objects.equals(source, event.source) && Objects.equals(sourceId, event.sourceId) && Objects.equals(eventLink, event.eventLink) && Objects.equals(venue, event.venue) && Objects.equals(eventPosts, event.eventPosts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventId, eventName, category, imageUrl, description, dateTime, source, sourceId, eventLink, venue, eventPosts);
     }
 }

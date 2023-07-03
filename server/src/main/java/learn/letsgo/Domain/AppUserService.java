@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -37,7 +36,8 @@ public class AppUserService implements UserDetailsService {
 
     public Result<AppUser> create(String username, String password,
                                   String email, String phone, String firstName, String lastName,boolean isEnabled) {
-        Result<AppUser> result = validate(username, password);
+        Result<AppUser> result = validate(username, password, phone, email);
+
         if (!result.isSuccess()) {
             return result;
         }
@@ -62,7 +62,7 @@ public class AppUserService implements UserDetailsService {
         return result;
     }
 
-    private Result<AppUser> validate(String username, String password) {
+    private Result<AppUser> validate(String username, String password, String phone, String email) {
         Result<AppUser> result = new Result<>();
         if (username == null || username.isBlank()) {
             result.addMessage(ResultType.INVALID, "username is required");
@@ -84,6 +84,9 @@ public class AppUserService implements UserDetailsService {
                             " a letter, and a non-digit/non-letter");
         }
 
+        if (!Helpers.isValidEmail(email)) {
+            result.addMessage(ResultType.INVALID, "User must enter a valid email");
+        }
         return result;
     }
 
