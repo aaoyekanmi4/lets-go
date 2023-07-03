@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { BsTelephone, BsPencil } from "react-icons/bs";
 import { FaTrashCan } from "react-icons/fa6";
+import DeleteContactModal from "../../views/pages/Contacts/DeleteContactModal/DeleteContactModal.js";
 
 import "./ContactCard.scss";
 
 const ContactCard = ({ firstName, lastName, phone, email }) => {
+  const [showDeleteContactModal, setShowDeleteContactModal] = useState(true);
+
   const getUpdatedPhoneFormat = () => {
     let newPhone = phone;
     if (phone.length === 10) {
@@ -20,31 +23,50 @@ const ContactCard = ({ firstName, lastName, phone, email }) => {
   };
 
   return (
-    <div className="ContactCard">
-      <div className="ContactCard__upper-border"></div>
-      <div className="ContactCard__lower-border"></div>
-      <BsPencil className="ContactCard__action-button ContactCard__pencil" />
-      <FaTrashCan className="ContactCard__action-button ContactCard__trash" />
-      <div className="ContactCard__circle-gradient">
-        <div className="ContactCard__circle">
-          <p className="ContactCard__letter">{firstName.split("")[0]}</p>
-          <p className="ContactCard__letter">{lastName.split("")[0]}</p>
+    <>
+      <div className="ContactCard">
+        <div className="ContactCard__upper-border"></div>
+        <div className="ContactCard__lower-border"></div>
+        <BsPencil className="ContactCard__action-button ContactCard__pencil" />
+        <button
+          className="ContactCard__action-button ContactCard__trash"
+          onClick={() => {
+            setShowDeleteContactModal(true);
+          }}
+        >
+          <FaTrashCan />
+        </button>
+
+        <div className="ContactCard__circle-gradient">
+          <div className="ContactCard__circle">
+            <p className="ContactCard__letter">{firstName.split("")[0]}</p>
+            <p className="ContactCard__letter">{lastName.split("")[0]}</p>
+          </div>
+        </div>
+        <h2 className="ContactCard__name">{`${firstName} ${lastName}`}</h2>
+        <div className="ContactCard__contact-method">
+          <BsTelephone className="ContactCard__icon" />
+          <a href={`tel:+${phone}`} className="ContactCard__contact-value">
+            {getUpdatedPhoneFormat()}
+          </a>
+        </div>
+        <div className="ContactCard__contact-method">
+          <AiOutlineMail className="ContactCard__icon" />
+          <a href={`mailto:${email}`} className="ContactCard__contact-value">
+            {email}
+          </a>
         </div>
       </div>
-      <h2 className="ContactCard__name">{`${firstName} ${lastName}`}</h2>
-      <div className="ContactCard__contact-method">
-        <BsTelephone className="ContactCard__icon" />
-        <a href={`tel:+${phone}`} className="ContactCard__contact-value">
-          {getUpdatedPhoneFormat()}
-        </a>
-      </div>
-      <div className="ContactCard__contact-method">
-        <AiOutlineMail className="ContactCard__icon" />
-        <a href={`mailto:${email}`} className="ContactCard__contact-value">
-          {email}
-        </a>
-      </div>
-    </div>
+
+      {showDeleteContactModal ? (
+        <DeleteContactModal
+          closeModal={setShowDeleteContactModal(false)}
+          firstName={firstName}
+          lastName={lastName}
+          email={email}
+        />
+      ) : null}
+    </>
   );
 };
 

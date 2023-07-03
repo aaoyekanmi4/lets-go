@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import TextInput from "../TextInput/TextInput.js";
 import ErrorsContainer from "../ErrorsContainer/ErrorsContainer.js";
@@ -8,10 +8,13 @@ import { defaultCreateContactValues } from "../defaultValues.js";
 import { validateField } from "./validator.js";
 import { validateAllFields } from "../validators.js";
 import { createContact } from "./helpers.js";
+import { getContacts } from "../../../actions";
 import "./CreateContactForm.scss";
 import "../form.scss";
 
 const CreateContactForm = () => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const user = useSelector((state) => {
@@ -45,6 +48,8 @@ const CreateContactForm = () => {
       );
 
       if (response.status === 201) {
+        await dispatch(getContacts());
+
         navigate(`/contacts/${user.appUserId}`);
       } else {
         setBackendErrors(response.errorMessages);

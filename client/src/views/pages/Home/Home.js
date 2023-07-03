@@ -29,7 +29,13 @@ const Home = () => {
         to="/contacts/create
       "
       >
-        Create Group
+        Create Contact
+      </Link>
+      <Link
+        to="/contacts/1
+      "
+      >
+        view contacts
       </Link>
       <GroupCard groupName="The Ballers we call" />
       <EventList />

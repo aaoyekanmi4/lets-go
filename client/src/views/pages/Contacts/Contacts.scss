@@ -1,6 +1,26 @@
 .Contacts {
   padding-bottom: 4rem;
-  &__container {
+  &__main {
+    margin-top: 3rem;
+    .SearchField__input {
+      font-size: 2.3rem;
+      &::placeholder {
+        font-size: 2.3rem;
+      }
+    }
+    .SearchField__icon {
+      font-size: 2.3rem;
+    }
+  }
+  &__search-field-container {
+    width: 44rem;
+    height: 7rem;
+    margin: auto;
+    background-color: red;
+  }
+
+  &__main-container {
+    margin-top: 5rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
     grid-gap: 3rem;
