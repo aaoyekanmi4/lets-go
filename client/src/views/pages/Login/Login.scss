@@ -1,0 +1,12 @@
+.Entry {
+  &__main {
+    padding: 2rem 0rem;
+    display: flex;
+    flex-direction: column;
+    .Form {
+    }
+  }
+  &__link {
+    margin-top: 1rem;
+  }
+}

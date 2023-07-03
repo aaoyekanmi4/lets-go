@@ -1,0 +1,60 @@
+.GroupCard {
+  display: block;
+  background-color: var(--color-light);
+  border-top: 1px solid blue;
+  border-left: 1px solid blue;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--color-tertiary);
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    background: linear-gradient(
+      90deg,
+      rgba(239, 94, 110, 1) 9%,
+      rgba(255, 107, 107, 1) 47%,
+      rgba(180, 43, 119, 1) 100%,
+      rgba(174, 38, 120, 1) 100%,
+      rgba(128, 0, 128, 1) 100%
+    );
+    top: 0;
+    left: 0;
+    width: 101.5%;
+    height: 106%;
+    z-index: -1;
+  }
+  &__content {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+  }
+  &__icon {
+    margin-left: 1.3rem;
+    font-size: 2rem;
+    transform: translatey(-0.8rem) rotate(-10deg);
+  }
+  &__name {
+<<<<<<< HEAD
+    letter-spacing: 0.2rem;
+=======
+<<<<<<< HEAD
+    letter-spacing: 0.3rem;
+=======
+    letter-spacing: 0.2rem;
+>>>>>>> a2fa8421d55752a6304c750af4551540689aaa6e
+>>>>>>> main
+    overflow-wrap: anywhere;
+  }
+  &__details {
+    text-align: center;
+    border: 1px solid red;
+  }
+}
+
+.GroupCard:hover .GroupCard__name {
+}
+
+.GroupCard:hover .GroupCard__icon {
+  transform: scale(1.4) translatey(-0.8rem) rotate(-10deg);
+}
