@@ -1,22 +1,51 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import Header from "../../../components/Header/Header.js";
-import EventCard from "../../../components/EventCard/EventCard.js";
 import EventList from "../../../components/EventList/EventList.js";
 import "./Home.scss";
 
 const Home = () => {
+  const [events, setEvents] = useState([]);
+  const [postalCode, setPostalCode] = useState('');
+
+  useEffect(() => {
+    fetchEvents(postalCode);
+  }, [postalCode]);
+
+  const fetchEvents = (postalCode = '') => {
+    Promise.all([
+        fetch(`http://localhost:8080/seatgeek/events?postalCode=${postalCode}`),
+        fetch(`http://localhost:8080/ticketmaster/events?postalCode=${postalCode}`)
+    ])
+    .then(async([res1, res2]) => {
+        const seatGeekEvents = await res1.json();
+        const ticketMasterEvents = await res2.json();
+        return [...seatGeekEvents, ...ticketMasterEvents];
+    })
+    .then(combinedEvents => {
+        setEvents(combinedEvents);
+    })
+    .catch(e => {
+        console.error(e);
+        setEvents([]);
+    });
+  }
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    fetchEvents(postalCode);
+  }
+
   return (
     <div className="Home">
       <Header />
-      <EventCard
-        dateTime="2016-03-18T14:00:00Z"
-        venue="Madison Square Garden"
-        eventName="WGC Cadillac Championship - Sunday Ticket"
-        imageUrl="http://s1.ticketm.net/dam/a/063/1689bfea-ae98-4c7e-a31d-bbca2dd14063_54361_RECOMENDATION_16_9.jpg"
-        category="Music"
-      />
-      <EventList />
+      <form onSubmit={handleSearch}>
+          <label>
+              Postal Code:
+              <input type="text" value={postalCode} onChange={e => setPostalCode(e.target.value)} />
+          </label>
+          <button type="submit">Search</button>
+      </form>
+      <EventList events={events}/>
     </div>
   );
 };
