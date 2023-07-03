@@ -51,7 +51,7 @@ const Header = () => {
             <li>
               <Link
                 className="button-text button-text--secondary"
-                to={`/events/${user.appUserId}`}
+                to={`/saved-events/${user.appUserId}`}
               >
                 My Events
               </Link>
@@ -143,7 +143,7 @@ const Header = () => {
               <TextButtonDropdown buttonName="My Personals">
                 <Link
                   className="button-text button-text--primary"
-                  to={`/events/${user.appUserId}`}
+                  to={`/saved-events/${user.appUserId}`}
                 >
                   My Events
                 </Link>
