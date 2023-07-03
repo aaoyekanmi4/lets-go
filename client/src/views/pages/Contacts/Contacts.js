@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Header from "../../../components/Header/Header.js";
 import SearchField from "../../../components/SearchField/SearchField.js";
 import ContactCard from "../../../components/ContactCard/ContactCard.js";
+import { AiOutlinePlus } from "react-icons/ai";
 import "./Contacts.scss";
 import "../../sharedStyles/contactsGroups.scss";
 
@@ -53,6 +55,9 @@ const Contacts = () => {
               onSearch={() => {}}
             />
           </div>
+          <Link to="/contacts/create">
+            <AiOutlinePlus className="GeneralLayout__add-icon" />
+          </Link>
 
           <div className="Contacts__container">{renderedContacts}</div>
         </div>

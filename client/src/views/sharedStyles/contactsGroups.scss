@@ -4,17 +4,36 @@
     .SearchField__input {
       font-size: 2.3rem;
       &::placeholder {
-        font-size: 2.3rem;
+        font-size: 2rem;
       }
     }
     .SearchField__icon {
-      font-size: 2.3rem;
+      font-size: 2rem;
+    }
+
+    .container {
+      position: relative;
     }
   }
   &__search-field-container {
     width: 44rem;
-    height: 7rem;
+    height: 5rem;
     margin: auto;
-    background-color: red;
+    display: flex;
+    align-items: center;
+  }
+  &__add-icon {
+    position: absolute;
+    font-size: 4rem;
+    font-weight: bold;
+    color: var(--color-secondary);
+    top: 2rem;
+    right: 3rem;
+    border: 2px solid var(--color-tertiary);
+    padding: 0.5rem;
+    box-shadow: 2px 3px 2px var(--color-secondary);
+    &:hover {
+      box-shadow: 2px 3px 2px var(--color-tertiary);
+    }
   }
 }

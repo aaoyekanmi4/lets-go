@@ -1,7 +1,8 @@
 .GroupCard {
   display: block;
   background-color: var(--color-dark);
-  border: none;
+  border-top: 1px solid blue;
+  border-left: 1px solid blue;
   font-size: 2rem;
   cursor: pointer;
   color: var(--color-light);
@@ -19,8 +20,8 @@
     );
     top: 0;
     left: 0;
-    width: 102%;
-    height: 109%;
+    width: 101.5%;
+    height: 104%;
     z-index: -1;
   }
   &__content {
