@@ -1,0 +1,46 @@
+@url=http://localhost:8080/api
+
+###
+// FUNCTION: authenticateUser
+// RETURNS: JWT token
+// PATH: /authenticate
+// ACCESS: PUBLIC
+
+POST {{url}}/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username":"arit@dev10.com",
+  "password":"P@ssw0rd!"
+}
+
+###
+
+// FUNCTION: createUser
+// RETURNS: appUserId
+// PATH: /create_account
+// ACCESS: PUBLIC
+
+POST {{url}}/create_account HTTP/1.1
+Content-Type: application/json
+
+{
+  "username":"bluto@dev10.com",
+  "password":"P@ssw0rd!",
+  "email": "bluto@dev10.com",
+  "phone":"44349433222",
+  "firstName": "Fredo",
+  "lastName":"Marisco"
+}
+
+###
+
+// FUNCTION: refreshToken
+// RETURNS: JWT Token
+// PATH: /refresh_token
+// ACCESS: AUTH
+
+POST {{url}}/refresh_token HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTc5OTQwfQ.Q2n_0dzZOWfQgZeez9pPrDjOURly0_kTiR0vrusQfKY
+
+

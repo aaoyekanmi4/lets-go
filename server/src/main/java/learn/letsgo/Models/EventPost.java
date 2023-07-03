@@ -1,9 +1,13 @@
 package learn.letsgo.Models;
 
+import java.time.LocalDateTime;
+
 public class EventPost {
     private int postId;
-    private Event event;
-    private AppUser appUser;
+    private int eventId;
+    private int appUserId;
+    private String author;
+    private LocalDateTime postDate;
     private String postBody;
     private int likes;
 
@@ -11,9 +15,11 @@ public class EventPost {
 
     }
 
-    public EventPost(Event event, AppUser appUser, String postBody, int likes) {
-        this.event = event;
-        this.appUser = appUser;
+    public EventPost(int eventId, int appUserId,  String author, LocalDateTime postDate, String postBody, int likes) {
+        this.eventId = eventId;
+        this.appUserId = appUserId;
+        this.author = author;
+        this.postDate = postDate;
         this.postBody = postBody;
         this.likes = likes;
     }
@@ -26,20 +32,20 @@ public class EventPost {
         this.postId = postId;
     }
 
-    public Event getEvent() {
-        return event;
+    public int getEventId() {
+        return eventId;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
     }
 
-    public AppUser getAppUser() {
-        return appUser;
+    public int getAppUserId() {
+        return appUserId;
     }
 
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
+    public void setAppUserId(int appUserId) {
+        this.appUserId = appUserId;
     }
 
     public String getPostBody() {
@@ -56,5 +62,21 @@ public class EventPost {
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public LocalDateTime getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(LocalDateTime postDate) {
+        this.postDate = postDate;
     }
 }

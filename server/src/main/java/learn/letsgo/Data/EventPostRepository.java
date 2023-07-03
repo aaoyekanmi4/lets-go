@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface EventPostRepository {
     EventPost findById(int postId);
-    //useState vs. findById
 
     EventPost create(EventPost eventPost);
 

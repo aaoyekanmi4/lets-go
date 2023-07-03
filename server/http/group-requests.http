@@ -1,0 +1,109 @@
+@url=http://localhost:8080/api/group
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MjQwMTMxfQ.ERDwYaX8Wln2DgF-47o9W9RkWMcjVfgcbJBoPrYUd3s
+
+###
+
+// FUNCTION: findGroupById
+// RETURNS: a Group
+// PATH: /:group
+// ACCESS: AUTH
+
+GET {{url}}/5
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: findGroupsByUserId
+// RETURNS: List of Groups
+// PATH: /user/:appUserId
+// ACCESS: AUTH
+
+GET {{url}}/user/1
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: findGroupsByEventId
+// RETURNS: List of Groups
+// PATH: /event/:savedEventId
+// ACCESS: AUTH
+
+GET {{url}}/event/1
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: createGroup
+// RETURNS: a Group
+// PATH: /
+// ACCESS: AUTH
+
+POST {{url}}
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+{
+  "appUserId": 1,
+  "name": "Immediate Family"
+}
+
+###
+
+// FUNCTION: updateGroup
+// RETURNS: a Group
+// PATH: /:groupId
+// ACCESS: AUTH
+
+PUT {{url}}/4
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+{
+  "groupId": 4,
+  "appUserId": 1,
+  "name": "Cosplay Friends"
+}
+
+###
+
+// FUNCTION: deleteGroup
+// RETURNS: void
+// PATH: /:groupId
+// ACCESS: AUTH
+
+DELETE {{url}}/4
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: addContactToGroup
+// RETURNS: void
+// PATH: /:contactId/:groupId
+// ACCESS: AUTH
+
+POST {{url}}/2/5
+Authorization:Bearer {{token}}
+
+###
+
+// FUNCTION: batchAddContactsToGroup
+// RETURNS: void
+// PATH: /:groupId
+// ACCESS: AUTH
+// POST BODY: array of ContactIds
+POST {{url}}/5
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+[3,5]
+
+###
+
+// FUNCTION: removeContactFromGroup
+// RETURNS: void
+// PATH: /:contactId/:groupId
+// ACCESS: AUTH
+
+DELETE {{url}}/5/5
+Authorization:Bearer {{token}}

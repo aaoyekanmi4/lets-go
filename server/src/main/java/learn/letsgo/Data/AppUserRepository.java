@@ -5,6 +5,9 @@ import learn.letsgo.Models.AppUser;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface AppUserRepository {
+
+    @Transactional
+    AppUser findById(int appUserId);
     @Transactional
     AppUser findByUsername(String username);
 

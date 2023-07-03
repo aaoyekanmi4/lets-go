@@ -6,6 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface EventRepository {
+
+    List<Event> findAll();
+
     Event findById(int eventId);
 
     @Transactional
@@ -14,7 +17,7 @@ public interface EventRepository {
     @Transactional
     boolean update(Event event);
 
-    boolean deleteById(Event event);
+    boolean deleteById(int eventId);
 
     List<Event> findAllByUserId(int appUserId);
 }

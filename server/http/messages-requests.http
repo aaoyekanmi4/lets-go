@@ -1,0 +1,90 @@
+@url=http://localhost:8080/api/message
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4Mzk2NjA2fQ.kq4IGIa19eG5IXKtq6n5MQ0dVdcH-0PSII_BT-b_aqY
+
+
+// FUNCTION: sendEmail
+// RETURNS: String that says "Message sent"
+// PATH: /sendEmail
+// ACCESS: Auth
+// POST BODY: EmailMessage Model
+
+POST {{url}}/sendEmail
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+"recipients":["aaoyekanmi4@gmail.com"],
+"savedEvent": {
+    "savedEventId": 12,
+    "appUserId": 1,
+    "event": {
+      "eventId": 4,
+      "eventName": "Janet Jackson Live!",
+      "category": "concert",
+      "imageUrl": "https://media.gettyimages.com/id/90717219/photo/janet-jackson-performs-onstage-during-the-2009-mtv-video-music-awards-at-radio-city-music-hall.jpg?s=612x612&w=gi&k=20&c=V1xKApqQC_hKVb8feevQuN2EFZsoJaTBcCtW_-6tFxw=",
+      "description": "",
+      "dateTime": "2012-03-09T19:00:00",
+      "source": "TicketMaster",
+      "sourceId": "721901",
+      "eventLink": "https://example.com",
+      "venue": {
+        "venueId": 1,
+        "venueName": "The Wine Cellar",
+        "address": "2222 Fifth St.",
+        "city": "New York",
+        "state": "NY",
+        "country": "United States",
+        "zipCode": 29292,
+        "events": []
+      },
+      "eventPosts": []
+    },
+    "groups": [],
+    "contacts": []
+  },
+  "eventDetailUrl": "https://www.google.com"
+}
+
+###
+// FUNCTION: sendSms
+// RETURNS: String that says "Message sent"
+// PATH: /sendSms
+// ACCESS: Auth
+// POST BODY: SMSMessage Model
+
+POST {{url}}/sendSMS
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+"recipient": "18325477840",
+"savedEvent": {
+  "savedEventId": 14,
+  "appUserId": 3,
+  "event": {
+    "eventId": 4,
+    "eventName": "Janet Jackson Live!",
+    "category": "concert",
+    "imageUrl": "https://media.gettyimages.com/id/90717219/photo/janet-jackson-performs-onstage-during-the-2009-mtv-video-music-awards-at-radio-city-music-hall.jpg?s=612x612&w=gi&k=20&c=V1xKApqQC_hKVb8feevQuN2EFZsoJaTBcCtW_-6tFxw=",
+    "description": "",
+    "dateTime": "2012-03-09T19:00:00",
+    "source": "TicketMaster",
+    "sourceId": "721901",
+    "eventLink": "https://example.com",
+    "venue": {
+      "venueId": 1,
+      "venueName": "The Wine Cellar",
+      "address": "2222 Fifth St.",
+      "city": "New York",
+      "state": "NY",
+      "country": "United States",
+      "zipCode": 29292,
+      "events": []
+    },
+    "eventPosts": []
+  },
+  "groups": [],
+  "contacts": []
+},
+  "eventDetailUrl": "https://www.google.com"
+}

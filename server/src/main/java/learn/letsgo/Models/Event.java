@@ -1,10 +1,13 @@
 package learn.letsgo.Models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Event {
     private int eventId;
+    private String eventName;
     private String category;
     private String imageUrl;
     private String description;
@@ -14,16 +17,16 @@ public class Event {
     private String eventLink;
     private Venue venue;
 
-    private List<AppUser> appUsers;
-
-    private List<EventPost> eventPosts;
+    private List<EventPost> eventPosts = new ArrayList<>();
 
     public Event(){
 
     }
 
-    public Event(String category, String imageUrl, String description, LocalDateTime dateTime, String source, String sourceId, String eventLink, Venue venue) {
+    public Event( String category, String eventName, String imageUrl,
+                 String description, LocalDateTime dateTime, String source, String sourceId, String eventLink, Venue venue) {
         this.category = category;
+        this.eventName = eventName;
         this.imageUrl = imageUrl;
         this.description = description;
         this.dateTime = dateTime;
@@ -39,6 +42,14 @@ public class Event {
 
     public void setEventId(int eventId) {
         this.eventId = eventId;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
     public String getCategory() {
@@ -103,5 +114,43 @@ public class Event {
 
     public void setVenue(Venue venue) {
         this.venue = venue;
+    }
+
+    public List<EventPost> getEventPosts() {
+        return new ArrayList<>(eventPosts);
+    }
+
+    public void setEventPosts(List<EventPost> eventPosts) {
+        this.eventPosts = eventPosts;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventId=" + eventId +
+                ", eventName='" + eventName + '\'' +
+                ", category='" + category + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", dateTime=" + dateTime +
+                ", source='" + source + '\'' +
+                ", sourceId='" + sourceId + '\'' +
+                ", eventLink='" + eventLink + '\'' +
+                ", venue=" + venue +
+                ", eventPosts=" + eventPosts +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return eventId == event.eventId && Objects.equals(eventName, event.eventName) && Objects.equals(category, event.category) && Objects.equals(imageUrl, event.imageUrl) && Objects.equals(description, event.description) && Objects.equals(dateTime, event.dateTime) && Objects.equals(source, event.source) && Objects.equals(sourceId, event.sourceId) && Objects.equals(eventLink, event.eventLink) && Objects.equals(venue, event.venue) && Objects.equals(eventPosts, event.eventPosts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventId, eventName, category, imageUrl, description, dateTime, source, sourceId, eventLink, venue, eventPosts);
     }
 }
