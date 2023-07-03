@@ -36,6 +36,7 @@ public class EmailService {
         this.userRepository = userRepository;
     }
 
+    //TODO REFACTOR INTO (AT LEAST) 2 METHODS
     public Result<Void> sendEmail(EmailMessage emailMessage) {
         Result<Void> result = validate(emailMessage);
         if (!result.isSuccess()) {
@@ -64,7 +65,6 @@ public class EmailService {
         }
 
         String eventDetailUrl = emailMessage.getEventDetailUrl();
-        System.out.println(eventDetailUrl);
 
         String body = String.format(templateStr, imageUrl, eventTitle, formattedDateTime,
                 venueName, formattedFullAddress, userFullName, eventDetailUrl);

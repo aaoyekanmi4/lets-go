@@ -67,16 +67,21 @@ public class ContactService {
             result.addMessage(ResultType.INVALID, "Contact cannot be null");
             return result;
         }
-
-        if (Helpers.isNullOrBlank(contact.getEmail())) {
-            result.addMessage(ResultType.INVALID, "Email is required");
-        }
         if (Helpers.isNullOrBlank(contact.getFirstName())
                 || Helpers.isNullOrBlank(contact.getLastName())) {
             result.addMessage(ResultType.INVALID, "First and last name are required");
         }
         if (Helpers.isNullOrBlank(contact.getPhone())) {
             result.addMessage(ResultType.INVALID, "Phone number is required");
+        }
+
+        if (Helpers.isNullOrBlank(contact.getEmail())) {
+            result.addMessage(ResultType.INVALID, "Email is required");
+            return result;
+        }
+
+        if (!Helpers.isValidEmail(contact.getEmail())) {
+            result.addMessage(ResultType.INVALID, "User must enter a valid email");
         }
 
         return result;

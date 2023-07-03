@@ -36,7 +36,7 @@ public class SMSService {
     private Result<String> validate(SMSMessage message) {
         Result<String> result = new Result<>();
         if (message == null) {
-            result.addMessage(ResultType.INVALID, "Message cannot not be null");
+            result.addMessage(ResultType.INVALID, "Message cannot be null");
             return result;
         }
         if (message.getSavedEvent().getAppUserId() == 0) {
@@ -44,6 +44,10 @@ public class SMSService {
         }
         if (Helpers.isNullOrBlank(message.getSavedEvent().getEvent().getEventName())) {
             result.addMessage(ResultType.INVALID, "Event name is required");
+        }
+
+        if (Helpers.isNullOrBlank(message.getRecipient())) {
+            result.addMessage(ResultType.INVALID, "Recipient is required");
         }
 
         if (Helpers.isNullOrBlank(message.getEventDetailUrl())) {

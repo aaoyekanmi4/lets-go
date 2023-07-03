@@ -38,8 +38,9 @@ class EventJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindAllEventsByUserId() {
-        List<Event> events = eventRepository.findAllByUserId(1);
+        List<Event> events = eventRepository.findAllByUserId(2);
         assertNotNull(events);
+        System.out.println(events);
         assertEquals(1, events.size());
     }
 

@@ -2,6 +2,7 @@ package learn.letsgo.Models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Group {
     private int groupId;
@@ -60,5 +61,18 @@ public class Group {
                 ", name='" + name + '\'' +
                 ", contacts=" + contacts +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
+        return groupId == group.groupId && appUserId == group.appUserId && Objects.equals(name, group.name) && Objects.equals(contacts, group.contacts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(groupId, appUserId, name, contacts);
     }
 }

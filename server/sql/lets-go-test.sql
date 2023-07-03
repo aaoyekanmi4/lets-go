@@ -61,7 +61,7 @@ create table `event` (
 		foreign key (venue_id)
 		references venue(venue_id),
 	constraint uq_source_source_id
-        unique (source, source_id)
+        unique (`source`, source_id)
 );
 
 create table saved_event (
@@ -73,7 +73,9 @@ create table saved_event (
 		references `event`(event_id),
 	constraint fk_saved_event_app_user_id
 		foreign key (app_user_id)
-		references app_user(app_user_id)    
+		references app_user(app_user_id),
+	constraint uq_event_id_app_user_id
+         unique (event_id, app_user_id)
 );
 
 create table event_post (
@@ -256,4 +258,14 @@ end //
 -- 4. Change the statement terminator back to the original.
 delimiter ;
 
-select * from event_post;
+select * from group_contact;
+
+SET SQL_SAFE_UPDATES = 0;
+call set_known_good_state;
+SET SQL_SAFE_UPDATES =1;
+
+select * from group_contact;
+
+insert into group_contact (group_id, contact_id) values (1,1);
+
+select * from group_contact where group_id=1; 

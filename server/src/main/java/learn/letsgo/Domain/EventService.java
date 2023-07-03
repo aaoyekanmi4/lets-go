@@ -1,9 +1,7 @@
 package learn.letsgo.Domain;
 
-import learn.letsgo.Data.EventRepository;
-import learn.letsgo.Data.SavedEventRepository;
-import learn.letsgo.Models.Event;
-import learn.letsgo.Models.SavedEvent;
+import learn.letsgo.Data.*;
+import learn.letsgo.Models.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +10,17 @@ import java.util.List;
 public class EventService {
     private final EventRepository eventRepository;
     private final SavedEventRepository savedEventRepository;
+    private final AppUserRepository appUserRepository;
+    private final GroupRepository groupRepository;
+    private final ContactRepository contactRepository;
 
-    public EventService(EventRepository eventRepository, SavedEventRepository savedEventRepository) {
+    public EventService(EventRepository eventRepository, SavedEventRepository savedEventRepository, AppUserRepository appUserRepository, GroupRepository groupRepository, ContactRepository contactRepository) {
         this.eventRepository = eventRepository;
         this.savedEventRepository = savedEventRepository;
+        this.appUserRepository = appUserRepository;
+        this.groupRepository = groupRepository;
+
+        this.contactRepository = contactRepository;
     }
 
     public List<Event> findAllByUserId(int appUserId) {
@@ -29,24 +34,32 @@ public class EventService {
     public SavedEvent findSavedEventForUser(int eventId, int appUserId) {
         return savedEventRepository.findSavedEventForUser(eventId, appUserId);
     }
-    //TODO test save event
+
     public Result<Event> saveEventToUser(Event event, int appUserId) {
         Result<Event> result = validate(event);
         if (!result.isSuccess()) {
             return result;
         }
         Event existingEvent = Helpers.findEventIfExists(event, eventRepository);
-        System.out.println(existingEvent);
+
         if (existingEvent != null) {
+            result = validateCanPerformBridgeAction(event.getEventId(), appUserId, true);
+            if (!result.isSuccess()) {
+                return result;
+            }
             boolean didAddEventToUser = savedEventRepository.addEventToUser(existingEvent.getEventId(), appUserId);
             if (!didAddEventToUser) {
                 result.addMessage(ResultType.INVALID, "Could not add event to saved events");
                 return result;
             }
-            result.setPayload(event);
+            result.setPayload(existingEvent);
         } else {
             Event newEvent = eventRepository.create(event);
             if (newEvent != null) {
+                result = validateCanPerformBridgeAction(newEvent.getEventId(), appUserId, true);
+                if (!result.isSuccess()) {
+                    return result;
+                }
                 boolean didAddEventToUser = savedEventRepository.addEventToUser(newEvent.getEventId(), appUserId);
                 if (!didAddEventToUser) {
                     result.addMessage(ResultType.INVALID, "Could not add event to saved events");
@@ -60,8 +73,8 @@ public class EventService {
         return result;
     }
 
-    public Result<Void> removeEventFromUser(int eventId, int appUserId) {
-        Result<Void> result = new Result<>();
+    public Result<Event> removeEventFromUser(int eventId, int appUserId) {
+        Result<Event> result = validateCanPerformBridgeAction(eventId, appUserId, false);
         boolean didRemoveEvent = savedEventRepository.removeEventFromUser(eventId, appUserId);
         if (!didRemoveEvent) {
             result.addMessage(ResultType.INVALID, "Could not remove event from saved events");
@@ -69,61 +82,7 @@ public class EventService {
         return result;
     }
 
-    public Result<Void> addContactToEvent(int contactId, int eventId, int appUserId) {
-        Result<Void> result = new Result<>();
-        Integer savedEventId = savedEventRepository.getSavedEventId(eventId, appUserId);
-        if (savedEventId == null) {
-            result.addMessage(ResultType.NOT_FOUND, "Saved event could not be found from given eventId and userId");
-            return result;
-        }
-        boolean didAddContactToEvent = savedEventRepository.addContactToEvent(contactId, savedEventId);
-        if (!didAddContactToEvent) {
-            result.addMessage(ResultType.INVALID, "Could not add contact to event");
-        }
-        return result;
-    }
 
-    public Result<Void> removeContactFromEvent(int contactId, int eventId, int appUserId) {
-        Result<Void> result = new Result<>();
-        Integer savedEventId = savedEventRepository.getSavedEventId(eventId, appUserId);
-        if (savedEventId == null) {
-            result.addMessage(ResultType.NOT_FOUND, "Saved event could not be found from given eventId and userId");
-            return result;
-        }
-        boolean didRemoveContactFromEvent = savedEventRepository.removeContactFromEvent(contactId, savedEventId);
-        if (!didRemoveContactFromEvent) {
-            result.addMessage(ResultType.INVALID, "Could not remove contact from event");
-        }
-        return result;
-    }
-
-    public Result<Void> addGroupToEvent(int groupId, int eventId, int appUserId) {
-        Result<Void> result = new Result<>();
-        Integer savedEventId = savedEventRepository.getSavedEventId(eventId, appUserId);
-        if (savedEventId == null) {
-            result.addMessage(ResultType.NOT_FOUND, "Saved event could not be found from given eventId and userId");
-            return result;
-        }
-        boolean didAddGroupToEvent = savedEventRepository.addGroupToEvent(groupId, savedEventId);
-        if (!didAddGroupToEvent) {
-            result.addMessage(ResultType.INVALID, "Could not add group to event");
-        }
-        return result;
-    }
-
-    public Result<Void> removeGroupFromEvent(int groupId, int eventId, int appUserId) {
-        Result<Void> result = new Result<>();
-        Integer savedEventId = savedEventRepository.getSavedEventId(eventId, appUserId);
-        if (savedEventId == null) {
-            result.addMessage(ResultType.NOT_FOUND, "Saved event could not be found from given eventId and userId");
-            return result;
-        }
-        boolean didRemoveContactFromEvent = savedEventRepository.removeGroupFromEvent(groupId, savedEventId);
-        if (!didRemoveContactFromEvent) {
-            result.addMessage(ResultType.INVALID, "Could not remove group from event");
-        }
-        return result;
-    }
 
     public Result<Event> update(Event event) {
         Result<Event> result = validate(event);
@@ -153,6 +112,38 @@ public class EventService {
         }
         if (event.getDateTime() == null) {
             result.addMessage(ResultType.INVALID, "Datetime is required");
+        }
+        return result;
+    }
+
+    //TODO REFACTOR 4: EventForUser, ContactsForGroup, GroupsForEvent, ContactsForEvent
+    private Result<Event> validateCanPerformBridgeAction(int eventId, int appUserId, boolean isAdding) {
+
+        Result<Event> result = new Result<>();
+
+        Event event = eventRepository.findById(eventId);
+
+        if (event == null) {
+            result.addMessage(ResultType.NOT_FOUND,
+                    String.format("Could not find event with eventId: %s", eventId));
+        }
+
+        AppUser user = appUserRepository.findById(appUserId);
+
+        if (user == null) {
+            result.addMessage(ResultType.NOT_FOUND,
+                    String.format("Could not find user with userId: %s", appUserId));
+        } else {
+            boolean alreadyHasEventSaved = user.getEvents()
+                    .stream().map(currEvent -> currEvent.getEventId()).anyMatch(id -> id == eventId);
+
+            if (alreadyHasEventSaved && isAdding) {
+                result.addMessage(ResultType.INVALID,
+                        String.format("Event with id %s already in saved events for user", eventId));
+            } else if (!alreadyHasEventSaved && !isAdding) {
+                result.addMessage(ResultType.INVALID,
+                        String.format("Event with id %s not in user's saved events for removal", eventId));
+            }
         }
         return result;
     }
