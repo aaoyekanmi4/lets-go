@@ -1,0 +1,80 @@
+.scroll {
+}
+.AddContacts {
+  position: relative;
+  &__view {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: scroll;
+    padding: 1.7rem 0rem;
+  }
+  &__selected {
+    &:not(:last-child) {
+      margin-right: 5rem;
+    }
+
+    text-align: center;
+    flex: 0 0 5rem;
+  }
+  &__selected-circle {
+    width: 3.7rem;
+    height: 3.7rem;
+    border-radius: 360px;
+    border: 2px solid var(--color-tertiary);
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
+  }
+  &__selected-name {
+  }
+  &__result {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__checkbox {
+    display: none;
+  }
+  &__circle {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    background-color: var(--color-light);
+    justify-content: center;
+    align-items: center;
+    border-radius: 360px;
+    border: 1px solid rgba(var(--color-black), 0.2);
+    &--selected {
+      background-color: #3944bc;
+    }
+  }
+  &__icon {
+    font-size: 1.2rem;
+    color: white;
+  }
+  &__suggestions {
+    max-height: 30rem;
+    padding-right: 1.8rem;
+    overflow-y: scroll;
+    margin-bottom: 1.3rem;
+  }
+  &__detail-text {
+    color: rgba(var(--color-black), 0.5);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  &__error {
+    color: red;
+    position: absolute;
+    left: 0;
+    top: 6.8rem;
+    font-size: 1.5rem;
+  }
+
+  .AddContacts__circle:hover {
+    border: 1px solid #3944bc;
+  }
+}

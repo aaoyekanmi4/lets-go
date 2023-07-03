@@ -1,0 +1,10 @@
+.Contacts {
+  padding-bottom: 4rem;
+  &__container {
+    margin-top: 5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+    justify-content: center;
+    grid-gap: 3rem;
+  }
+}

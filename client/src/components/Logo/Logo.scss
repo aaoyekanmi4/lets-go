@@ -1,0 +1,12 @@
+.Logo {
+  cursor: pointer;
+  text-decoration: none;
+  padding: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  &__icon {
+    margin-left: 0.4rem;
+    color: red;
+    transform: rotate(-10deg) translatey(-0.8rem);
+  }
+}
