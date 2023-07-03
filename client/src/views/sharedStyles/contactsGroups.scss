@@ -1,0 +1,20 @@
+.GeneralLayout {
+  &__main {
+    margin-top: 3rem;
+    .SearchField__input {
+      font-size: 2.3rem;
+      &::placeholder {
+        font-size: 2.3rem;
+      }
+    }
+    .SearchField__icon {
+      font-size: 2.3rem;
+    }
+  }
+  &__search-field-container {
+    width: 44rem;
+    height: 7rem;
+    margin: auto;
+    background-color: red;
+  }
+}

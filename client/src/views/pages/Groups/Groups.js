@@ -1,22 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import Header from "../../../components/Header/Header.js";
 import GroupCard from "../../../components/GroupCard/GroupCard.js";
+import SearchField from "../../../components/SearchField/SearchField.js";
+import "../../sharedStyles/contactsGroups.scss";
+import "./Groups.scss";
 
 const Groups = () => {
   const groups = useSelector((state) => {
     return state.groups;
   });
 
-  const renderedGroups = groups.map((group) => {
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    getFilteredGroups();
+  }, [searchValue]);
+
+  const getFilteredGroups = () => {
+    return groups.filter((group) => {
+      return group.name.toLowerCase().includes(searchValue.toLowerCase());
+    });
+  };
+
+  const renderedGroups = getFilteredGroups().map((group) => {
     return <GroupCard key={group.groupId} groupName={group.name} />;
   });
 
   return (
     <div className="Groups">
       <Header />
-      <div className="Groups__container container">{renderedGroups}</div>
+      <main className="GeneralLayout__main">
+        <div className="container">
+          <div className="GeneralLayout__search-field-container">
+            <SearchField
+              placeholder="Search group..."
+              value={searchValue}
+              onChange={setSearchValue}
+              onSearch={() => {}}
+            />
+          </div>
+          <div className="Groups__container">{renderedGroups}</div>
+        </div>
+      </main>
     </div>
   );
 };

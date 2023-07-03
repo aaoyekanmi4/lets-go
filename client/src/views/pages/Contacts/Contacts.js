@@ -5,6 +5,7 @@ import Header from "../../../components/Header/Header.js";
 import SearchField from "../../../components/SearchField/SearchField.js";
 import ContactCard from "../../../components/ContactCard/ContactCard.js";
 import "./Contacts.scss";
+import "../../sharedStyles/contactsGroups.scss";
 
 const Contacts = () => {
   const contacts = useSelector((state) => {
@@ -42,9 +43,9 @@ const Contacts = () => {
   return (
     <div className="Contacts">
       <Header />
-      <main className="Contacts__main">
+      <main className="GeneralLayout__main">
         <div className="container">
-          <div className="Contacts__search-field-container">
+          <div className="GeneralLayout__search-field-container">
             <SearchField
               placeholder="Search contact..."
               value={searchValue}
@@ -53,7 +54,7 @@ const Contacts = () => {
             />
           </div>
 
-          <div className="Contacts__main-container">{renderedContacts}</div>
+          <div className="Contacts__container">{renderedContacts}</div>
         </div>
       </main>
     </div>

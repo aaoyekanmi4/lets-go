@@ -51,7 +51,7 @@ const Header = () => {
             <li>
               <Link
                 className="button-text button-text--secondary"
-                to="/contacts"
+                to={`/events/${user.appUserId}`}
               >
                 My Events
               </Link>
@@ -59,7 +59,7 @@ const Header = () => {
             <li>
               <Link
                 className="button-text button-text--secondary"
-                to="/contacts"
+                to={`/contacts/${user.appUserId}`}
               >
                 My Contacts
               </Link>
@@ -67,7 +67,7 @@ const Header = () => {
             <li>
               <Link
                 className="button-text button-text--secondary"
-                to="/contacts"
+                to={`/groups/${user.appUserId}`}
               >
                 My Groups
               </Link>
@@ -143,19 +143,19 @@ const Header = () => {
               <TextButtonDropdown buttonName="My Personals">
                 <Link
                   className="button-text button-text--primary"
-                  to="/contacts"
+                  to={`/events/${user.appUserId}`}
                 >
                   My Events
                 </Link>
                 <Link
                   className="button-text button-text--primary"
-                  to="/contacts"
+                  to={`/contacts/${user.appUserId}`}
                 >
                   My Contacts
                 </Link>
                 <Link
                   className="button-text button-text--primary"
-                  to="/contacts"
+                  to={`/groups/${user.appUserId}`}
                 >
                   My Groups
                 </Link>

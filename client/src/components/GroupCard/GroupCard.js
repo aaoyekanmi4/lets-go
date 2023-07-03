@@ -4,12 +4,12 @@ import "./GroupCard.scss";
 
 const GroupCard = ({ groupName }) => {
   return (
-    <div className="GroupCard">
-      <div className="GroupCard__content">
-        <h2 className="GroupCard__name">{groupName}</h2>
+    <button className="GroupCard">
+      <span className="GroupCard__content">
+        <span className="GroupCard__name">{groupName}</span>
         <FaBullhorn className="GroupCard__icon" />
-      </div>
-    </div>
+      </span>
+    </button>
   );
 };
 

@@ -1,0 +1,12 @@
+.Groups {
+  padding-bottom: 3rem;
+  &__container {
+    margin-top: 5rem;
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    .GroupCard {
+      margin-bottom: 2rem;
+    }
+  }
+}

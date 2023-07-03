@@ -1,11 +1,28 @@
 .GroupCard {
-  margin-left: 5rem;
-  margin-bottom: 2rem;
-  height: auto;
-  display: inline-block;
+  display: block;
   background-color: var(--color-dark);
-
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
   color: var(--color-light);
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    background: linear-gradient(
+      90deg,
+      rgba(239, 94, 110, 1) 9%,
+      rgba(255, 107, 107, 1) 47%,
+      rgba(180, 43, 119, 1) 100%,
+      rgba(174, 38, 120, 1) 100%,
+      rgba(128, 0, 128, 1) 100%
+    );
+    top: 0;
+    left: 0;
+    width: 102%;
+    height: 109%;
+    z-index: -1;
+  }
   &__content {
     display: flex;
     align-items: center;
