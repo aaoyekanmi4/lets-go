@@ -40,11 +40,15 @@
   border: none;
   border-radius: 2rem;
   font-size: 2rem;
+  &:hover {
+    transform: scale(1.05);
+  }
   &--primary {
     background-color: var(--color-tertiary);
     color: var(--color-light);
-    &:hover {
-      transform: scale(1.05);
-    }
+  }
+  &--danger {
+    background-color: red;
+    color: var(--color-light);
   }
 }

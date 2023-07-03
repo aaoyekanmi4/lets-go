@@ -7,7 +7,7 @@ import DeleteContactModal from "../../views/pages/Contacts/DeleteContactModal/De
 import "./ContactCard.scss";
 
 const ContactCard = ({ firstName, lastName, phone, email }) => {
-  const [showDeleteContactModal, setShowDeleteContactModal] = useState(true);
+  const [showDeleteContactModal, setShowDeleteContactModal] = useState(false);
 
   const getUpdatedPhoneFormat = () => {
     let newPhone = phone;
@@ -60,7 +60,9 @@ const ContactCard = ({ firstName, lastName, phone, email }) => {
 
       {showDeleteContactModal ? (
         <DeleteContactModal
-          closeModal={setShowDeleteContactModal(false)}
+          closeModal={() => {
+            setShowDeleteContactModal(false);
+          }}
           firstName={firstName}
           lastName={lastName}
           email={email}

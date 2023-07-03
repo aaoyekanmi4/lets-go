@@ -10,7 +10,7 @@ const ModalContainer = ({ closeModal, children }) => {
        justify-content-center align-items-center"
     >
       <button
-        className="ModalContainer__close-button anchor-button anchor-button--light"
+        className="ModalContainer__close-button button-text button-text--secondary"
         onClick={closeModal}
       >
         Close
