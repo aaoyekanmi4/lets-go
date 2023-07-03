@@ -6,7 +6,7 @@
   color: #8a4fff;
   color: var(--color-tertiary);
   position: relative;
-  padding: 2rem;
+  padding: 2rem 1rem;
   &__upper-border,
   &__lower-border {
     position: absolute;
@@ -49,8 +49,8 @@
   }
   &__circle-gradient {
     margin: 0 auto;
-    height: 11rem;
-    width: 11rem;
+    height: 9rem;
+    width: 9rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,8 +65,8 @@
     );
   }
   &__circle {
-    height: 10rem;
-    width: 10rem;
+    height: 8rem;
+    width: 8rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,11 +75,14 @@
   }
   &__letter {
     text-transform: capitalize;
-    font-size: 5.4rem;
+    font-size: 3rem;
+    &:first-child {
+      margin-right: 0.2rem;
+    }
   }
   &__name {
     text-align: center;
-    font-size: 1.9rem;
+    font-size: 2rem;
     margin-top: 1rem;
     margin-bottom: 2rem;
   }

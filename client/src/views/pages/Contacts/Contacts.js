@@ -7,6 +7,7 @@ import "./Contacts.scss";
 
 const Contacts = () => {
   const contacts = useSelector((state) => {
+    console.log("ds");
     return state.contacts;
   });
 

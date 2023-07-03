@@ -26,7 +26,7 @@ const Home = () => {
         phone="6788022654"
       />
       <Link
-        to="/contacts/1
+        to="/contacts/create
       "
       >
         Create Group
