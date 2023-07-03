@@ -5,6 +5,8 @@ import backendRegisterErrors from "./backendRegisterErrors.js";
 import backendLoginErrors from "./backendLoginErrors.js";
 import contacts from "./contacts.js";
 import contactsErrors from "./contactsErrors.js";
+import groups from "./groups.js";
+import groupsErrors from "./groupsErrors.js";
 
 export default combineReducers({
   user,
@@ -12,4 +14,6 @@ export default combineReducers({
   backendLoginErrors,
   contacts,
   contactsErrors,
+  groups,
+  groupsErrors,
 });

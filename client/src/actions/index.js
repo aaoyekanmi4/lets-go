@@ -8,6 +8,8 @@ import {
 
 import { getContacts } from "./contacts.js";
 
+import { getGroups } from "./groups.js";
+
 export {
   loginUser,
   createUser,
@@ -15,4 +17,5 @@ export {
   clearBackendRegisterErrors,
   clearBackendLoginErrors,
   getContacts,
+  getGroups,
 };

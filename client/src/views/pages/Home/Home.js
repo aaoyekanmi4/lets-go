@@ -26,22 +26,12 @@ const Home = () => {
         phone="6788022654"
       />
       <Link
-        to="/groups/create
+        to="/contacts/1
       "
       >
         Create Group
       </Link>
       <GroupCard groupName="The Ballers we call" />
-      <CreateGroup
-        contacts={[
-          "Elizah Jenkins",
-          "Matt Owen",
-          "Eric Baffour-Addo",
-          "Seasoned Dunkin",
-          "Ada Driver",
-          "Rebeccah Soles",
-        ]}
-      />
       <EventList />
     </div>
   );

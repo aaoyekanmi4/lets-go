@@ -54,7 +54,7 @@
     color: white;
   }
   &__suggestions {
-    height: 30rem;
+    max-height: 30rem;
     overflow-y: scroll;
   }
   &__detail-text {

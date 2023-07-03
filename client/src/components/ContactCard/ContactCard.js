@@ -5,7 +5,7 @@ import { FaTrashCan } from "react-icons/fa6";
 
 import "./ContactCard.scss";
 
-const ContactCard = ({ firstName, lastName, phone, email, groups }) => {
+const ContactCard = ({ firstName, lastName, phone, email }) => {
   const getUpdatedPhoneFormat = () => {
     let newPhone = phone;
     if (phone.length === 10) {
@@ -28,6 +28,7 @@ const ContactCard = ({ firstName, lastName, phone, email, groups }) => {
       <div className="ContactCard__circle-gradient">
         <div className="ContactCard__circle">
           <p className="ContactCard__letter">{firstName.split("")[0]}</p>
+          <p className="ContactCard__letter">{lastName.split("")[0]}</p>
         </div>
       </div>
       <h2 className="ContactCard__name">{`${firstName} ${lastName}`}</h2>

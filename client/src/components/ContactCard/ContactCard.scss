@@ -1,7 +1,6 @@
 .ContactCard {
-  margin-left: 50rem;
-  width: 30rem;
-  height: 30rem;
+  border: 0.5px solid var(--color-secondary);
+  width: 100%;
   border-radius: 15px;
   background-color: var(--color-light);
   color: #8a4fff;
@@ -75,10 +74,12 @@
     border-radius: 360px;
   }
   &__letter {
-    font-size: 6rem;
+    text-transform: capitalize;
+    font-size: 5.4rem;
   }
   &__name {
     text-align: center;
+    font-size: 1.9rem;
     margin-top: 1rem;
     margin-bottom: 2rem;
   }

@@ -2,7 +2,7 @@ import React from "react";
 import { FaBullhorn } from "react-icons/fa";
 import "./GroupCard.scss";
 
-const GroupCard = ({ groupName, contacts }) => {
+const GroupCard = ({ groupName }) => {
   return (
     <div className="GroupCard">
       <div className="GroupCard__content">
