@@ -1,0 +1,82 @@
+.Form {
+  padding: 3rem;
+  background-color: var(--color-light);
+  border: 2px solid rgba(var(--color-black), 0.1);
+  color: var(--color-dark);
+  position: relative;
+
+  &__upper-style {
+    position: absolute;
+    width: 100%;
+    height: 2rem;
+    background-color: var(--color-secondary);
+    top: 0rem;
+    left: 0rem;
+  }
+  &__header {
+    text-align: center;
+    margin-bottom: 2.3rem;
+    color: var(--color-tertiary);
+  }
+  &__backend-errors {
+    padding: 0.5rem 1rem;
+    background-color: red;
+    color: var(--color-light);
+    font-size: 1.9rem;
+    margin-bottom: 1.5rem;
+  }
+  &__backend-error:not(:last-child) {
+    margin-bottom: 0.4rem;
+  }
+  &__group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2.7rem;
+    position: relative;
+    &:last-of-type {
+      margin-bottom: 4rem;
+    }
+  }
+  &__double-group {
+    display: flex;
+    margin-bottom: 2.7rem;
+    & > *:not(:first-child) {
+      margin-left: 4rem;
+    }
+
+    .Form__group {
+      &:last-of-type {
+        margin-bottom: 2.7rem;
+      }
+    }
+  }
+  &__input {
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--color-dark);
+    font-size: 2rem;
+    transition: border-bottom 200ms ease-in;
+    width: 100%;
+    &--normal {
+      border-bottom: 2px solid var(--color-tertiary);
+    }
+    &--error {
+      border-bottom: 2px solid red;
+    }
+  }
+  &__label {
+    color: var(--color-tertiary);
+    font-size: 1.9rem;
+    margin-bottom: 0.2rem;
+  }
+  &__error {
+    position: absolute;
+    font-size: 1.5rem;
+    top: 100%;
+    left: 0;
+    color: red;
+  }
+  &__link-text {
+    color: var(--color-tertiary);
+  }
+}

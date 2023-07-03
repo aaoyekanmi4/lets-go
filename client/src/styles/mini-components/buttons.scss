@@ -1,0 +1,54 @@
+.button-outline {
+  display: flex;
+  text-decoration: none;
+  padding: 1rem 1.5rem;
+  font-size: var(--fs-400);
+  background-color: transparent;
+  cursor: pointer;
+  &--primary {
+    color: var(--color-tertiary);
+    border: 2px solid var(--color-tertiary);
+    &:hover {
+      background-color: var(--color-tertiary);
+      color: white;
+      transition: background-color 300ms ease-in;
+    }
+  }
+}
+
+.button-text {
+  font-size: 2rem;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  &:hover {
+    text-decoration: underline;
+  }
+  &--primary {
+    color: var(--color-tertiary);
+  }
+  &--secondary {
+    color: var(--color-primary);
+  }
+}
+
+.button-main {
+  cursor: pointer;
+  width: 100%;
+  padding: 1rem 3rem;
+  border: none;
+  border-radius: 2rem;
+  font-size: 2rem;
+  &:hover {
+    transform: scale(1.05);
+  }
+  &--primary {
+    background-color: var(--color-tertiary);
+    color: var(--color-light);
+  }
+  &--danger {
+    background-color: red;
+    color: var(--color-light);
+  }
+}
