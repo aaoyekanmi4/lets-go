@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import Header from "../../../components/Header/Header.js";
-import ModalContainer from "../../../components/ModalContainer/ModalContainer.js";
 import SearchField from "../../../components/SearchField/SearchField.js";
 import ContactCard from "../../../components/ContactCard/ContactCard.js";
 import "./Contacts.scss";
@@ -35,6 +34,7 @@ const Contacts = () => {
         lastName={contact.lastName}
         phone={contact.phone}
         email={contact.email}
+        contactId={contact.contactId}
       />
     );
   });

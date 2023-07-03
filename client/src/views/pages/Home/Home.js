@@ -4,7 +4,6 @@ import Header from "../../../components/Header/Header.js";
 import EventCard from "../../../components/EventCard/EventCard.js";
 import ContactCard from "../../../components/ContactCard/ContactCard.js";
 import GroupCard from "../../../components/GroupCard/GroupCard.js";
-import CreateGroup from "../../../components/forms/CreateGroupForm/CreateGroupForm.js";
 import EventList from "../../../components/EventList/EventList.js";
 
 import "./Home.scss";

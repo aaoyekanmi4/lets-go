@@ -1,5 +1,3 @@
-import validator from "validator";
-
 import {
   validateFirstName,
   validateLastName,

@@ -5,16 +5,12 @@ import getBackendErrorMessages from "../../../getBackendErrorMessages.js";
 
 const createContact = async (contactData, jwtToken) => {
   try {
-    const response = await axios.post(
-      `${baseUrls.database}/api/contact`,
-      contactData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      }
-    );
+    await axios.post(`${baseUrls.database}/api/contact`, contactData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    });
 
     return {
       status: 201,

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import moment from "moment";
 
 import Logo from "../Logo/Logo.js";
 import TextButtonDropdown from "../TextButtonDropdown/TextButtonDropdown.js";

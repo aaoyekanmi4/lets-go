@@ -1,4 +1,7 @@
-const getBackendErrorMessages = (e) => {
+const getBackendErrorMessages = (
+  e,
+  customMessage = "Something went wrong. Try again later"
+) => {
   let errorMessages;
 
   if (e.response.status === 403) {
@@ -7,7 +10,7 @@ const getBackendErrorMessages = (e) => {
   }
 
   if (!e.response.data) {
-    errorMessages = ["Something went wrong. Try again later"];
+    errorMessages = [customMessage];
   } else if (e.response.data.message) {
     errorMessages = [e.response.data.message];
   } else {

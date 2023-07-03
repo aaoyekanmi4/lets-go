@@ -1,13 +1,36 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineMail } from "react-icons/ai";
 import { BsTelephone, BsPencil } from "react-icons/bs";
 import { FaTrashCan } from "react-icons/fa6";
-import DeleteContactModal from "../../views/pages/Contacts/DeleteContactModal/DeleteContactModal.js";
 
+import DeleteContactModal from "../../views/pages/Contacts/DeleteContactModal/DeleteContactModal.js";
+import { deleteContact } from "./helpers.js";
+import { getContacts } from "../../actions";
 import "./ContactCard.scss";
 
-const ContactCard = ({ firstName, lastName, phone, email }) => {
+const ContactCard = ({ contactId, firstName, lastName, phone, email }) => {
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => {
+    return state.user;
+  });
+
   const [showDeleteContactModal, setShowDeleteContactModal] = useState(false);
+
+  const [backendErrors, setBackendErrors] = useState([]);
+
+  const onDelete = async () => {
+    const response = await deleteContact(contactId, user.jwtToken);
+
+    if (response.status === 204) {
+      await dispatch(getContacts());
+
+      setShowDeleteContactModal(false);
+    } else {
+      setBackendErrors(response.errorMessages);
+    }
+  };
 
   const getUpdatedPhoneFormat = () => {
     let newPhone = phone;
@@ -63,6 +86,7 @@ const ContactCard = ({ firstName, lastName, phone, email }) => {
           closeModal={() => {
             setShowDeleteContactModal(false);
           }}
+          onDelete={onDelete}
           firstName={firstName}
           lastName={lastName}
           email={email}

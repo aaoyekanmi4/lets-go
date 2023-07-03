@@ -1,14 +1,26 @@
 import types from "../actions/types.js";
 
-const defaultUser = null;
+let defaultUser = null;
+
+defaultUser = localStorage.getItem("user");
+
+if (defaultUser) {
+  defaultUser = JSON.parse(defaultUser);
+}
 
 const user = (state = defaultUser, action) => {
   switch (action.type) {
     case types.LOGIN_USER:
     case types.CREATE_USER:
-    case types.REFRESH_TOKEN:
+    case types.REFRESH_TOKEN: {
+      const userString = JSON.stringify(action.payload);
+
+      localStorage.setItem("user", userString);
+
       return action.payload;
+    }
     case types.LOGOUT_USER:
+      localStorage.removeItem("user");
       return null;
     default:
       return state;

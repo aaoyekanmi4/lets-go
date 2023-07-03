@@ -3,13 +3,19 @@ import ModalContainer from "../../../../components/ModalContainer/ModalContainer
 
 import "./DeleteContactModal.scss";
 
-const DeleteContactModal = ({ closeModal, firstName, lastName, email }) => {
+const DeleteContactModal = ({
+  closeModal,
+  onDelete,
+  firstName,
+  lastName,
+  email,
+}) => {
   return (
     <ModalContainer closeModal={closeModal}>
       <div className="DeleteCard">
         <p className="DeleteCard__text">
           Are you sure you want to delete agent{" "}
-          <span className="fw-bold">{`"${firstName} ${lastName}"?`}</span>
+          <span className="">{`"${firstName} ${lastName}"?`}</span>
         </p>
         <div className="DeleteCard__actions">
           <button
@@ -20,7 +26,7 @@ const DeleteContactModal = ({ closeModal, firstName, lastName, email }) => {
           </button>
           <button
             className="button-main button-main--primary"
-            onClick={() => {}}
+            onClick={onDelete}
           >
             Delete
           </button>
