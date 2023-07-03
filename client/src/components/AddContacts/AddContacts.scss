@@ -1,3 +1,5 @@
+.scroll {
+}
 .AddContacts {
   position: relative;
   &__view {
@@ -55,6 +57,7 @@
   }
   &__suggestions {
     max-height: 30rem;
+    padding-right: 1.8rem;
     overflow-y: scroll;
     margin-bottom: 1.3rem;
   }
