@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
+import { defaultGroupValues } from "../../../components/forms/defaultValues.js";
 import Header from "../../../components/Header/Header.js";
 import CreateGroupForm from "../../../components/forms/CreateGroupForm/CreateGroupForm.js";
 import "../../sharedStyles/formPage.scss";
@@ -14,7 +15,10 @@ const CreateGroup = () => {
     <div className="CreateGroup">
       <Header />
       <main className="form-page__main">
-        <CreateGroupForm contacts={contacts} />
+        <CreateGroupForm
+          contacts={contacts}
+          initialFormValues={defaultGroupValues}
+        />
       </main>
     </div>
   );

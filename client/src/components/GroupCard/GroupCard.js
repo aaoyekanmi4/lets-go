@@ -50,7 +50,7 @@ const GroupCard = ({ groupId, groupName, setDeleteResultIndicator }) => {
         </span>
         <span
           onClick={() => {
-            navigate(`/contacts/edit/${groupId}`);
+            navigate(`/groups/edit/${groupId}`);
           }}
           className="GroupCard__action-button GroupCard__pencil"
         >

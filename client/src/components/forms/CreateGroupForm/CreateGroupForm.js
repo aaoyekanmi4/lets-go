@@ -12,7 +12,7 @@ import { createGroup } from "./helpers.js";
 import "./CreateGroupForm.scss";
 import "../form.scss";
 
-const CreateGroupForm = ({ contacts }) => {
+const CreateGroupForm = ({ type, contacts, initialFormValues }) => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -21,16 +21,17 @@ const CreateGroupForm = ({ contacts }) => {
     return state.user;
   });
 
-  const [formValues, setFormValues] = useState({
-    name: "",
-    contacts: [],
-  });
+  const [formValues, setFormValues] = useState(initialFormValues);
 
   const [formErrors, setFormErrors] = useState({});
 
   const [isFrontendValidated, setIsFrontendValidated] = useState(false);
 
   const [backendErrors, setBackendErrors] = useState([]);
+
+  useEffect(() => {
+    setFormValues(initialFormValues);
+  }, [initialFormValues]);
 
   useEffect(() => {
     const run = async () => {
@@ -80,7 +81,9 @@ const CreateGroupForm = ({ contacts }) => {
   return (
     <form className="CreateGroupForm Form" onSubmit={runFrontendValidation}>
       <div className="Form__upper-style"></div>
-      <h1 className="Form__header">Create Group</h1>
+      <h1 className="Form__header">
+        {type === "create" ? "Create Group" : "Edit Group"}
+      </h1>
       <ErrorsContainer errorsArray={backendErrors} />
       <TextInput
         type="text"
@@ -102,10 +105,11 @@ const CreateGroupForm = ({ contacts }) => {
         data={contacts}
         error={formErrors.contacts}
         onChange={onInputChange}
+        initialSelectedContacts={formValues.contacts}
       />
 
       <button className="button-main button-main--primary" type="submit">
-        Submit
+        {type === "create" ? "Submit" : "Update"}
       </button>
     </form>
   );

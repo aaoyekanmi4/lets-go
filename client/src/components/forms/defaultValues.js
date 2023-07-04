@@ -15,6 +15,11 @@ const defaultRegisterValues = {
   password: "",
 };
 
+const defaultGroupValues = {
+  name: "",
+  contacts: [],
+};
+
 const defaultLoginValues = {
   username: "",
   password: "",
@@ -24,4 +29,5 @@ export {
   defaultCreateContactValues,
   defaultRegisterValues,
   defaultLoginValues,
+  defaultGroupValues,
 };

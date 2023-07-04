@@ -6,7 +6,7 @@ import { getEditContactFunction, findContact } from "./helpers.js";
 
 import { defaultCreateContactValues } from "../../../components/forms/defaultValues.js";
 import Header from "../../../components/Header/Header.js";
-import CreateContactForm from "../../../components/forms/ContactForm/ContactForm.js";
+import ContactForm from "../../../components/forms/ContactForm/ContactForm.js";
 import "../../sharedStyles/formPage.scss";
 
 const EditContact = () => {
@@ -30,7 +30,7 @@ const EditContact = () => {
     <div className="EditContact">
       <Header />
       <main className="form-page__main">
-        <CreateContactForm
+        <ContactForm
           initialFormValues={formValues}
           type="edit"
           sendData={editContact}

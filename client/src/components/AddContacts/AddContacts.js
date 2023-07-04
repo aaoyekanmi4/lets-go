@@ -4,14 +4,16 @@ import { ImCheckmark } from "react-icons/im";
 import SearchField from "../SearchField/SearchField.js";
 import "./AddContacts.scss";
 
-const AddContacts = ({ data, onChange, error }) => {
+const AddContacts = ({ data, onChange, error, initialSelectedContacts }) => {
   const [allContacts, setAllContacts] = useState(data);
 
   const [suggestedContacts, setSuggestedContacts] = useState(
     allContacts.slice(0, 20)
   );
 
-  const [selectedContacts, setSelectedContacts] = useState([]);
+  const [selectedContacts, setSelectedContacts] = useState(
+    initialSelectedContacts
+  );
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -20,13 +22,18 @@ const AddContacts = ({ data, onChange, error }) => {
     setSuggestedContacts(data.slice(0, 20));
   }, [data]);
 
+  //when initialSelectedContacts changes,so from [] to [{}] update selected contacts
+  useEffect(() => {
+    setSelectedContacts(initialSelectedContacts);
+  }, [initialSelectedContacts]);
+
   //when selectedContacts change, update the contacts values the in parent createGroupForm
   //component
   useEffect(() => {
     onChange("contacts", selectedContacts);
   }, [selectedContacts]);
 
-  //when search value changes, get filteredResults
+  //when search value changes, get filteredResults/suggested contacts
   useEffect(() => {
     onSearch();
   }, [searchValue]);
