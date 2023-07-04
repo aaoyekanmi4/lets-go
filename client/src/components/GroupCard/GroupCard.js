@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { getGroups } from "../../actions";
 import { FaBullhorn } from "react-icons/fa";
+import ViewGroupModal from "../../views/pages/Groups/ViewGroupModal/ViewGroupModal.js";
 import { deleteGroup } from "./helpers.js";
 import DeleteModal from "../DeleteModal/DeleteModal.js";
 import { BsPencil } from "react-icons/bs";
@@ -21,6 +22,8 @@ const GroupCard = ({ groupId, groupName, setDeleteResultIndicator }) => {
 
   const [showDeleteGroupModal, setShowDeleteGroupModal] = useState(false);
 
+  const [showViewGroupModal, setShowViewGroupModal] = useState(false);
+
   const [backendDeleteErrors, setBackendDeleteErrors] = useState([]);
 
   const onDelete = async () => {
@@ -32,25 +35,33 @@ const GroupCard = ({ groupId, groupName, setDeleteResultIndicator }) => {
       displayResultIndicator("success");
     } else {
       setBackendDeleteErrors(response.errorMessages);
+
       displayResultIndicator("fail");
     }
   };
 
   const displayResultIndicator = (type) => {
     setDeleteResultIndicator({ show: true, type: type });
+
     setShowDeleteGroupModal(false);
   };
 
   return (
     <>
-      <button className="GroupCard" onClick={() => {}}>
+      <button
+        className="GroupCard"
+        onClick={() => {
+          setShowViewGroupModal(true);
+        }}
+      >
         <span className="GroupCard__content">
           <span className="GroupCard__name">{groupName}</span>
           <FaBullhorn className="GroupCard__icon" />
         </span>
         <span
-          onClick={() => {
+          onClick={(e) => {
             navigate(`/groups/edit/${groupId}`);
+            e.stopPropagation();
           }}
           className="GroupCard__action-button GroupCard__pencil"
         >
@@ -68,7 +79,6 @@ const GroupCard = ({ groupId, groupName, setDeleteResultIndicator }) => {
           <FaTrashCan />
         </span>
       </button>
-
       {showDeleteGroupModal ? (
         <DeleteModal
           closeModal={() => {
@@ -76,11 +86,21 @@ const GroupCard = ({ groupId, groupName, setDeleteResultIndicator }) => {
           }}
           message={
             <p className="DeleteCard__text">
-              Are you sure you want to delete group
+              Are you sure you want to delete group{" "}
               <span className="DeleteCard__name">{`"${groupName}"?`}</span>
             </p>
           }
           onDelete={onDelete}
+        />
+      ) : null}
+
+      {showViewGroupModal ? (
+        <ViewGroupModal
+          closeModal={() => {
+            setShowViewGroupModal(false);
+          }}
+          groupId={groupId}
+          jwtToken={user.jwtToken}
         />
       ) : null}
     </>

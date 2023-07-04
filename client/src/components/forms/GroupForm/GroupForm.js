@@ -8,11 +8,10 @@ import ErrorsContainer from "../ErrorsContainer/ErrorsContainer.js";
 import { validateField } from "./validator.js";
 import { validateAllFields } from "../validators.js";
 import AddContacts from "../../AddContacts/AddContacts.js";
-import { createGroup } from "./helpers.js";
 import "./GroupForm.scss";
 import "../form.scss";
 
-const GroupForm = ({ type, contacts, initialFormValues }) => {
+const GroupForm = ({ type, contacts, initialFormValues, sendData }) => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -46,13 +45,13 @@ const GroupForm = ({ type, contacts, initialFormValues }) => {
 
       setIsFrontendValidated(false);
 
-      const response = await createGroup(
+      const response = await sendData(
         { name: formValues.name, appUserId: user.appUserId },
         formValues.contacts.map((contact) => contact.contactId),
         user.jwtToken
       );
 
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 204) {
         await dispatch(getGroups());
 
         navigate(`/groups/${user.appUserId}`);

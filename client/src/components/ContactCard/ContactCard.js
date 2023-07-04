@@ -109,7 +109,7 @@ const ContactCard = ({
           }}
           message={
             <p className="DeleteCard__text">
-              Are you sure you want to delete agent{" "}
+              Are you sure you want to delete contact{" "}
               <span className="DeleteCard__name">{`"${firstName} ${lastName}"?`}</span>
             </p>
           }

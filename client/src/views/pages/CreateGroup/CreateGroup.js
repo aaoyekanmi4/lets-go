@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { defaultGroupValues } from "../../../components/forms/defaultValues.js";
 import Header from "../../../components/Header/Header.js";
 import GroupForm from "../../../components/forms/GroupForm/GroupForm.js";
+import { createGroup } from "./helpers.js";
 import "../../sharedStyles/formPage.scss";
 
 const CreateGroup = () => {
@@ -19,6 +20,7 @@ const CreateGroup = () => {
           contacts={contacts}
           initialFormValues={defaultGroupValues}
           type="create"
+          sendData={createGroup}
         />
       </main>
     </div>
