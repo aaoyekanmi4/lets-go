@@ -70,6 +70,7 @@ public class SeatGeekEvent {
 
     public static class Venue {
         private String name;
+        private String address;
         private String city;
         private String state;
         private String postal_code;
@@ -88,6 +89,14 @@ public class SeatGeekEvent {
 
         public void setCity(String city) {
             this.city = city;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
         }
 
         public String getState() {
