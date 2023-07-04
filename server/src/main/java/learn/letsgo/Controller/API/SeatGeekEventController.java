@@ -2,10 +2,7 @@ package learn.letsgo.Controller.API;
 
 import learn.letsgo.Domain.API.SeatGeekEventService;
 import learn.letsgo.Models.API.SeatGeekEvent;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +19,10 @@ public class SeatGeekEventController {
     @GetMapping("/seatgeek/events")
     public List<SeatGeekEvent> getEvents(@RequestParam(name = "postalCode", required = false) String postalCode) {
         return eventService.getEvents(postalCode);
+    }
+
+    @GetMapping("/seatgeek/events/id/{id}")
+    public SeatGeekEvent getEventById(@PathVariable String id) {
+        return eventService.getEventById(id);
     }
 }

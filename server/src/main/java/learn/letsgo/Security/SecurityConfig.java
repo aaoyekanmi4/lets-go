@@ -33,6 +33,8 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .antMatchers("/seatgeek/*").permitAll()
                 .antMatchers("/ticketmaster/*").permitAll()
+                .antMatchers("/seatgeek/*/*/*").permitAll()
+                .antMatchers("/ticketmaster/*/*/*").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/refresh_token").authenticated()
                 .antMatchers("/api/create_account").permitAll()
