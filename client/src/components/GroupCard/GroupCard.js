@@ -43,7 +43,7 @@ const GroupCard = ({ groupId, groupName, setDeleteResultIndicator }) => {
 
   return (
     <>
-      <button className="GroupCard">
+      <button className="GroupCard" onClick={() => {}}>
         <span className="GroupCard__content">
           <span className="GroupCard__name">{groupName}</span>
           <FaBullhorn className="GroupCard__icon" />
@@ -59,9 +59,10 @@ const GroupCard = ({ groupId, groupName, setDeleteResultIndicator }) => {
 
         <span
           className="GroupCard__action-button GroupCard__trash"
-          onClick={() => {
+          onClick={(e) => {
             setDeleteResultIndicator({ show: false, type: "" });
             setShowDeleteGroupModal(true);
+            e.stopPropagation();
           }}
         >
           <FaTrashCan />

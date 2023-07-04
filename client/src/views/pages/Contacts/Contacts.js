@@ -80,8 +80,11 @@ const Contacts = () => {
                 onSearch={() => {}}
               />
             </div>
-            <Link to="/contacts/create">
-              <AiOutlinePlus className="GeneralLayout__add-icon" />
+            <Link
+              to="/contacts/create"
+              className="Contacts__add-link button-text button-text--primary"
+            >
+              + Add Contact
             </Link>
 
             <div

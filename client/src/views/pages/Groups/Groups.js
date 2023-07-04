@@ -72,8 +72,11 @@ const Groups = () => {
                 onSearch={() => {}}
               />
             </div>
-            <Link to="/groups/create">
-              <AiOutlinePlus className="GeneralLayout__add-icon" />
+            <Link
+              to="/groups/create"
+              className="button-text button-text--primary"
+            >
+              + Add Group
             </Link>
             <div className="Groups__container">{renderedGroups}</div>
           </div>
