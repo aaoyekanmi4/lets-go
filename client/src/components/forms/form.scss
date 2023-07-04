@@ -4,7 +4,9 @@
   border: 2px solid rgba(var(--color-black), 0.1);
   color: var(--color-dark);
   position: relative;
-
+  &__text {
+    font-size: 2rem;
+  }
   &__upper-style {
     position: absolute;
     width: 100%;
@@ -78,5 +80,8 @@
   }
   &__link-text {
     color: var(--color-tertiary);
+  }
+  &__submit-button {
+    margin-top: 1rem;
   }
 }

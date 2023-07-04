@@ -33,7 +33,21 @@ const Groups = () => {
     });
   };
 
-  const renderedGroups = getFilteredGroups().map((group) => {
+  const sortGroups = (groups) => {
+    groups.sort((a, b) => {
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        return -1;
+      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    return groups;
+  };
+
+  const renderedGroups = sortGroups(getFilteredGroups()).map((group) => {
     return (
       <GroupCard
         key={group.groupId}

@@ -7,6 +7,8 @@ import contacts from "./contacts.js";
 import contactsErrors from "./contactsErrors.js";
 import groups from "./groups.js";
 import groupsErrors from "./groupsErrors.js";
+import isLoggingIn from "./isLoggingIn.js";
+import isCreatingUser from "./isCreatingUser.js";
 
 export default combineReducers({
   user,
@@ -16,4 +18,6 @@ export default combineReducers({
   contactsErrors,
   groups,
   groupsErrors,
+  isLoggingIn,
+  isCreatingUser,
 });

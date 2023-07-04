@@ -12,6 +12,8 @@ const EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
 const createUser = (userData) => {
   return async (dispatch) => {
     try {
+      dispatch(setIsCreatingUser(true));
+
       const response = await axios.post(
         `${baseUrls.database}/api/create_account`,
         userData,
@@ -31,9 +33,13 @@ const createUser = (userData) => {
 
       dispatch(clearBackendRegisterErrors());
 
+      dispatch(clearBackendLoginErrors());
+
       dispatch(setRefreshTokenTimer());
     } catch (e) {
       dispatch(sendBackendRegisterErrors(getBackendErrorMessages(e)));
+    } finally {
+      dispatch(setIsCreatingUser(false));
     }
   };
 };
@@ -54,6 +60,8 @@ const clearBackendRegisterErrors = () => {
 const loginUser = (loginData) => {
   return async (dispatch) => {
     try {
+      dispatch(setIsLoggingIn(true));
+
       const response = await axios.post(
         "http://localhost:8080/api/authenticate",
         loginData,
@@ -73,11 +81,15 @@ const loginUser = (loginData) => {
 
       dispatch(clearBackendLoginErrors());
 
+      dispatch(clearBackendRegisterErrors());
+
       dispatch(setRefreshTokenTimer());
     } catch (e) {
       if (e.response.status === 403) {
         dispatch(sendBackendLoginErrors(["Incorrect username or password"]));
       } else dispatch(sendBackendLoginErrors(getBackendErrorMessages(e)));
+    } finally {
+      dispatch(setIsLoggingIn(false));
     }
   };
 };
@@ -156,6 +168,20 @@ const setRefreshTokenTimer = () => {
   // } else {
   //   return;
   // }
+};
+
+const setIsLoggingIn = (boolean) => {
+  return {
+    type: types.SET_IS_LOGGING_IN,
+    payload: boolean,
+  };
+};
+
+const setIsCreatingUser = (boolean) => {
+  return {
+    type: types.SET_IS_CREATING_USER,
+    payload: boolean,
+  };
 };
 
 const makeUserFromJwt = (jwtToken) => {

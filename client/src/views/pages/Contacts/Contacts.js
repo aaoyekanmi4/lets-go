@@ -36,19 +36,35 @@ const Contacts = () => {
     });
   };
 
-  const renderedContacts = getFilteredContacts().map((contact) => {
-    return (
-      <ContactCard
-        key={contact.contactId}
-        firstName={contact.firstName}
-        lastName={contact.lastName}
-        phone={contact.phone}
-        email={contact.email}
-        contactId={contact.contactId}
-        setDeleteResultIndicator={setShowDeleteResultIndicator}
-      />
-    );
-  });
+  const sortContacts = (contacts) => {
+    contacts.sort((a, b) => {
+      if (a.firstName.toLowerCase() < b.firstName.toLowerCase()) {
+        return -1;
+      } else if (a.firstName.toLowerCase() > b.firstName.toLowerCase()) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    return contacts;
+  };
+
+  const renderedContacts = sortContacts(getFilteredContacts()).map(
+    (contact) => {
+      return (
+        <ContactCard
+          key={contact.contactId}
+          firstName={contact.firstName}
+          lastName={contact.lastName}
+          phone={contact.phone}
+          email={contact.email}
+          contactId={contact.contactId}
+          setDeleteResultIndicator={setShowDeleteResultIndicator}
+        />
+      );
+    }
+  );
 
   return (
     <>

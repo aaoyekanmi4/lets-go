@@ -151,7 +151,10 @@ const ContactForm = ({ type, initialFormValues, sendData }) => {
           setFormErrors(errors);
         }}
       />
-      <button className="button-main button-main--primary" type="submit">
+      <button
+        className="Form__submit-button button-main button-main--primary"
+        type="submit"
+      >
         {type === "create" ? "Submit" : "Update"}
       </button>
     </form>
