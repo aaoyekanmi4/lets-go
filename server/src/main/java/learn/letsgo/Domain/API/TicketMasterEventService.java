@@ -49,7 +49,7 @@ public class TicketMasterEventService {
         String url = String.format("https://app.ticketmaster.com/discovery/v2/events/%s?apikey=" + API_KEY, id);
 
         TicketMasterEvent ticketMasterEvent = restTemplate.getForObject(url, TicketMasterEvent.class);
-        System.out.println(ticketMasterEvent);
+
         if (ticketMasterEvent != null) {
             List<TicketMasterEvent.Image> images = ticketMasterEvent.getImages();
             images.removeIf(image ->

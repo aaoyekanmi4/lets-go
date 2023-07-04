@@ -131,6 +131,8 @@ public class TicketMasterEvent {
             private City city;
             private State state;
 
+            private Address address;
+
             public String getName() {
                 return name;
             }
@@ -163,6 +165,14 @@ public class TicketMasterEvent {
                 this.state = state;
             }
 
+            public Address getAddress() {
+                return address;
+            }
+
+            public void setAddress(Address address) {
+                this.address = address;
+            }
+
             public static class City {
                 private String name;
 
@@ -184,6 +194,18 @@ public class TicketMasterEvent {
 
                 public void setName(String name) {
                     this.name = name;
+                }
+            }
+
+            public static class Address {
+                private String line1;
+
+                public String getLine1() {
+                    return line1;
+                }
+
+                public void setLine1(String line1) {
+                    this.line1 = line1;
                 }
             }
         }
