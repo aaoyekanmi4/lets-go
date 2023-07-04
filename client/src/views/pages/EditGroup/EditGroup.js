@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { findGroup } from "./helpers.js";
 import { defaultGroupValues } from "../../../components/forms/defaultValues.js";
 import Header from "../../../components/Header/Header.js";
-import CreateGroupForm from "../../../components/forms/CreateGroupForm/CreateGroupForm.js";
+import GroupForm from "../../../components/forms/GroupForm/GroupForm.js";
 import "../../sharedStyles/formPage.scss";
 
 const EditGroup = () => {
@@ -34,7 +34,7 @@ const EditGroup = () => {
     <div className="EditGroup">
       <Header />
       <main className="form-page__main">
-        <CreateGroupForm
+        <GroupForm
           initialFormValues={formValues}
           type="edit"
           contacts={contacts}

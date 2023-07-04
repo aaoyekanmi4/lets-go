@@ -9,10 +9,10 @@ import { validateField } from "./validator.js";
 import { validateAllFields } from "../validators.js";
 import AddContacts from "../../AddContacts/AddContacts.js";
 import { createGroup } from "./helpers.js";
-import "./CreateGroupForm.scss";
+import "./GroupForm.scss";
 import "../form.scss";
 
-const CreateGroupForm = ({ type, contacts, initialFormValues }) => {
+const GroupForm = ({ type, contacts, initialFormValues }) => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ const CreateGroupForm = ({ type, contacts, initialFormValues }) => {
   };
 
   return (
-    <form className="CreateGroupForm Form" onSubmit={runFrontendValidation}>
+    <form className="GroupForm Form" onSubmit={runFrontendValidation}>
       <div className="Form__upper-style"></div>
       <h1 className="Form__header">
         {type === "create" ? "Create Group" : "Edit Group"}
@@ -115,4 +115,4 @@ const CreateGroupForm = ({ type, contacts, initialFormValues }) => {
   );
 };
 
-export default CreateGroupForm;
+export default GroupForm;

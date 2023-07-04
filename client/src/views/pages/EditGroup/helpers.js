@@ -14,13 +14,16 @@ const findGroup = async (jwtToken, groupId, setFormValues, setErrors) => {
       }
     );
 
-    console.log(response);
+    if (!response.data) {
+      setErrors(["Unable to find group"]);
+      return;
+    }
 
     const { name, contacts } = response.data;
 
-    //setFormValues({ firstName, lastName, email, phone });
+    setFormValues({ name, contacts });
   } catch (e) {
-    console.log(e);
+    setErrors(getBackendErrorMessages(e));
   }
 };
 

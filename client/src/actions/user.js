@@ -3,6 +3,7 @@ import jwtDecode from "jwt-decode";
 
 import types from "./types.js";
 import baseUrls from "../baseUrls";
+import getBackendErrorMessages from "../getBackendErrorMessages.js";
 
 const EXPIRATION_MINUTES = 13;
 
@@ -20,7 +21,7 @@ const createUser = (userData) => {
           },
         }
       );
-      console.log("finished creating user");
+
       const jwtToken = response.data.jwt_token;
 
       dispatch({
@@ -32,11 +33,7 @@ const createUser = (userData) => {
 
       dispatch(setRefreshTokenTimer());
     } catch (e) {
-      if (e.response.status === 403) {
-        dispatch(
-          sendBackendRegisterErrors(["You don't have access to this resource"])
-        );
-      } else dispatch(sendBackendRegisterErrors(e.response.data));
+      dispatch(sendBackendRegisterErrors(getBackendErrorMessages(e)));
     }
   };
 };
@@ -80,21 +77,15 @@ const loginUser = (loginData) => {
     } catch (e) {
       if (e.response.status === 403) {
         dispatch(sendBackendLoginErrors(["Incorrect username or password"]));
-      } else dispatch(sendBackendLoginErrors(e.response.data));
+      } else dispatch(sendBackendLoginErrors(getBackendErrorMessages(e)));
     }
   };
 };
 
 const sendBackendLoginErrors = (errorsArray) => {
-  let payload = errorsArray;
-
-  if (!errorsArray) {
-    payload = ["Something went wrong. Try again later"];
-  }
-
   return {
     type: types.SEND_BACKEND_LOGIN_ERRORS,
-    payload: payload,
+    payload: errorsArray,
   };
 };
 

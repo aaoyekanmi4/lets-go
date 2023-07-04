@@ -14,11 +14,16 @@ const findContact = async (jwtToken, contactId, setFormValues, setErrors) => {
       }
     );
 
+    if (!response.data) {
+      setErrors(["Unable to find contact"]);
+      return;
+    }
+
     const { firstName, lastName, email, phone } = response.data;
 
     setFormValues({ firstName, lastName, email, phone });
   } catch (e) {
-    console.log(e);
+    setErrors(getBackendErrorMessages(e));
   }
 };
 

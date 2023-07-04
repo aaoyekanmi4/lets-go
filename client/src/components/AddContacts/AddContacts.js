@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ImCheckmark } from "react-icons/im";
+import { AiOutlineDelete } from "react-icons/ai";
 
 import SearchField from "../SearchField/SearchField.js";
 import "./AddContacts.scss";
@@ -55,6 +56,12 @@ const AddContacts = ({ data, onChange, error, initialSelectedContacts }) => {
     });
   };
 
+  const removeContactFromSelected = (contactId) => {
+    setSelectedContacts(
+      selectedContacts.filter((contact) => contact.contactId !== contactId)
+    );
+  };
+
   const renderedSuggested = suggestedContacts.map((contact) => {
     const { contactId, firstName, lastName } = contact;
 
@@ -103,6 +110,14 @@ const AddContacts = ({ data, onChange, error, initialSelectedContacts }) => {
           {contact.firstName.split("")[0]}
         </p>
         <p className="AddContacts__selected-name">{`${contact.firstName} ${contact.lastName}`}</p>
+        <button
+          className="AddContacts__remove-selected-icon"
+          onClick={() => {
+            removeContactFromSelected(contact.contactId);
+          }}
+        >
+          <AiOutlineDelete />
+        </button>
       </div>
     );
   });

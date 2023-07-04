@@ -10,10 +10,10 @@
     padding: 1.7rem 0rem;
   }
   &__selected {
+    position: relative;
     &:not(:last-child) {
       margin-right: 5rem;
     }
-
     text-align: center;
     flex: 0 0 5rem;
   }
@@ -28,7 +28,18 @@
     align-items: center;
     text-transform: capitalize;
   }
-  &__selected-name {
+  &__remove-selected-icon {
+    cursor: pointer;
+    color: var(--color-secondary);
+    background: none;
+    border: none;
+    position: absolute;
+    top: -5%;
+    right: -0.7rem;
+    font-size: 2rem;
+    &:hover {
+      font-size: 2.3rem;
+    }
   }
   &__result {
     margin-bottom: 1.5rem;
@@ -73,7 +84,6 @@
     top: 7.9rem;
     font-size: 1.5rem;
   }
-
   .AddContacts__circle:hover {
     border: 1px solid #3944bc;
   }
