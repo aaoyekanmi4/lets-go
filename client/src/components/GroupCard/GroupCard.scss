@@ -44,6 +44,7 @@
   }
   &__action-button {
     position: absolute;
+    padding: 0.8rem 1.2rem 0rem 1.2rem;
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -51,15 +52,21 @@
   }
   &__pencil {
     bottom: 1%;
-    right: 4rem;
+    right: 3.5rem;
     color: rgba(var(--color-black), 0.4);
     font-size: 2rem;
+    &:hover {
+      color: var(--color-dark);
+    }
   }
   &__trash {
     bottom: 1%;
-    right: 1rem;
-    color: var(--color-secondary);
+    right: 0rem;
+    color: rgba(var(--color-black), 0.4);
     font-size: 2rem;
+    &:hover {
+      color: var(--color-secondary);
+    }
   }
 }
 
