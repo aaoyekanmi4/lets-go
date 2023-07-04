@@ -1,20 +1,21 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { createContact } from "./helpers";
 
+import { defaultCreateContactValues } from "../../../components/forms/defaultValues.js";
 import Header from "../../../components/Header/Header.js";
-import CreateContactForm from "../../../components/forms/CreateContactForm/CreateContactForm.js";
+import ContactForm from "../../../components/forms/ContactForm/ContactForm.js";
 import "../../sharedStyles/formPage.scss";
 
 const CreateContact = () => {
-  const contacts = useSelector((state) => {
-    return state.contacts;
-  });
-
   return (
     <div className="CreateContact">
       <Header />
       <main className="form-page__main">
-        <CreateContactForm />
+        <ContactForm
+          initialFormValues={defaultCreateContactValues}
+          type="create"
+          sendData={createContact}
+        />
       </main>
     </div>
   );

@@ -3,18 +3,20 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
+import { defaultCreateContactValues } from "../../../components/forms/defaultValues.js";
 import baseUrls from "../../../baseUrls.js";
 import Header from "../../../components/Header/Header.js";
-import CreateContactForm from "../../../components/forms/CreateContactForm/CreateContactForm.js";
+import CreateContactForm from "../../../components/forms/ContactForm/ContactForm.js";
 import "../../sharedStyles/formPage.scss";
 
 const EditContact = () => {
   const { contactId } = useParams();
 
-  console.log(contactId);
   const user = useSelector((state) => {
     return state.user;
   });
+
+  const [formValues, setFormValues] = useState(defaultCreateContactValues);
 
   const [errors, setErrors] = useState(null);
 
@@ -33,7 +35,9 @@ const EditContact = () => {
         }
       );
 
-      console.log(response);
+      const { firstName, lastName, email, phone } = response.data;
+
+      setFormValues({ firstName, lastName, email, phone });
     } catch (e) {
       console.log(e);
     }
@@ -43,7 +47,7 @@ const EditContact = () => {
     <div className="EditContact">
       <Header />
       <main className="form-page__main">
-        <CreateContactForm />
+        <CreateContactForm initialFormValues={formValues} type="edit" />
       </main>
     </div>
   );
