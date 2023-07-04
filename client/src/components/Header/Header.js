@@ -43,6 +43,14 @@ const Header = () => {
                 : "Header__mobile-links--off-screen"
             }`}
           >
+            <h3
+              className="color-tertiary"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              {user.username}
+            </h3>
             <li>
               <div className="Header__search-container-mobile">
                 <SearchField placeholder="Search Events..." />
@@ -141,6 +149,14 @@ const Header = () => {
             </li>
             <li>
               <TextButtonDropdown buttonName="My Personals">
+                <h3
+                  className="color-tertiary"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  {user.username}
+                </h3>
                 <Link
                   className="button-text button-text--primary"
                   to={`/saved-events/${user.appUserId}`}
@@ -166,7 +182,7 @@ const Header = () => {
                 className="button-outline button-outline--primary"
                 onClick={onSignOut}
               >
-                Sign Out
+                {`Sign Out`}
               </button>
             </li>
           </ul>

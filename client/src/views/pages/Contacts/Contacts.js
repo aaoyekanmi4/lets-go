@@ -6,7 +6,6 @@ import Header from "../../../components/Header/Header.js";
 import SearchField from "../../../components/SearchField/SearchField.js";
 import ContactCard from "../../../components/ContactCard/ContactCard.js";
 import { AiOutlinePlus } from "react-icons/ai";
-import ResultIndicator from "../../../components/ResultIndicator/ResultIndicator.js";
 import useDeleteResultIndicator from "../../../hooks/useDeleteResultIndicator.js";
 import getDeleteResultIndicator from "../../../getDeleteResultIndicator.js";
 import "./Contacts.scss";
