@@ -7,7 +7,9 @@ function EventList() {
   useEffect(() => {
     fetch("http://localhost:8080/ticketmaster/events")
       .then((response) => response.json())
-      .then((data) => setTicketMasterEvents(data));
+      .then((data) => {
+        setTicketMasterEvents(data);
+      });
 
     fetch("http://localhost:8080/seatgeek/events")
       .then((response) => response.json())
