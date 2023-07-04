@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineMail } from "react-icons/ai";
 import { BsTelephone, BsPencil } from "react-icons/bs";
@@ -63,7 +64,13 @@ const ContactCard = ({
       <div className="ContactCard">
         <div className="ContactCard__upper-border"></div>
         <div className="ContactCard__lower-border"></div>
-        <BsPencil className="ContactCard__action-button ContactCard__pencil" />
+        <Link
+          to={`/contacts/edit/${contactId}`}
+          className="ContactCard__action-button ContactCard__pencil"
+        >
+          <BsPencil />
+        </Link>
+
         <button
           className="ContactCard__action-button ContactCard__trash"
           onClick={() => {

@@ -7,6 +7,7 @@ import Login from "./views/pages/Login/Login.js";
 import Register from "./views/pages/Register/Register.js";
 import Contacts from "./views/pages/Contacts/Contacts.js";
 import CreateContact from "./views/pages/CreateContact/CreateContact.js";
+import EditContact from "./views/pages/EditContact/EditContact.js";
 import Groups from "./views/pages/Groups/Groups.js";
 import CreateGroup from "./views/pages/CreateGroup/CreateGroup.js";
 import SavedEvents from "./views/pages/SavedEvents/SavedEvents.js";
@@ -54,8 +55,8 @@ const App = () => {
           element={user ? <CreateContact /> : <Navigate to="/login" />}
         />
         <Route
-          path="/contacts/edit/contactId"
-          element={user ? <CreateContact /> : <Navigate to="/login" />}
+          path="/contacts/edit/:contactId"
+          element={user ? <EditContact /> : <Navigate to="/login" />}
         />
         <Route
           path="/groups/create"
