@@ -1,9 +1,9 @@
 import React from "react";
-import ModalContainer from "../../../../components/ModalContainer/ModalContainer.js";
+import ModalContainer from "../ModalContainer/ModalContainer.js";
 
-import "./DeleteContactModal.scss";
+import "./DeleteModal.scss";
 
-const DeleteContactModal = ({ closeModal, onDelete, message }) => {
+const DeleteModal = ({ closeModal, onDelete, message }) => {
   return (
     <ModalContainer closeModal={closeModal}>
       <div className="DeleteCard">
@@ -27,4 +27,4 @@ const DeleteContactModal = ({ closeModal, onDelete, message }) => {
   );
 };
 
-export default DeleteContactModal;
+export default DeleteModal;

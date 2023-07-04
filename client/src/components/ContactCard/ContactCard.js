@@ -4,12 +4,19 @@ import { AiOutlineMail } from "react-icons/ai";
 import { BsTelephone, BsPencil } from "react-icons/bs";
 import { FaTrashCan } from "react-icons/fa6";
 
-import DeleteContactModal from "../../views/pages/Contacts/DeleteContactModal/DeleteContactModal.js";
+import DeleteModal from "../DeleteModal/DeleteModal.js";
 import { deleteContact } from "./helpers.js";
 import { getContacts } from "../../actions";
 import "./ContactCard.scss";
 
-const ContactCard = ({ contactId, firstName, lastName, phone, email }) => {
+const ContactCard = ({
+  contactId,
+  firstName,
+  lastName,
+  phone,
+  email,
+  setDeleteResultIndicator,
+}) => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => {
@@ -26,10 +33,16 @@ const ContactCard = ({ contactId, firstName, lastName, phone, email }) => {
     if (response.status === 204) {
       await dispatch(getContacts());
 
-      setShowDeleteContactModal(false);
+      displayResultIndicator("success");
     } else {
       setBackendErrors(response.errorMessages);
+      displayResultIndicator("fail");
     }
+  };
+
+  const displayResultIndicator = (type) => {
+    setDeleteResultIndicator({ show: true, type: type });
+    setShowDeleteContactModal(false);
   };
 
   const getUpdatedPhoneFormat = () => {
@@ -54,6 +67,7 @@ const ContactCard = ({ contactId, firstName, lastName, phone, email }) => {
         <button
           className="ContactCard__action-button ContactCard__trash"
           onClick={() => {
+            setDeleteResultIndicator({ show: false, type: "" });
             setShowDeleteContactModal(true);
           }}
         >
@@ -82,14 +96,17 @@ const ContactCard = ({ contactId, firstName, lastName, phone, email }) => {
       </div>
 
       {showDeleteContactModal ? (
-        <DeleteContactModal
+        <DeleteModal
           closeModal={() => {
             setShowDeleteContactModal(false);
           }}
+          message={
+            <p className="DeleteCard__text">
+              Are you sure you want to delete agent{" "}
+              <span className="DeleteCard__name">{`"${firstName} ${lastName}"?`}</span>
+            </p>
+          }
           onDelete={onDelete}
-          firstName={firstName}
-          lastName={lastName}
-          email={email}
         />
       ) : null}
     </>

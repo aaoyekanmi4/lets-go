@@ -54,6 +54,10 @@ const App = () => {
           element={user ? <CreateContact /> : <Navigate to="/login" />}
         />
         <Route
+          path="/contacts/edit/contactId"
+          element={user ? <CreateContact /> : <Navigate to="/login" />}
+        />
+        <Route
           path="/groups/create"
           element={user ? <CreateGroup /> : <Navigate to="/login" />}
         />
