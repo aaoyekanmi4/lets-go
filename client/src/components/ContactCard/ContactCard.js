@@ -26,7 +26,7 @@ const ContactCard = ({
 
   const [showDeleteContactModal, setShowDeleteContactModal] = useState(false);
 
-  const [backendErrors, setBackendErrors] = useState([]);
+  const [backendDeleteErrors, setBackendDeleteErrors] = useState([]);
 
   const onDelete = async () => {
     const response = await deleteContact(contactId, user.jwtToken);
@@ -36,7 +36,7 @@ const ContactCard = ({
 
       displayResultIndicator("success");
     } else {
-      setBackendErrors(response.errorMessages);
+      setBackendDeleteErrors(response.errorMessages);
       displayResultIndicator("fail");
     }
   };

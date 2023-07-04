@@ -7,6 +7,8 @@ import SearchField from "../../../components/SearchField/SearchField.js";
 import ContactCard from "../../../components/ContactCard/ContactCard.js";
 import { AiOutlinePlus } from "react-icons/ai";
 import ResultIndicator from "../../../components/ResultIndicator/ResultIndicator.js";
+import useDeleteResultIndicator from "../../../hooks/useDeleteResultIndicator.js";
+import getDeleteResultIndicator from "../../../getDeleteResultIndicator.js";
 import "./Contacts.scss";
 import "../../sharedStyles/contactsGroups.scss";
 
@@ -19,25 +21,12 @@ const Contacts = () => {
 
   const [searchValue, setSearchValue] = useState("");
 
-  const [showDeleteResultIndicator, setShowDeleteResultIndicator] = useState({
-    show: false,
-    type: "",
-  });
+  const [showDeleteResultIndicator, setShowDeleteResultIndicator] =
+    useDeleteResultIndicator(deleteIndicatorTimerId);
 
   useEffect(() => {
     getFilteredContacts();
   }, [searchValue]);
-
-  //remove the delete result indicator after 2seconds
-  useEffect(() => {
-    if (showDeleteResultIndicator.show) {
-      clearTimeout(deleteIndicatorTimerId);
-
-      deleteIndicatorTimerId = setTimeout(() => {
-        setShowDeleteResultIndicator({ show: false, type: "" });
-      }, 2000);
-    }
-  }, [showDeleteResultIndicator.show]);
 
   const getFilteredContacts = () => {
     return contacts.filter((contact) => {
@@ -61,14 +50,6 @@ const Contacts = () => {
       />
     );
   });
-
-  const getDeleteResultIndicator = (type) => {
-    if (type === "success") {
-      return <ResultIndicator type={type} message="Successfully deleted!" />;
-    }
-
-    return <ResultIndicator type={type} message="Unable to delete" />;
-  };
 
   return (
     <>
@@ -113,5 +94,3 @@ const Contacts = () => {
 };
 
 export default Contacts;
-// grid-template-columns: repeat(auto-fit, 23rem);
-// justify-content: center;

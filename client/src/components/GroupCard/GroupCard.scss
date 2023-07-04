@@ -42,9 +42,29 @@
     text-align: center;
     border: 1px solid red;
   }
+  &__action-button {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: none;
+  }
+  &__pencil {
+    bottom: 1%;
+    right: 4rem;
+    color: rgba(var(--color-black), 0.4);
+    font-size: 2rem;
+  }
+  &__trash {
+    bottom: 1%;
+    right: 1rem;
+    color: var(--color-secondary);
+    font-size: 2rem;
+  }
 }
 
-.GroupCard:hover .GroupCard__name {
+.GroupCard:hover .GroupCard__action-button {
+  display: block;
 }
 
 .GroupCard:hover .GroupCard__icon {
