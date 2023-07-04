@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+
+import { getEditContactFunction, findContact } from "./helpers.js";
 
 import { defaultCreateContactValues } from "../../../components/forms/defaultValues.js";
-import baseUrls from "../../../baseUrls.js";
 import Header from "../../../components/Header/Header.js";
 import CreateContactForm from "../../../components/forms/ContactForm/ContactForm.js";
 import "../../sharedStyles/formPage.scss";
@@ -21,33 +21,20 @@ const EditContact = () => {
   const [errors, setErrors] = useState(null);
 
   useEffect(() => {
-    findContact();
+    findContact(user.jwtToken, contactId, setFormValues, setErrors);
   }, []);
 
-  const findContact = async () => {
-    try {
-      const response = await axios.get(
-        `${baseUrls.database}/api/contact/${contactId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.jwtToken}`,
-          },
-        }
-      );
-
-      const { firstName, lastName, email, phone } = response.data;
-
-      setFormValues({ firstName, lastName, email, phone });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const editContact = getEditContactFunction(contactId);
 
   return (
     <div className="EditContact">
       <Header />
       <main className="form-page__main">
-        <CreateContactForm initialFormValues={formValues} type="edit" />
+        <CreateContactForm
+          initialFormValues={formValues}
+          type="edit"
+          sendData={editContact}
+        />
       </main>
     </div>
   );

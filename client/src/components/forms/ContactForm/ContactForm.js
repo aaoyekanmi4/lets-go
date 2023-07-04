@@ -49,11 +49,12 @@ const ContactForm = ({ type, initialFormValues, sendData }) => {
         user.jwtToken
       );
 
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 204) {
         await dispatch(getContacts());
 
         navigate(`/contacts/${user.appUserId}`);
       } else {
+        console.log(response.errorMessages);
         setBackendErrors(response.errorMessages);
       }
     };
