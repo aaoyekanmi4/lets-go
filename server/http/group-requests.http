@@ -100,6 +100,19 @@ Authorization:Bearer {{token}}
 
 ###
 
+// FUNCTION: batchUpdateContactsInGroup
+// RETURNS: void
+// PATH: /batch/:groupId
+// ACCESS: AUTH
+// POST BODY: array of ContactIds
+POST {{url}}/batch/5
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+[4,7]
+
+###
+
 // FUNCTION: removeContactFromGroup
 // RETURNS: void
 // PATH: /:contactId/:groupId

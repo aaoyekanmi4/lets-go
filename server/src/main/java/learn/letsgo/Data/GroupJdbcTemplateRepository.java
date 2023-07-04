@@ -131,6 +131,13 @@ public class GroupJdbcTemplateRepository implements GroupRepository{
                 groupId, contactId) > 0;
     }
 
+    @Override
+    public boolean batchUpdateContactsInGroup(List<Integer> contactIds, int groupId) {
+        jdbcTemplate.update("delete from group_contact where group_id =?;", groupId);
+
+        return batchAddContactsToGroup(contactIds, groupId);
+    }
+
     private void addContacts (Group group) {
 
         final String sql ="select c.contact_id, c.app_user_id, c.email, "

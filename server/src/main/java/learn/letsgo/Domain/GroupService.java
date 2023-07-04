@@ -82,8 +82,8 @@ public class GroupService {
     public Result<Void> batchAddContactsToGroup(List<Integer> contactIds, int groupId) {
 
         Result<Void> result = new Result<>();
-        for (Integer num : contactIds) {
-            result = validateCanPerformBridgeAction(num, groupId, true);
+        for (Integer contactId : contactIds) {
+            result = validateCanPerformBridgeAction(contactId, groupId, true);
             if (!result.isSuccess()) {
                 return result;
             }
@@ -91,6 +91,23 @@ public class GroupService {
 
         boolean didAddContacts = groupRepository.batchAddContactsToGroup(contactIds, groupId);
         if (!didAddContacts) {
+            result.addMessage(ResultType.INVALID, "Could not add all contacts to group");
+        }
+        return result;
+    }
+
+    public Result<Void> batchUpdateContactsInGroup(List<Integer> contactIds, int groupId) {
+
+        Result<Void> result = new Result<>();
+        for (Integer contactId : contactIds) {
+            result = validateCanPerformBridgeUpdate(contactId, groupId);
+            if (!result.isSuccess()) {
+                return result;
+            }
+        }
+
+        boolean didUpdateContacts = groupRepository.batchUpdateContactsInGroup(contactIds, groupId);
+        if (!didUpdateContacts) {
             result.addMessage(ResultType.INVALID, "Could not add all contacts to group");
         }
         return result;
@@ -150,6 +167,25 @@ public class GroupService {
                 result.addMessage(ResultType.INVALID,
                         String.format("Contact with id %s not in group so cannot be removed", contactId));
             }
+        }
+        return result;
+    }
+
+    private Result<Void> validateCanPerformBridgeUpdate(int contactId, int groupId) {
+        Result<Void> result = new Result<>();
+
+        Contact contactToAdd = contactRepository.findById(contactId);
+
+        if (contactToAdd == null) {
+            result.addMessage(ResultType.NOT_FOUND,
+                    String.format("Could not find contact with contactId: %s", contactId));
+        }
+
+        Group groupToAddContact = groupRepository.findById(groupId);
+
+        if (groupToAddContact == null) {
+            result.addMessage(ResultType.NOT_FOUND,
+                    String.format("Could not find group with groupId: %s", groupId));
         }
         return result;
     }

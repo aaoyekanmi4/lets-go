@@ -175,7 +175,7 @@ class GroupServiceTest {
     }
 
     @Test
-    void shouldNotBatchAddContactsToGroupWhenInGroup() {
+    void shouldNotBatchAddContactsToGroupWhenContactInGroup() {
         Group group = new Group();
         group.setGroupId(3);
         group.setContacts(makeContactsList());
@@ -202,6 +202,32 @@ class GroupServiceTest {
         assertEquals(ResultType.NOT_FOUND, actual.getStatus());
     }
 
+    @Test
+    void shouldBatchUpdateContactsInGroup() {
+        Group group = new Group();
+        group.setContacts(makeContactsList());
+        group.setGroupId(3);
+        when(groupRepository.findById(3)).thenReturn(group);
+        when(contactRepository.findById(10)).thenReturn(new Contact());
+        when(contactRepository.findById(14)).thenReturn(new Contact());
+        when(groupRepository.batchUpdateContactsInGroup(List.of(10,14), 3)).thenReturn(true);
+        Result<Void> actual = groupService.batchUpdateContactsInGroup(List.of(10,14), 3);
+        assertTrue(actual.isSuccess());
+    }
+
+    @Test
+    void shouldNotBatchUpdateContactsWhenGroupMissing() {
+        Group group = new Group();
+        group.setContacts(makeContactsList());
+        when(groupRepository.findById(3)).thenReturn(null);
+        when(contactRepository.findById(15)).thenReturn(new Contact());
+        when(contactRepository.findById(17)).thenReturn(new Contact());
+        when(groupRepository.batchUpdateContactsInGroup(List.of(15,17), 3)).thenReturn(true);
+        Result<Void> actual = groupService.batchUpdateContactsInGroup(List.of(15,17), 3);
+        assertFalse(actual.isSuccess());
+        assertEquals(ResultType.NOT_FOUND, actual.getStatus());
+    }
+
     Group makeGroup() {
         return new Group(1, "The Bluebirds");
     }
@@ -215,6 +241,4 @@ class GroupServiceTest {
         contact2.setContactId(12);
         return List.of(contact, contact2);
     }
-
-
 }
