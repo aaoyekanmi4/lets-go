@@ -23,4 +23,6 @@ public interface GroupRepository {
     boolean batchAddContactsToGroup(List<Integer> contactIds, int groupId);
 
     boolean removeContactFromGroup(int contactId, int groupId);
+
+    boolean batchUpdateContactsInGroup(List<Integer> contactIds, int groupId);
 }
