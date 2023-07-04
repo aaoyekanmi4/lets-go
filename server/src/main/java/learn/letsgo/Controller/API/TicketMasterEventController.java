@@ -2,10 +2,7 @@ package learn.letsgo.Controller.API;
 
 import learn.letsgo.Domain.API.TicketMasterEventService;
 import learn.letsgo.Models.API.TicketMasterEvent;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +18,10 @@ public class TicketMasterEventController {
     @GetMapping("/ticketmaster/events")
     public List<TicketMasterEvent> getEvents(@RequestParam(name = "postalCode", required = false) String postalCode) {
         return eventService.getEvents(postalCode);
+    }
+
+    @GetMapping("/ticketmaster/events/id/{id}")
+    public TicketMasterEvent getEventById(@PathVariable String id) {
+        return eventService.getEventById(id);
     }
 }

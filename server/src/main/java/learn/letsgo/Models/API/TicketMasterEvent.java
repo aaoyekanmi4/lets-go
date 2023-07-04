@@ -1,4 +1,5 @@
 package learn.letsgo.Models.API;
+
 import java.util.List;
 
 public class TicketMasterEvent {
@@ -7,7 +8,24 @@ public class TicketMasterEvent {
     private Embedded _embedded;
     private String url;
     private List<Image> images;
+    private String id;
+    private String source;
 
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -50,7 +68,6 @@ public class TicketMasterEvent {
     }
 
 
-
     public static class Dates {
         private Start start;
         private End end;
@@ -70,7 +87,6 @@ public class TicketMasterEvent {
         public void setEnd(End end) {
             this.end = end;
         }
-
 
 
         public static class Start {
