@@ -82,6 +82,15 @@ public class GroupController {
         return ErrorResponse.build(result);
     }
 
+    @PutMapping("/batch/{groupId}")
+    public ResponseEntity<?> batchUpdateContactsInGroup (@RequestBody List<Integer> contactIds, @PathVariable int groupId) {
+        Result<Void> result = groupService.batchUpdateContactsInGroup(contactIds, groupId);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
+
     @DeleteMapping("/{contactId}/{groupId}")
     public ResponseEntity<?> removeContactFromGroup(@PathVariable int contactId,
                                                   @PathVariable int groupId) {
