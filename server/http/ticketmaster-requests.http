@@ -1,0 +1,32 @@
+@url=http://localhost:8080/ticketmaster/events
+
+// FUNCTION: findAllTicketMasterEvents
+// RETURNS: a List of TicketMasterEvents
+// PATH: /
+// ACCESS: PUBLIC
+
+GET {{url}}
+
+###
+
+// FUNCTION: findAllTicketMasterEvents
+// RETURNS: a List of TicketMasterEvents for postalCode
+// PATH: ?postalCode=/:postalCode
+// ACCESS: PUBLIC
+
+GET {{url}}?postalCode=78701
+
+###
+
+// FUNCTION: findTicketMasterEventById
+// RETURNS: a TicketMasterEvent
+// PATH: /id/:id (TicketMaster site id)
+// ACCESS: PUBLIC
+
+GET {{url}}/id/Z7r9jZ1AdpZjV
+
+
+###
+
+GET https://app.ticketmaster.com/discovery/v2/events/Z7r9jZ1AdpZjV?apikey=ihrEJGVbWZWb4UeA6lbZ6Ax3ELRkkyGV HTTP/1.1
+

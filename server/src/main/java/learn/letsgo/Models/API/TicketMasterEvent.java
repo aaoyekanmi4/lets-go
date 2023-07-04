@@ -1,4 +1,5 @@
 package learn.letsgo.Models.API;
+
 import java.util.List;
 
 public class TicketMasterEvent {
@@ -7,7 +8,24 @@ public class TicketMasterEvent {
     private Embedded _embedded;
     private String url;
     private List<Image> images;
+    private String id;
+    private String source;
 
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -50,7 +68,6 @@ public class TicketMasterEvent {
     }
 
 
-
     public static class Dates {
         private Start start;
         private End end;
@@ -70,7 +87,6 @@ public class TicketMasterEvent {
         public void setEnd(End end) {
             this.end = end;
         }
-
 
 
         public static class Start {
@@ -115,6 +131,8 @@ public class TicketMasterEvent {
             private City city;
             private State state;
 
+            private Address address;
+
             public String getName() {
                 return name;
             }
@@ -147,6 +165,14 @@ public class TicketMasterEvent {
                 this.state = state;
             }
 
+            public Address getAddress() {
+                return address;
+            }
+
+            public void setAddress(Address address) {
+                this.address = address;
+            }
+
             public static class City {
                 private String name;
 
@@ -168,6 +194,18 @@ public class TicketMasterEvent {
 
                 public void setName(String name) {
                     this.name = name;
+                }
+            }
+
+            public static class Address {
+                private String line1;
+
+                public String getLine1() {
+                    return line1;
+                }
+
+                public void setLine1(String line1) {
+                    this.line1 = line1;
                 }
             }
         }

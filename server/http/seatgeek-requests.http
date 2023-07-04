@@ -1,0 +1,26 @@
+@url=http://localhost:8080/seatgeek/events
+
+// FUNCTION: findAllSeatGeekEvents
+// RETURNS: a List of SeatGeekEvents
+// PATH: /
+// ACCESS: PUBLIC
+
+GET {{url}}
+
+###
+
+// FUNCTION: findAllSeatGeekEvents
+// RETURNS: a List of SeatGeekEvents for postalCode
+// PATH: ?postalCode=/:postalCode
+// ACCESS: PUBLIC
+
+GET {{url}}?postalCode=78748
+
+###
+
+// FUNCTION: findSeatGeekEventById
+// RETURNS: a SeatGeekEvent
+// PATH: /id/:id (SeatGeek site id)
+// ACCESS: PUBLIC
+
+GET {{url}}/id/6070079

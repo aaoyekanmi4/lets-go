@@ -34,32 +34,21 @@ class SavedEventServiceTest {
 
     @Test
     void shouldAddContactToEvent() {
-        when(savedEventRepository.getSavedEventId(1,2)).thenReturn(valueOf(3));
         when(savedEventRepository.findById(3)).thenReturn(new SavedEvent());
         when(contactRepository.findById(1)).thenReturn(new Contact());
         when(savedEventRepository.addContactToEvent(1,3)).thenReturn(true);
-        Result<Void> actual = savedEventService.addContactToEvent(1,1, 2);
+        Result<Void> actual = savedEventService.addContactToEvent(1,3);
         assertTrue(actual.isSuccess());
     }
 
     @Test
     void shouldNotAddContactToEventWhenContactMissing() {
-        when(savedEventRepository.getSavedEventId(1,2)).thenReturn(valueOf(3));
         when(savedEventRepository.findById(3)).thenReturn(new SavedEvent());
         when(contactRepository.findById(1)).thenReturn(null);
         when(savedEventRepository.addContactToEvent(1,3)).thenReturn(true);
-        Result<Void> actual = savedEventService.addContactToEvent(1,1, 2);
+        Result<Void> actual = savedEventService.addContactToEvent(1,3);
         assertFalse(actual.isSuccess());
         assertEquals("Could not find contact with contactId: 1",
-                actual.getMessages().get(0));
-    }
-
-    @Test
-    void shouldNotAddContactToEventWhenSavedEventMissing() {
-        when(savedEventRepository.getSavedEventId(1,2)).thenReturn(null);
-        Result<Void> actual = savedEventService.addContactToEvent(1,1, 2);
-        assertFalse(actual.isSuccess());
-        assertEquals("Saved event could not be found from given eventId and userId",
                 actual.getMessages().get(0));
     }
 
@@ -69,10 +58,9 @@ class SavedEventServiceTest {
         savedEvent.setContacts(makeContactsList());
         Contact contactToAdd = new Contact();
         contactToAdd.setContactId(10);
-        when(savedEventRepository.getSavedEventId(1,2)).thenReturn(3);
         when(savedEventRepository.findById(3)).thenReturn(savedEvent);
         when(contactRepository.findById(10)).thenReturn(makeContactsList().get(0));
-        Result<Void> actual = savedEventService.addContactToEvent(10,1, 2);
+        Result<Void> actual = savedEventService.addContactToEvent(10,3);
         assertFalse(actual.isSuccess());
         assertEquals("Contact id 10 already in this saved event",
                 actual.getMessages().get(0));
@@ -85,11 +73,10 @@ class SavedEventServiceTest {
         savedEvent.setContacts(makeContactsList());
         Contact contactToRemove = new Contact();
         contactToRemove.setContactId(10);
-        when(savedEventRepository.getSavedEventId(1,2)).thenReturn(3);
         when(savedEventRepository.findById(3)).thenReturn(savedEvent);
         when(savedEventRepository.removeContactFromEvent(10,3)).thenReturn(true);
         when(contactRepository.findById(10)).thenReturn(contactToRemove);
-        Result<Void> actual = savedEventService.removeContactFromEvent(10,1, 2);
+        Result<Void> actual = savedEventService.removeContactFromEvent(10,3);
         assertTrue(actual.isSuccess());
     }
 
@@ -100,31 +87,19 @@ class SavedEventServiceTest {
         Contact contactToRemove = new Contact();
         contactToRemove.setContactId(9);
         when(contactRepository.findById(9)).thenReturn(contactToRemove);
-        when(savedEventRepository.getSavedEventId(1,2)).thenReturn(3);
         when(savedEventRepository.findById(3)).thenReturn(savedEvent);
-        Result<Void> actual = savedEventService.removeContactFromEvent(9,1, 2);
+        Result<Void> actual = savedEventService.removeContactFromEvent(9,3);
         assertEquals("Contact with id 9 not in this saved event for removal", actual.getMessages().get(0));
         assertFalse(actual.isSuccess());
     }
 
     @Test
     void shouldAddGroupToEvent() {
-        when(savedEventRepository.getSavedEventId(1,2)).thenReturn(valueOf(3));
         when(savedEventRepository.findById(3)).thenReturn(new SavedEvent());
         when(groupRepository.findById(1)).thenReturn(new Group());
         when(savedEventRepository.addGroupToEvent(1,3)).thenReturn(true);
-        Result<Void> actual = savedEventService.addGroupToEvent(1,1, 2);
+        Result<Void> actual = savedEventService.addGroupToEvent(1,3);
         assertTrue(actual.isSuccess());
-    }
-
-    @Test
-    void shouldNotAddGroupToEventWhenEventMissing() {
-        when(savedEventRepository.getSavedEventId(1,2)).thenReturn(null);
-        when(savedEventRepository.findById(3)).thenReturn(new SavedEvent());
-        when(groupRepository.findById(1)).thenReturn(new Group());
-        when(savedEventRepository.addGroupToEvent(1,3)).thenReturn(true);
-        Result<Void> actual = savedEventService.addGroupToEvent(1,1, 2);
-        assertFalse(actual.isSuccess());
     }
 
     @Test
@@ -138,7 +113,7 @@ class SavedEventServiceTest {
         when(savedEventRepository.findById(3)).thenReturn(savedEvent);
         when(savedEventRepository.removeGroupFromEvent(10,3)).thenReturn(true);
         when(groupRepository.findById(10)).thenReturn(groupToRemove);
-        Result<Void> actual = savedEventService.removeGroupFromEvent(10,1, 2);
+        Result<Void> actual = savedEventService.removeGroupFromEvent(10,3);
         System.out.println(actual.getMessages());
         assertTrue(actual.isSuccess());
     }

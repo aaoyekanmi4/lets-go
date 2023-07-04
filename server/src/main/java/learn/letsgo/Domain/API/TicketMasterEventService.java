@@ -37,10 +37,28 @@ public class TicketMasterEventService {
                         !"16_9".equals(image.getRatio()) ||
                                 image.getWidth() != 1024 ||
                                 image.getHeight() != 576);
+                event.setSource("TicketMaster");
             }
             return events;
         } else {
             return Collections.emptyList();
         }
+    }
+
+    public TicketMasterEvent getEventById(String id) {
+        String url = String.format("https://app.ticketmaster.com/discovery/v2/events/%s?apikey=" + API_KEY, id);
+
+        TicketMasterEvent ticketMasterEvent = restTemplate.getForObject(url, TicketMasterEvent.class);
+
+        if (ticketMasterEvent != null) {
+            List<TicketMasterEvent.Image> images = ticketMasterEvent.getImages();
+            images.removeIf(image ->
+                    !"16_9".equals(image.getRatio()) ||
+                            image.getWidth() != 1024 ||
+                            image.getHeight() != 576);
+            ticketMasterEvent.setSource("TicketMaster");
+            return ticketMasterEvent;
+        }
+        return null;
     }
 }

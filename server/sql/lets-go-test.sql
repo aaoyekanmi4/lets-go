@@ -160,11 +160,11 @@ create table contact_saved_event (
 delimiter //
 create procedure set_known_good_state()
 begin
+    delete from group_contact;
 	delete from group_saved_event;
     delete from contact_saved_event;
 	delete from saved_event;
     alter table saved_event auto_increment=1;
-	delete from group_contact;
     delete from contact;
     alter table contact auto_increment = 1;
     delete from `group`;
@@ -180,7 +180,7 @@ begin
     alter table app_role auto_increment=1;
     delete from app_user;
     alter table app_user auto_increment=1;
-   
+   select * from group_contact;
 insert into app_role (`name`) values
     ('USER'),
     ('ADMIN');
@@ -257,15 +257,3 @@ values
 end //
 -- 4. Change the statement terminator back to the original.
 delimiter ;
-
-select * from group_contact;
-
-SET SQL_SAFE_UPDATES = 0;
-call set_known_good_state;
-SET SQL_SAFE_UPDATES =1;
-
-select * from group_contact;
-
-insert into group_contact (group_id, contact_id) values (1,1);
-
-select * from group_contact where group_id=1; 

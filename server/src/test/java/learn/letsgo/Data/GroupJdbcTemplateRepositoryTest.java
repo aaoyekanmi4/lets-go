@@ -1,6 +1,5 @@
 package learn.letsgo.Data;
 
-import learn.letsgo.Models.Contact;
 import learn.letsgo.Models.Group;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,19 +55,30 @@ class GroupJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldBatchAddContactsToGroup() {
-        System.out.println(groupRepository.findById(1).getContacts());
-        boolean actual = groupRepository.batchAddContactsToGroup(List.of(2), 1);
-        assertTrue(actual);
-    }
-
-    @Test
-   void shouldRemoveContactFromGroup() {
+    void shouldRemoveContactFromGroup() {
         int initialCount =  groupRepository.findById(1).getContacts().size();
         boolean actual = groupRepository.removeContactFromGroup(1,1);
         assertTrue(actual);
         int resultCount = groupRepository.findById(1).getContacts().size();
         assertEquals(-1, resultCount - initialCount);
+    }
+
+    @Test
+    void shouldBatchAddContactsToGroup() {
+        groupRepository.removeContactFromGroup(1,1);
+        boolean actual = groupRepository.batchAddContactsToGroup(List.of(1), 1);
+        assertTrue(actual);
+        Group group =  groupRepository.findById(1);
+        assertEquals(2, group.getContacts().size());
+    }
+
+    @Test
+    void shouldBatchUpdateContactsInGroup() {
+        System.out.println( groupRepository.findById(1).getContacts());
+        boolean actual = groupRepository.batchUpdateContactsInGroup(List.of(2), 1);
+        assertTrue(actual);
+        Group group = groupRepository.findById(1);
+        assertEquals(1, group.getContacts().size());
     }
 
     @Test
