@@ -1,7 +1,7 @@
 import axios from "axios";
 
-import baseUrls from "../../../baseUrls.js";
-import getBackendErrorMessages from "../../../getBackendErrorMessages.js";
+import baseUrls from "../../../baseUrls";
+import getBackendErrorMessages from "../../../getBackendErrorMessages";
 
 const createGroup = async (groupData, contacts, jwtToken) => {
   try {
@@ -38,5 +38,4 @@ const createGroup = async (groupData, contacts, jwtToken) => {
     };
   }
 };
-
 export { createGroup };

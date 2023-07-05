@@ -45,4 +45,10 @@ const removeGetContactsErrors = () => {
   };
 };
 
-export { getContacts };
+const clearContacts = () => {
+  return {
+    type: types.CLEAR_CONTACTS,
+  };
+};
+
+export { getContacts, clearContacts };

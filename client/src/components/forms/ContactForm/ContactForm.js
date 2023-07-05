@@ -4,15 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 import TextInput from "../TextInput/TextInput.js";
 import ErrorsContainer from "../ErrorsContainer/ErrorsContainer.js";
-import { defaultCreateContactValues } from "../defaultValues.js";
 import { validateField } from "./validator.js";
 import { validateAllFields } from "../validators.js";
-import { createContact } from "./helpers.js";
-import { getContacts } from "../../../actions";
-import "./CreateContactForm.scss";
+import {
+  getContacts,
+  clearBackendRegisterErrors,
+} from "../../../actions/index.js";
+import "./ContactForm.scss";
 import "../form.scss";
 
-const CreateContactForm = () => {
+const ContactForm = ({ type, initialFormValues, sendData }) => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -21,13 +22,19 @@ const CreateContactForm = () => {
     return state.user;
   });
 
-  const [formValues, setFormValues] = useState(defaultCreateContactValues);
+  const [formValues, setFormValues] = useState(initialFormValues);
 
   const [formErrors, setFormErrors] = useState({});
 
   const [isFrontendValidated, setIsFrontendValidated] = useState(false);
 
   const [backendErrors, setBackendErrors] = useState([]);
+
+  const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    setFormValues(initialFormValues);
+  }, [initialFormValues]);
 
   useEffect(() => {
     const run = async () => {
@@ -42,15 +49,19 @@ const CreateContactForm = () => {
 
       setIsFrontendValidated(false);
 
-      const response = await createContact(
+      const response = await sendData(
         { ...formValues, appUserId: user.appUserId },
         user.jwtToken
       );
 
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 204) {
         await dispatch(getContacts());
 
-        navigate(`/contacts/${user.appUserId}`);
+        setSuccessMessage("Success! Redirecting you back to contacts page");
+
+        setTimeout(() => {
+          navigate(`/contacts/${user.appUserId}`);
+        }, 1000);
       } else {
         setBackendErrors(response.errorMessages);
       }
@@ -71,13 +82,23 @@ const CreateContactForm = () => {
     validateAllFields(validateField, formValues, setFormErrors);
 
     setIsFrontendValidated(true);
+
+    dispatch(clearBackendRegisterErrors());
   };
 
   return (
-    <form className="CreateContactForm Form" onSubmit={runFrontendValidation}>
+    <form className="ContactForm Form" onSubmit={runFrontendValidation}>
       <div className="Form__upper-style"></div>
-      <h1 className="Form__header">Create Contact</h1>
+      <h1 className="Form__header">
+        {type === "create" ? "Create Contact" : "Edit Contact"}
+      </h1>
+
       <ErrorsContainer errorsArray={backendErrors} />
+
+      {successMessage ? (
+        <p className="Form__success-message">{successMessage}</p>
+      ) : null}
+
       <TextInput
         type="text"
         id="first-name"
@@ -146,11 +167,14 @@ const CreateContactForm = () => {
           setFormErrors(errors);
         }}
       />
-      <button className="button-main button-main--primary" type="submit">
-        Submit
+      <button
+        className="Form__submit-button button-main button-main--primary"
+        type="submit"
+      >
+        {type === "create" ? "Submit" : "Update"}
       </button>
     </form>
   );
 };
 
-export default CreateContactForm;
+export default ContactForm;

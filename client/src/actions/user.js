@@ -1,8 +1,12 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
+import { clearContacts } from "./contacts";
+import { clearGroups } from "./groups";
+import { clearSavedEvents } from "./savedEvents";
 import types from "./types.js";
 import baseUrls from "../baseUrls";
+import getBackendErrorMessages from "../getBackendErrorMessages.js";
 
 const EXPIRATION_MINUTES = 13;
 
@@ -11,6 +15,8 @@ const EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
 const createUser = (userData) => {
   return async (dispatch) => {
     try {
+      dispatch(setIsCreatingUser(true));
+
       const response = await axios.post(
         `${baseUrls.database}/api/create_account`,
         userData,
@@ -20,7 +26,7 @@ const createUser = (userData) => {
           },
         }
       );
-      console.log("finished creating user");
+
       const jwtToken = response.data.jwt_token;
 
       dispatch({
@@ -30,13 +36,13 @@ const createUser = (userData) => {
 
       dispatch(clearBackendRegisterErrors());
 
+      dispatch(clearBackendLoginErrors());
+
       dispatch(setRefreshTokenTimer());
     } catch (e) {
-      if (e.response.status === 403) {
-        dispatch(
-          sendBackendRegisterErrors(["You don't have access to this resource"])
-        );
-      } else dispatch(sendBackendRegisterErrors(e.response.data));
+      dispatch(sendBackendRegisterErrors(getBackendErrorMessages(e)));
+    } finally {
+      dispatch(setIsCreatingUser(false));
     }
   };
 };
@@ -57,6 +63,8 @@ const clearBackendRegisterErrors = () => {
 const loginUser = (loginData) => {
   return async (dispatch) => {
     try {
+      dispatch(setIsLoggingIn(true));
+
       const response = await axios.post(
         "http://localhost:8080/api/authenticate",
         loginData,
@@ -76,25 +84,23 @@ const loginUser = (loginData) => {
 
       dispatch(clearBackendLoginErrors());
 
+      dispatch(clearBackendRegisterErrors());
+
       dispatch(setRefreshTokenTimer());
     } catch (e) {
       if (e.response.status === 403) {
         dispatch(sendBackendLoginErrors(["Incorrect username or password"]));
-      } else dispatch(sendBackendLoginErrors(e.response.data));
+      } else dispatch(sendBackendLoginErrors(getBackendErrorMessages(e)));
+    } finally {
+      dispatch(setIsLoggingIn(false));
     }
   };
 };
 
 const sendBackendLoginErrors = (errorsArray) => {
-  let payload = errorsArray;
-
-  if (!errorsArray) {
-    payload = ["Something went wrong. Try again later"];
-  }
-
   return {
     type: types.SEND_BACKEND_LOGIN_ERRORS,
-    payload: payload,
+    payload: errorsArray,
   };
 };
 
@@ -156,17 +162,29 @@ const setRefreshTokenTimer = () => {
       }
     }, EXPIRATION_MILLIS);
   };
-  // if (user) {
-  //   await dispatch(refreshToken());
-
-  //   setTimeout(() => {
-  //     dispatch(setRefreshTokenTimer());
-  //   }, 5000);
-  // } else {
-  //   return;
-  // }
 };
 
+const setIsLoggingIn = (boolean) => {
+  return {
+    type: types.SET_IS_LOGGING_IN,
+    payload: boolean,
+  };
+};
+
+const setIsCreatingUser = (boolean) => {
+  return {
+    type: types.SET_IS_CREATING_USER,
+    payload: boolean,
+  };
+};
+
+const clearAllData = () => {
+  return (dispatch) => {
+    dispatch(clearContacts());
+    dispatch(clearGroups());
+    dispatch(clearSavedEvents());
+  };
+};
 const makeUserFromJwt = (jwtToken) => {
   const {
     app_user_id: appUserId,
@@ -190,4 +208,5 @@ export {
   logoutUser,
   clearBackendRegisterErrors,
   clearBackendLoginErrors,
+  clearAllData,
 };

@@ -1,0 +1,43 @@
+.ViewGroupModal {
+  padding: 2rem;
+  margin-top: 25rem;
+  max-height: 40rem;
+  width: 50%;
+  background-color: white;
+  color: var(--color-dark);
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    background: linear-gradient(
+      90deg,
+      rgba(239, 94, 110, 1) 9%,
+      rgba(255, 107, 107, 1) 47%,
+      rgba(180, 43, 119, 1) 100%,
+      rgba(174, 38, 120, 1) 100%,
+      rgba(128, 0, 128, 1) 100%
+    );
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    height: 100%;
+    transform: translate(-50%, -50%) scale(1.2);
+    z-index: -1;
+  }
+  &__group-name {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--color-tertiary);
+  }
+  &__contacts-container {
+    text-align: center;
+  }
+  &__contact {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    &:first-child {
+      margin-top: 1rem;
+    }
+  }
+}

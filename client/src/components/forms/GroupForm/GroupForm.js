@@ -8,11 +8,10 @@ import ErrorsContainer from "../ErrorsContainer/ErrorsContainer.js";
 import { validateField } from "./validator.js";
 import { validateAllFields } from "../validators.js";
 import AddContacts from "../../AddContacts/AddContacts.js";
-import { createGroup } from "./helpers.js";
-import "./CreateGroupForm.scss";
+import "./GroupForm.scss";
 import "../form.scss";
 
-const CreateGroupForm = ({ contacts }) => {
+const GroupForm = ({ type, contacts, initialFormValues, sendData }) => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -21,16 +20,19 @@ const CreateGroupForm = ({ contacts }) => {
     return state.user;
   });
 
-  const [formValues, setFormValues] = useState({
-    name: "",
-    contacts: [],
-  });
+  const [formValues, setFormValues] = useState(initialFormValues);
 
   const [formErrors, setFormErrors] = useState({});
 
   const [isFrontendValidated, setIsFrontendValidated] = useState(false);
 
   const [backendErrors, setBackendErrors] = useState([]);
+
+  const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    setFormValues(initialFormValues);
+  }, [initialFormValues]);
 
   useEffect(() => {
     const run = async () => {
@@ -45,16 +47,20 @@ const CreateGroupForm = ({ contacts }) => {
 
       setIsFrontendValidated(false);
 
-      const response = await createGroup(
+      const response = await sendData(
         { name: formValues.name, appUserId: user.appUserId },
         formValues.contacts.map((contact) => contact.contactId),
         user.jwtToken
       );
 
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 204) {
         await dispatch(getGroups());
 
-        navigate(`/groups/${user.appUserId}`);
+        setSuccessMessage("Success! Redirecting you back to groups page...");
+
+        setTimeout(() => {
+          navigate(`/groups/${user.appUserId}`);
+        }, 1000);
       } else {
         setBackendErrors(response.errorMessages);
       }
@@ -78,10 +84,18 @@ const CreateGroupForm = ({ contacts }) => {
   };
 
   return (
-    <form className="CreateGroupForm Form" onSubmit={runFrontendValidation}>
+    <form className="GroupForm Form" onSubmit={runFrontendValidation}>
       <div className="Form__upper-style"></div>
-      <h1 className="Form__header">Create Group</h1>
+      <h1 className="Form__header">
+        {type === "create" ? "Create Group" : "Edit Group"}
+      </h1>
+
       <ErrorsContainer errorsArray={backendErrors} />
+
+      {successMessage ? (
+        <p className="Form__success-message">{successMessage}</p>
+      ) : null}
+
       <TextInput
         type="text"
         id="group-name"
@@ -102,13 +116,14 @@ const CreateGroupForm = ({ contacts }) => {
         data={contacts}
         error={formErrors.contacts}
         onChange={onInputChange}
+        initialSelectedContacts={formValues.contacts}
       />
 
       <button className="button-main button-main--primary" type="submit">
-        Submit
+        {type === "create" ? "Submit" : "Update"}
       </button>
     </form>
   );
 };
 
-export default CreateGroupForm;
+export default GroupForm;

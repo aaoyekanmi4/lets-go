@@ -1,0 +1,15 @@
+.AuthenticateModal {
+  margin-top: 35rem;
+  width: 30%;
+  padding: 2rem;
+  background-color: var(--color-light);
+  border-radius: 15px;
+  color: var(--color-tertiary);
+  &__text {
+    font-size: 2.3rem;
+    font-weight: bold;
+  }
+  &__link {
+    margin-top: 1rem;
+  }
+}

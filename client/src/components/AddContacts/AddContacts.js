@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { ImCheckmark } from "react-icons/im";
+import { AiOutlineDelete } from "react-icons/ai";
 
 import SearchField from "../SearchField/SearchField.js";
 import "./AddContacts.scss";
 
-const AddContacts = ({ data, onChange, error }) => {
+const AddContacts = ({ data, onChange, error, initialSelectedContacts }) => {
   const [allContacts, setAllContacts] = useState(data);
 
   const [suggestedContacts, setSuggestedContacts] = useState(
     allContacts.slice(0, 20)
   );
 
-  const [selectedContacts, setSelectedContacts] = useState([]);
+  const [selectedContacts, setSelectedContacts] = useState(
+    initialSelectedContacts
+  );
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -20,13 +23,18 @@ const AddContacts = ({ data, onChange, error }) => {
     setSuggestedContacts(data.slice(0, 20));
   }, [data]);
 
+  //when initialSelectedContacts changes,so from [] to [{}] update selected contacts
+  useEffect(() => {
+    setSelectedContacts(initialSelectedContacts);
+  }, [initialSelectedContacts]);
+
   //when selectedContacts change, update the contacts values the in parent createGroupForm
   //component
   useEffect(() => {
     onChange("contacts", selectedContacts);
   }, [selectedContacts]);
 
-  //when search value changes, get filteredResults
+  //when search value changes, get filteredResults/suggested contacts
   useEffect(() => {
     onSearch();
   }, [searchValue]);
@@ -46,6 +54,12 @@ const AddContacts = ({ data, onChange, error }) => {
     return selectedContacts.some((contact) => {
       return contact.contactId === contactId;
     });
+  };
+
+  const removeContactFromSelected = (contactId) => {
+    setSelectedContacts(
+      selectedContacts.filter((contact) => contact.contactId !== contactId)
+    );
   };
 
   const renderedSuggested = suggestedContacts.map((contact) => {
@@ -96,6 +110,15 @@ const AddContacts = ({ data, onChange, error }) => {
           {contact.firstName.split("")[0]}
         </p>
         <p className="AddContacts__selected-name">{`${contact.firstName} ${contact.lastName}`}</p>
+        <button
+          className="AddContacts__remove-selected-icon"
+          onClick={(e) => {
+            removeContactFromSelected(contact.contactId);
+            e.preventDefault();
+          }}
+        >
+          <AiOutlineDelete />
+        </button>
       </div>
     );
   });

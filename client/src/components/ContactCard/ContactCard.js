@@ -1,15 +1,23 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineMail } from "react-icons/ai";
 import { BsTelephone, BsPencil } from "react-icons/bs";
 import { FaTrashCan } from "react-icons/fa6";
 
-import DeleteContactModal from "../../views/pages/Contacts/DeleteContactModal/DeleteContactModal.js";
+import DeleteModal from "../DeleteModal/DeleteModal.js";
 import { deleteContact } from "./helpers.js";
 import { getContacts } from "../../actions";
 import "./ContactCard.scss";
 
-const ContactCard = ({ contactId, firstName, lastName, phone, email }) => {
+const ContactCard = ({
+  contactId,
+  firstName,
+  lastName,
+  phone,
+  email,
+  setDeleteResultIndicator,
+}) => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => {
@@ -18,7 +26,7 @@ const ContactCard = ({ contactId, firstName, lastName, phone, email }) => {
 
   const [showDeleteContactModal, setShowDeleteContactModal] = useState(false);
 
-  const [backendErrors, setBackendErrors] = useState([]);
+  const [backendDeleteErrors, setBackendDeleteErrors] = useState([]);
 
   const onDelete = async () => {
     const response = await deleteContact(contactId, user.jwtToken);
@@ -26,10 +34,21 @@ const ContactCard = ({ contactId, firstName, lastName, phone, email }) => {
     if (response.status === 204) {
       await dispatch(getContacts());
 
-      setShowDeleteContactModal(false);
+      displayResultIndicator("success");
     } else {
-      setBackendErrors(response.errorMessages);
+      setBackendDeleteErrors(response.errorMessages);
+      displayResultIndicator("fail");
     }
+  };
+
+  const displayResultIndicator = (outcome) => {
+    setDeleteResultIndicator({
+      show: true,
+      outcome: outcome,
+      operation: "delete",
+      message: "",
+    });
+    setShowDeleteContactModal(false);
   };
 
   const getUpdatedPhoneFormat = () => {
@@ -50,10 +69,22 @@ const ContactCard = ({ contactId, firstName, lastName, phone, email }) => {
       <div className="ContactCard">
         <div className="ContactCard__upper-border"></div>
         <div className="ContactCard__lower-border"></div>
-        <BsPencil className="ContactCard__action-button ContactCard__pencil" />
+        <Link
+          to={`/contacts/edit/${contactId}`}
+          className="ContactCard__action-button ContactCard__pencil"
+        >
+          <BsPencil />
+        </Link>
+
         <button
           className="ContactCard__action-button ContactCard__trash"
           onClick={() => {
+            setDeleteResultIndicator({
+              show: false,
+              outcome: "",
+              operation: "",
+              message: "",
+            });
             setShowDeleteContactModal(true);
           }}
         >
@@ -82,14 +113,17 @@ const ContactCard = ({ contactId, firstName, lastName, phone, email }) => {
       </div>
 
       {showDeleteContactModal ? (
-        <DeleteContactModal
+        <DeleteModal
           closeModal={() => {
             setShowDeleteContactModal(false);
           }}
+          message={
+            <p className="DeleteCard__text">
+              Are you sure you want to delete contact{" "}
+              <span className="DeleteCard__name">{`"${firstName} ${lastName}"?`}</span>
+            </p>
+          }
           onDelete={onDelete}
-          firstName={firstName}
-          lastName={lastName}
-          email={email}
         />
       ) : null}
     </>

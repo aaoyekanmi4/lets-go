@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Logo from "../Logo/Logo.js";
 import TextButtonDropdown from "../TextButtonDropdown/TextButtonDropdown.js";
 import SearchField from "../SearchField/SearchField.js";
-import { logoutUser } from "../../actions";
+import { logoutUser, clearAllData } from "../../actions";
 import useWindowSize from "../../hooks/useWindowSize.js";
 import "./Header.scss";
 
 const Header = () => {
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const user = useSelector((state) => {
     return state.user;
@@ -22,6 +24,10 @@ const Header = () => {
 
   const onSignOut = () => {
     dispatch(logoutUser());
+
+    dispatch(clearAllData());
+
+    navigate("/login");
   };
 
   const getMobileMenuLoggedIn = () => {
@@ -43,6 +49,14 @@ const Header = () => {
                 : "Header__mobile-links--off-screen"
             }`}
           >
+            <h3
+              className="color-tertiary"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              {user.username}
+            </h3>
             <li>
               <div className="Header__search-container-mobile">
                 <SearchField placeholder="Search Events..." />
@@ -141,6 +155,14 @@ const Header = () => {
             </li>
             <li>
               <TextButtonDropdown buttonName="My Personals">
+                <h3
+                  className="color-tertiary"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  {user.username}
+                </h3>
                 <Link
                   className="button-text button-text--primary"
                   to={`/saved-events/${user.appUserId}`}
@@ -166,7 +188,7 @@ const Header = () => {
                 className="button-outline button-outline--primary"
                 onClick={onSignOut}
               >
-                Sign Out
+                {`Sign Out`}
               </button>
             </li>
           </ul>

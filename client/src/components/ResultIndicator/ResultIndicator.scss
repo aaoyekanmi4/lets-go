@@ -1,0 +1,18 @@
+.ResultIndicator {
+  text-align: center;
+  width: 30rem;
+  border-radius: 5px;
+  padding: 0.5rem;
+  position: fixed;
+  left: 50%;
+  transform: translatex(-50%);
+  animation: slideDown 600ms ease-in both;
+  z-index: 3;
+  color: var(--color-light);
+  &--success {
+    background-color: green;
+  }
+  &--danger {
+    background-color: red;
+  }
+}

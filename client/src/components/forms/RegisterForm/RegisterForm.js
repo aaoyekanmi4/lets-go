@@ -18,6 +18,10 @@ const RegisterForm = () => {
     return state.backendRegisterErrors || [];
   });
 
+  const isCreatingUser = useSelector((state) => {
+    return state.isCreatingUser;
+  });
+
   const [formValues, setFormValues] = useState(defaultRegisterValues);
 
   const [formErrors, setFormErrors] = useState({});
@@ -184,8 +188,13 @@ const RegisterForm = () => {
           }}
         />
       </div>
-
-      <button className="button-main button-main--primary" type="submit">
+      {isCreatingUser ? (
+        <p className="Form__text">Hold on. Creating user...</p>
+      ) : null}
+      <button
+        className="Form__submit-button button-main button-main--primary"
+        type="submit"
+      >
         Submit
       </button>
     </form>

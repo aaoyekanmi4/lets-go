@@ -45,4 +45,9 @@ const removeGetGroupsErrors = () => {
   };
 };
 
-export { getGroups };
+const clearGroups = () => {
+  return {
+    type: types.CLEAR_GROUPS,
+  };
+};
+export { getGroups, clearGroups };

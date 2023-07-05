@@ -4,11 +4,14 @@ import {
   logoutUser,
   clearBackendRegisterErrors,
   clearBackendLoginErrors,
+  clearAllData,
 } from "./user.js";
 
 import { getContacts } from "./contacts.js";
 
 import { getGroups } from "./groups.js";
+
+import { getSavedEvents } from "./savedEvents.js";
 
 export {
   loginUser,
@@ -18,4 +21,6 @@ export {
   clearBackendLoginErrors,
   getContacts,
   getGroups,
+  getSavedEvents,
+  clearAllData,
 };

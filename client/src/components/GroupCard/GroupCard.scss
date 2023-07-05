@@ -35,16 +35,45 @@
     transform: translatey(-0.8rem) rotate(-10deg);
   }
   &__name {
-    letter-spacing: 0.2rem;
+    letter-spacing: 0.1rem;
     overflow-wrap: anywhere;
+    color: var(--color-tertiary-darker);
+    font-weight: medium;
   }
   &__details {
     text-align: center;
     border: 1px solid red;
   }
+  &__action-button {
+    position: absolute;
+    padding: 0.8rem 1.2rem 0rem 1.2rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: none;
+  }
+  &__pencil {
+    bottom: 1%;
+    right: 3.5rem;
+    color: rgba(var(--color-black), 0.4);
+    font-size: 2rem;
+    &:hover {
+      color: var(--color-dark);
+    }
+  }
+  &__trash {
+    bottom: 1%;
+    right: 0rem;
+    color: rgba(var(--color-black), 0.4);
+    font-size: 2rem;
+    &:hover {
+      color: var(--color-secondary);
+    }
+  }
 }
 
-.GroupCard:hover .GroupCard__name {
+.GroupCard:hover .GroupCard__action-button {
+  display: block;
 }
 
 .GroupCard:hover .GroupCard__icon {

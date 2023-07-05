@@ -1,5 +1,5 @@
-.DeleteCard {
-  margin-top: 18rem;
+.DeleteModal {
+  margin-top: 25rem;
   padding: 2rem;
   background-color: var(--color-light);
   width: 30vw;
@@ -7,6 +7,9 @@
   color: var(--color-dark);
   &__text {
     font-size: 2.5rem;
+  }
+  &__name {
+    font-weight: bold;
   }
   &__actions {
     margin-top: 2rem;

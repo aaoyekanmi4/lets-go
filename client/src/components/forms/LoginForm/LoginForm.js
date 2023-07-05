@@ -17,6 +17,10 @@ const LoginForm = () => {
     return state.backendLoginErrors || [];
   });
 
+  const isLoggingIn = useSelector((state) => {
+    return state.isLoggingIn;
+  });
+
   const [formValues, setFormValues] = useState(defaultLoginValues);
 
   const [formErrors, setFormErrors] = useState({});
@@ -87,7 +91,11 @@ const LoginForm = () => {
           return;
         }}
       />
-      <button className="button-main button-main--primary" type="submit">
+      {isLoggingIn ? <p className="Form__text">Logging in user...</p> : null}
+      <button
+        className="Form__submit-button button-main button-main--primary"
+        type="submit"
+      >
         Submit
       </button>
     </form>

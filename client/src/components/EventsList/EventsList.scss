@@ -1,0 +1,12 @@
+.EventsList {
+  &__header {
+    font-weight: normal;
+    color: var(--color-tertiary);
+  }
+  &__events-container {
+    margin-top: 3rem;
+    display: grid;
+    justify-content: center;
+    grid-gap: 3rem;
+  }
+}

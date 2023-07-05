@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { AiOutlinePlus } from "react-icons/ai";
 
 import Header from "../../../components/Header/Header.js";
 import GroupCard from "../../../components/GroupCard/GroupCard.js";
 import SearchField from "../../../components/SearchField/SearchField.js";
+import useResultIndicator from "../../../hooks/useResultIndicator.js";
+import getResultIndicator from "../../../getResultIndicator.js";
 import "../../sharedStyles/contactsGroups.scss";
 import "./Groups.scss";
+
+let deleteIndicatorTimerId;
 
 const Groups = () => {
   const groups = useSelector((state) => {
@@ -16,9 +19,9 @@ const Groups = () => {
 
   const [searchValue, setSearchValue] = useState("");
 
-  useEffect(() => {
-    getFilteredGroups();
-  }, [searchValue]);
+  const [deleteResultIndicator, setDeleteResultIndicator] = useResultIndicator(
+    deleteIndicatorTimerId
+  );
 
   const getFilteredGroups = () => {
     return groups.filter((group) => {
@@ -26,30 +29,60 @@ const Groups = () => {
     });
   };
 
-  const renderedGroups = getFilteredGroups().map((group) => {
-    return <GroupCard key={group.groupId} groupName={group.name} />;
+  const sortGroups = (groups) => {
+    groups.sort((a, b) => {
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        return -1;
+      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    return groups;
+  };
+
+  const renderedGroups = sortGroups(getFilteredGroups()).map((group) => {
+    return (
+      <GroupCard
+        key={group.groupId}
+        groupId={group.groupId}
+        groupName={group.name}
+        setDeleteResultIndicator={setDeleteResultIndicator}
+      />
+    );
   });
 
   return (
-    <div className="Groups">
-      <Header />
-      <main className="GeneralLayout__main">
-        <div className="container">
-          <div className="GeneralLayout__search-field-container">
-            <SearchField
-              placeholder="Search group..."
-              value={searchValue}
-              onChange={setSearchValue}
-              onSearch={() => {}}
-            />
+    <>
+      <div className="Groups">
+        <Header />
+        <main className="GeneralLayout__main">
+          <div className="container">
+            <div className="GeneralLayout__search-field-container">
+              <SearchField
+                placeholder="Search group..."
+                value={searchValue}
+                onChange={setSearchValue}
+                onSearch={() => {}}
+              />
+            </div>
+            <Link
+              to="/groups/create"
+              className="button-text button-text--primary"
+            >
+              + Add Group
+            </Link>
+            <div className="Groups__container">{renderedGroups}</div>
           </div>
-          <Link to="/groups/create">
-            <AiOutlinePlus className="GeneralLayout__add-icon" />
-          </Link>
-          <div className="Groups__container">{renderedGroups}</div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+
+      {deleteResultIndicator.show
+        ? getResultIndicator(deleteResultIndicator)
+        : null}
+    </>
   );
 };
 

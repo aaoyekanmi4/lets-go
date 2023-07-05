@@ -19,9 +19,19 @@ const deleteContact = async (contactId, jwtToken) => {
       status: 204,
     };
   } catch (e) {
+    const status = e.response.status;
+
+    let errorMessages = [];
+
+    if (status === 404) {
+      errorMessages = ["Contact not found"];
+    } else {
+      errorMessages = getBackendErrorMessages(e);
+    }
+
     return {
-      status: e.response.status,
-      errorMessages: getBackendErrorMessages(e, "Contact not found. Try again"),
+      status,
+      errorMessages,
     };
   }
 };
