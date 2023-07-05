@@ -9,6 +9,8 @@ const savedEvents = (state = [], action) => {
       );
       return events;
     }
+    case types.CLEAR_SAVED_EVENTS:
+      return [];
     default:
       return state;
   }

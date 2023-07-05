@@ -4,6 +4,7 @@ import {
   logoutUser,
   clearBackendRegisterErrors,
   clearBackendLoginErrors,
+  clearAllData,
 } from "./user.js";
 
 import { getContacts } from "./contacts.js";
@@ -21,4 +22,5 @@ export {
   getContacts,
   getGroups,
   getSavedEvents,
+  clearAllData,
 };

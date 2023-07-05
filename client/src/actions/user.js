@@ -1,6 +1,9 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
+import { clearContacts } from "./contacts";
+import { clearGroups } from "./groups";
+import { clearSavedEvents } from "./savedEvents";
 import types from "./types.js";
 import baseUrls from "../baseUrls";
 import getBackendErrorMessages from "../getBackendErrorMessages.js";
@@ -159,15 +162,6 @@ const setRefreshTokenTimer = () => {
       }
     }, EXPIRATION_MILLIS);
   };
-  // if (user) {
-  //   await dispatch(refreshToken());
-
-  //   setTimeout(() => {
-  //     dispatch(setRefreshTokenTimer());
-  //   }, 5000);
-  // } else {
-  //   return;
-  // }
 };
 
 const setIsLoggingIn = (boolean) => {
@@ -184,6 +178,13 @@ const setIsCreatingUser = (boolean) => {
   };
 };
 
+const clearAllData = () => {
+  return (dispatch) => {
+    dispatch(clearContacts());
+    dispatch(clearGroups());
+    dispatch(clearSavedEvents());
+  };
+};
 const makeUserFromJwt = (jwtToken) => {
   const {
     app_user_id: appUserId,
@@ -207,4 +208,5 @@ export {
   logoutUser,
   clearBackendRegisterErrors,
   clearBackendLoginErrors,
+  clearAllData,
 };

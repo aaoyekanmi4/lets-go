@@ -53,4 +53,10 @@ const removeGetSavedEventsErrors = () => {
   };
 };
 
-export { getSavedEvents };
+const clearSavedEvents = () => {
+  return {
+    type: types.CLEAR_SAVED_EVENTS,
+  };
+};
+
+export { getSavedEvents, clearSavedEvents };
