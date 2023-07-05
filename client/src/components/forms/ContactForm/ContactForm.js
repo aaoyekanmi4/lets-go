@@ -61,7 +61,7 @@ const ContactForm = ({ type, initialFormValues, sendData }) => {
 
         setTimeout(() => {
           navigate(`/contacts/${user.appUserId}`);
-        }, 1300);
+        }, 1000);
       } else {
         setBackendErrors(response.errorMessages);
       }

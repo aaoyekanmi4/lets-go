@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import Header from "../../../components/Header/Header.js";
 import EventCard from "../../../components/EventCard/EventCard.js";
 import EventsList from "../../../components/EventsList/EventsList.js";
-
 import SearchField from "../../../components/SearchField/SearchField.js";
 import "./SavedEvents.scss";
 
@@ -13,15 +12,29 @@ const SavedEvents = () => {
     return state.savedEvents;
   });
 
-  const savedEventsArray = Object.values(savedEvents).map((savedEvent) => {
+  let savedEventsArray = Object.values(savedEvents).map((savedEvent) => {
     return savedEvent.event;
   });
 
-  const [eventsearchValue, setEventsSearchValue] = useState("");
+  const [filter, setFilter] = useState("eventName");
 
-  const [venueSearchValue, setVenueSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
   const [sortBy, setSortBy] = useState("eventName");
+
+  const getFilteredSavedEvents = () => {
+    if (filter === "eventName") {
+      return savedEventsArray.filter((event) =>
+        event.eventName.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    }
+
+    if (filter === "venue") {
+      return savedEventsArray.filter((event) =>
+        event.venue.venueName.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    }
+  };
 
   const sortEvents = (events) => {
     if (sortBy === "eventName") {
@@ -55,13 +68,39 @@ const SavedEvents = () => {
     <div className="SavedEvents">
       <Header />
       <div className="SavedEvents__main">
-        <div className="SavedEvents__side-actions">
-          <p>search by</p>
+        <div className="container">
+          <div className="SavedEvents__search-and-filter">
+            <div className="SavedEvents__search-field-container">
+              <SearchField
+                placeholder="Search for event..."
+                value={searchValue}
+                onChange={setSearchValue}
+                onSearch={() => {}}
+              />
+            </div>
+
+            <div className="SavedEvents__sort">
+              <select
+                onChange={(e) => {
+                  setSortBy(e.target.value);
+                }}
+                className="SavedEvents__select"
+                selected={sortBy}
+              >
+                <option selected={sortBy === "eventName"} value="eventName">
+                  Sort by event name
+                </option>
+                <option selected={sortBy === "date"} value="date">
+                  Sort by date
+                </option>
+              </select>
+            </div>
+          </div>
+          <EventsList
+            events={sortEvents(getFilteredSavedEvents())}
+            listTitle="Saved Events"
+          />
         </div>
-        <EventsList
-          events={sortEvents(savedEventsArray)}
-          listTitle="Saved Events"
-        />
       </div>
     </div>
   );

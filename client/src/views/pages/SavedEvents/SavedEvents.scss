@@ -1,16 +1,21 @@
 .SavedEvents {
   padding-bottom: var(--padding-bottom-page);
-  &__main {
-    margin-top: 3rem;
+  &__search-field-container {
+    width: 44rem;
+    height: 5rem;
+  }
+  &__search-and-filter {
     display: flex;
+    justify-content: center;
   }
-  &__side-actions {
-    background-color: red;
-    margin-left: 8rem;
-    flex: 0 0 20rem;
+  &__sort {
+    margin-left: 2rem;
   }
-
-  .EventsList {
-    flex: 7 0 0;
+  &__select {
+    width: 20rem;
+    padding: 1rem;
+    height: 100%;
+    border: 1px solid var(--color-tertiary);
+    color: rgba(var(--color-black), 0.7);
   }
 }

@@ -60,7 +60,7 @@ const GroupForm = ({ type, contacts, initialFormValues, sendData }) => {
 
         setTimeout(() => {
           navigate(`/groups/${user.appUserId}`);
-        }, 1300);
+        }, 1000);
       } else {
         setBackendErrors(response.errorMessages);
       }

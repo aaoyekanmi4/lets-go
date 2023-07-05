@@ -23,10 +23,6 @@ const Groups = () => {
     deleteIndicatorTimerId
   );
 
-  useEffect(() => {
-    getFilteredGroups();
-  }, [searchValue]);
-
   const getFilteredGroups = () => {
     return groups.filter((group) => {
       return group.name.toLowerCase().includes(searchValue.toLowerCase());

@@ -23,10 +23,6 @@ const Contacts = () => {
     deleteIndicatorTimerId
   );
 
-  useEffect(() => {
-    getFilteredContacts();
-  }, [searchValue]);
-
   const getFilteredContacts = () => {
     return contacts.filter((contact) => {
       return (
