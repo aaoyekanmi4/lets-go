@@ -104,8 +104,8 @@ Authorization:Bearer {{token}}
 // RETURNS: void
 // PATH: /batch/:groupId
 // ACCESS: AUTH
-// POST BODY: array of ContactIds
-POST {{url}}/batch/5
+// PUT BODY: array of ContactIds
+PUT {{url}}/batch/5
 Content-Type: application/json
 Authorization:Bearer {{token}}
 

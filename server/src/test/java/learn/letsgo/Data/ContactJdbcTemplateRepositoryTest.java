@@ -35,7 +35,7 @@ class ContactJdbcTemplateRepositoryTest {
     void shouldFindAllBySavedEventId() {
         List<Contact> contacts= contactRepository.findAllBySavedEventId(1);
         assertNotNull(contacts);
-        assertEquals(1, contacts.size());
+        assertEquals(2, contacts.size());
     }
 
     @Test

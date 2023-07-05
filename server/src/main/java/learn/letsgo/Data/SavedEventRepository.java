@@ -24,4 +24,12 @@ public interface SavedEventRepository {
     List<SavedEvent> findAll(int appUserId);
 
     SavedEvent findById(int savedEventId);
+
+    boolean batchAddContactsToEvent(List<Integer> contactIds, int savedEventId);
+
+    boolean batchUpdateContactsInEvent(List<Integer> contactIds, int savedEventId);
+
+    boolean batchAddGroupsToEvent(List<Integer> groupIds, int savedEventId);
+
+    boolean batchUpdateGroupsInEvent(List<Integer> groupIds, int savedEventId);
 }

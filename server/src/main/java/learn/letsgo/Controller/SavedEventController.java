@@ -70,4 +70,40 @@ public class SavedEventController {
         }
         return ErrorResponse.build(result);
     }
+
+    @PostMapping("/batch/contacts/{savedEventId}")
+    public ResponseEntity<?> batchAddContactsToSavedEvent (@RequestBody List<Integer> contactIds, @PathVariable int savedEventId) {
+        Result<Void> result = savedEventService.batchAddContactsToSavedEvent(contactIds, savedEventId);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
+
+    @PutMapping("/batch/contacts/{savedEventId}")
+    public ResponseEntity<?> batchUpdateContactsInSavedEvent(@RequestBody List<Integer> contactIds, @PathVariable int savedEventId) {
+        Result<Void> result = savedEventService.batchUpdateContactsInSavedEvent(contactIds, savedEventId);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
+
+    @PostMapping("/batch/groups/{savedEventId}")
+    public ResponseEntity<?> batchAddGroupsToSavedEvent (@RequestBody List<Integer> groupIds, @PathVariable int savedEventId) {
+        Result<Void> result = savedEventService.batchAddGroupsToSavedEvent(groupIds, savedEventId);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
+
+    @PutMapping("/batch/groups/{savedEventId}")
+    public ResponseEntity<?> batchUpdateGroupInSavedEvent(@RequestBody List<Integer> groupIds, @PathVariable int savedEventId) {
+        Result<Void> result = savedEventService.batchUpdateGroupsInSavedEvent(groupIds, savedEventId);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
 }

@@ -1,6 +1,7 @@
 package learn.letsgo.Data;
 
 import learn.letsgo.Models.Event;
+import learn.letsgo.Models.Group;
 import learn.letsgo.Models.SavedEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,12 +52,14 @@ class SavedEventJdbcTemplateRepositoryTest {
 
     @Test
     void shouldAddContactToEvent() {
+        savedEventRepository.removeContactFromEvent(1,1);
         boolean actual = savedEventRepository.addContactToEvent(1,1);
         assertTrue(actual);
     }
 
     @Test
     void shouldRemoveContactFromEvent() {
+        savedEventRepository.addContactToEvent(2,1);
         boolean actual = savedEventRepository.removeContactFromEvent(2,1);
         assertTrue(actual);
         boolean repeat = savedEventRepository.removeContactFromEvent(2,1);
@@ -91,5 +94,39 @@ class SavedEventJdbcTemplateRepositoryTest {
         SavedEvent actual = savedEventRepository.findSavedEventForUser(1, 2);
         assertNotNull(actual);
         assertEquals(2, actual.getAppUserId());
+    }
+
+    @Test
+    void shouldBatchAddContactsToEvent() {
+        savedEventRepository.removeContactFromEvent(1,1);
+        boolean actual = savedEventRepository.batchAddContactsToEvent(List.of(1), 1);
+        assertTrue(actual);
+        SavedEvent savedEvent = savedEventRepository.findById(1);
+        assertEquals(2, savedEvent.getContacts().size());
+    }
+
+    @Test
+    void shouldBatchUpdateContactsInEvent() {
+        boolean actual = savedEventRepository.batchUpdateContactsInEvent(List.of(3,1), 1);
+        assertTrue(actual);
+        SavedEvent savedEvent = savedEventRepository.findById(1);
+        assertEquals(2, savedEvent.getContacts().size());
+    }
+
+    @Test
+    void shouldBatchAddGroupsToEvent() {
+        savedEventRepository.removeGroupFromEvent(1,1);
+        boolean actual = savedEventRepository.batchAddGroupsToEvent(List.of(1), 1);
+        assertTrue(actual);
+        SavedEvent savedEvent = savedEventRepository.findById(1);
+        assertEquals(2, savedEvent.getGroups().size());
+    }
+
+    @Test
+    void shouldBatchUpdateGroupsInEvent() {
+        boolean actual = savedEventRepository.batchUpdateGroupsInEvent(List.of(2), 1);
+        assertTrue(actual);
+        SavedEvent savedEvent = savedEventRepository.findById(1);
+        assertEquals(1, savedEvent.getGroups().size());
     }
 }
