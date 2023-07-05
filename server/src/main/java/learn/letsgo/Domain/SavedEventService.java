@@ -78,6 +78,74 @@ public class SavedEventService {
         return result;
     }
 
+    public Result<Void> batchAddContactsToSavedEvent(List<Integer> contactIds, int savedEventId) {
+
+        Result<Void> result = new Result<>();
+        for (Integer contactId : contactIds) {
+            result = validateCanBridgeContactToSavedEvent(contactId, savedEventId, true);
+            if (!result.isSuccess()) {
+                return result;
+            }
+        }
+
+        boolean didAddContacts = savedEventRepository.batchAddContactsToEvent(contactIds, savedEventId);
+        if (!didAddContacts) {
+            result.addMessage(ResultType.INVALID, "Could not add all contacts to savedEvent");
+        }
+        return result;
+    }
+
+    public Result<Void> batchUpdateContactsInSavedEvent(List<Integer> contactIds, int savedEventId) {
+
+        Result<Void> result = new Result<>();
+        for (Integer contactId : contactIds) {
+            result = validateCanPerformContactBridgeUpdate(contactId, savedEventId);
+            if (!result.isSuccess()) {
+                return result;
+            }
+        }
+
+        boolean didUpdateContacts = savedEventRepository.batchUpdateContactsInEvent(contactIds, savedEventId);
+        if (!didUpdateContacts) {
+            result.addMessage(ResultType.INVALID, "Could not add all contacts to saved event");
+        }
+        return result;
+    }
+
+    public Result<Void> batchAddGroupsToSavedEvent(List<Integer> groupIds, int savedEventId) {
+
+        Result<Void> result = new Result<>();
+        for (Integer groupId : groupIds) {
+            result = validateCanBridgeGroupToSavedEvent(groupId, savedEventId, true);
+            if (!result.isSuccess()) {
+                return result;
+            }
+        }
+
+        boolean didAddGroups = savedEventRepository.batchAddGroupsToEvent(groupIds, savedEventId);
+        if (!didAddGroups) {
+            result.addMessage(ResultType.INVALID, "Could not add all groups to savedEvent");
+        }
+        return result;
+    }
+
+    public Result<Void> batchUpdateGroupsInSavedEvent(List<Integer> groupIds, int savedEventId) {
+
+        Result<Void> result = new Result<>();
+        for (Integer groupId : groupIds) {
+            result = validateCanPerformGroupBridgeUpdate(groupId, savedEventId);
+            if (!result.isSuccess()) {
+                return result;
+            }
+        }
+
+        boolean didUpdateGroups = savedEventRepository.batchUpdateGroupsInEvent(groupIds, savedEventId);
+        if (!didUpdateGroups) {
+            result.addMessage(ResultType.INVALID, "Could not add all groups to saved event");
+        }
+        return result;
+    }
+
     //TODO REFACTOR THESE INTO ONE METHOD
     private Result<Void> validateCanBridgeGroupToSavedEvent(int groupId, int savedEventId, boolean isAdding) {
 
@@ -141,4 +209,41 @@ public class SavedEventService {
         return result;
     }
 
+    private Result<Void> validateCanPerformContactBridgeUpdate(int contactId, int savedEventId) {
+        Result<Void> result = new Result<>();
+
+        Contact contactToAdd = contactRepository.findById(contactId);
+
+        if (contactToAdd == null) {
+            result.addMessage(ResultType.NOT_FOUND,
+                    String.format("Could not find contact with contactId: %s", contactId));
+        }
+
+        SavedEvent savedEventToAddContact = savedEventRepository.findById(savedEventId);
+
+        if (savedEventToAddContact == null) {
+            result.addMessage(ResultType.NOT_FOUND,
+                    String.format("Could not find savedEvent with savedEventId: %s", savedEventId));
+        }
+        return result;
+    }
+
+    private Result<Void> validateCanPerformGroupBridgeUpdate(int groupId, int savedEventId) {
+        Result<Void> result = new Result<>();
+
+        Group groupToAdd = groupRepository.findById(groupId);
+
+        if (groupToAdd == null) {
+            result.addMessage(ResultType.NOT_FOUND,
+                    String.format("Could not find group with groupId: %s", groupId));
+        }
+
+        SavedEvent savedEventToAddGroup = savedEventRepository.findById(savedEventId);
+
+        if (savedEventToAddGroup == null) {
+            result.addMessage(ResultType.NOT_FOUND,
+                    String.format("Could not find savedEvent with savedEventId: %s", savedEventId));
+        }
+        return result;
+    }
 }

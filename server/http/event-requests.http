@@ -1,12 +1,12 @@
 @url=http://localhost:8080/api/event
-@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4Mzk2MjM3fQ.PzrFwtEmIe2sRJ0ASBNpTjJJrgvwFWfmKpM9t9vXhpE
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4NTY0ODYyfQ._onvDaKuQzWvdlgrJ9rUBECOWJPD0IlJay3LDx8h_yQ
 
 // FUNCTION: findEventById
 // RETURNS: an Event
 // PATH: /:eventId
 // ACCESS: PUBLIC
 
-GET {{url}}/1
+GET {{url}}/6
 
 ###
 
@@ -30,25 +30,26 @@ Content-Type: application/json
 Authorization:Bearer {{token}}
 
 {
-    "eventId": 2,
-    "eventName": "Janet Jackson Live!",
-    "category": "concert",
-    "imageUrl": "https://chairnerd.global.ssl.fastly.net/images/performers/8741/555bce1815140ad65ab0b1066467ae7d/huge.jpg",
-    "description": "",
-    "dateTime": "2012-03-09T19:00:00",
-    "source": "TicketMaster",
-    "sourceId": "721901",
-    "eventLink": "https://example.com",
-    "venue": {
-      "venueId": 1,
-      "venueName": "The Wine Cellar",
-      "address": "2222 Fifth St.",
-      "city": "New York",
-      "state": "NY",
-      "country": "United States",
-      "zipCode": 29292,
-      "events": []
-    }
+  "eventId": 6,
+  "eventName": "Davido",
+  "category": null,
+  "imageUrl": "https://seatgeek.com/images/performers-landscape/davido-e9c361/250876/45976/huge.jpg",
+  "description": null,
+  "dateTime": "2023-07-07T19:00:00",
+  "source": "SeatGeek",
+  "sourceId": "6008856",
+  "eventLink": "https://seatgeek.com/davido-tickets/houston-texas-toyota-center-7-2023-07-07-7-pm/concert/6008856",
+  "venue": {
+    "venueId": 7,
+    "venueName": "Toyota Center",
+    "address": "1510 Polk Street",
+    "city": "Houston",
+    "state": "TX",
+    "country": null,
+    "zipCode": 77002,
+    "events": []
+  },
+  "eventPosts": []
 }
 
 ###
@@ -58,7 +59,7 @@ Authorization:Bearer {{token}}
 // PATH: /user/:eventId/:appUserId
 // ACCESS: AUTH
 
-DELETE {{url}}/user/4/1
+DELETE {{url}}/user/6/3
 Content-Type: application/json
 Authorization:Bearer {{token}}
 

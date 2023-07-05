@@ -118,6 +118,99 @@ class SavedEventServiceTest {
         assertTrue(actual.isSuccess());
     }
 
+    @Test
+    void shouldBatchAddContactsToSavedEvent() {
+        SavedEvent savedEvent = new SavedEvent();
+        savedEvent.setSavedEventId(3);
+        List<Integer> contactIds = List.of(10, 12);
+        when(savedEventRepository.findById(3)).thenReturn(savedEvent);
+        when(contactRepository.findById(10)).thenReturn(new Contact());
+        when(contactRepository.findById(12)).thenReturn(new Contact());
+        when(savedEventRepository.batchAddContactsToEvent(contactIds, 3)).thenReturn(true);
+        Result<Void> actual = savedEventService.batchAddContactsToSavedEvent(contactIds, 3);
+        assertTrue(actual.isSuccess());
+    }
+
+    @Test
+    void shouldNotBatchAddContactsToSavedEventWhenAlreadyPresent() {
+        SavedEvent savedEvent = new SavedEvent();
+        savedEvent.setSavedEventId(3);
+        savedEvent.setContacts(makeContactsList());
+        List<Integer> contactIds = makeContactsList().stream().map(Contact::getContactId).toList();
+        when(savedEventRepository.findById(3)).thenReturn(savedEvent);
+        when(contactRepository.findById(10)).thenReturn(new Contact());
+        when(contactRepository.findById(12)).thenReturn(new Contact());
+        when(savedEventRepository.batchAddContactsToEvent(contactIds, 3)).thenReturn(true);
+        Result<Void> actual = savedEventService.batchAddContactsToSavedEvent(contactIds, 3);
+        assertFalse(actual.isSuccess());
+        assertEquals("Contact id 10 already in this saved event", actual.getMessages().get(0));
+    }
+
+    @Test
+    void shouldNotBatchAddContactsToSavedEventWhenAContactMissing() {
+        SavedEvent savedEvent = new SavedEvent();
+        savedEvent.setSavedEventId(3);
+        savedEvent.setContacts(makeContactsList());
+        when(savedEventRepository.findById(3)).thenReturn(savedEvent);
+        when(contactRepository.findById(15)).thenReturn(new Contact());
+        when(contactRepository.findById(17)).thenReturn(null);
+        when(savedEventRepository.batchAddContactsToEvent(List.of(15,17), 3)).thenReturn(true);
+        Result<Void> actual = savedEventService.batchAddContactsToSavedEvent(List.of(15,17), 3);
+        assertFalse(actual.isSuccess());
+        assertEquals(ResultType.NOT_FOUND, actual.getStatus());
+    }
+
+    @Test
+    void shouldBatchUpdateContactsInSavedEvent() {
+        SavedEvent savedEvent = new SavedEvent();
+        savedEvent.setSavedEventId(3);
+        when(savedEventRepository.findById(3)).thenReturn(savedEvent);
+        when(contactRepository.findById(10)).thenReturn(new Contact());
+        when(contactRepository.findById(14)).thenReturn(new Contact());
+        when(savedEventRepository.batchUpdateContactsInEvent(List.of(10,14), 3)).thenReturn(true);
+        Result<Void> actual = savedEventService.batchUpdateContactsInSavedEvent(List.of(10,14), 3);
+        assertTrue(actual.isSuccess());
+    }
+
+    @Test
+    void shouldNotBatchUpdateContactsWhenSavedEventMissing() {
+        when(savedEventRepository.findById(3)).thenReturn(null);
+        when(contactRepository.findById(15)).thenReturn(new Contact());
+        when(contactRepository.findById(17)).thenReturn(new Contact());
+        when(savedEventRepository.batchUpdateContactsInEvent(List.of(15,17), 3)).thenReturn(true);
+        Result<Void> actual = savedEventService.batchUpdateContactsInSavedEvent(List.of(15,17), 3);
+        assertFalse(actual.isSuccess());
+        assertEquals(ResultType.NOT_FOUND, actual.getStatus());
+    }
+
+    @Test
+    void shouldBatchAddGroupsToSavedEvent() {
+        SavedEvent savedEvent = new SavedEvent();
+        savedEvent.setSavedEventId(3);
+        List<Integer> groupIds = List.of(10, 12);
+        when(savedEventRepository.findById(3)).thenReturn(savedEvent);
+        when(groupRepository.findById(10)).thenReturn(new Group());
+        when(groupRepository.findById(12)).thenReturn(new Group());
+        when(savedEventRepository.batchAddGroupsToEvent(groupIds, 3)).thenReturn(true);
+        Result<Void> actual = savedEventService.batchAddGroupsToSavedEvent(groupIds, 3);
+        assertTrue(actual.isSuccess());
+    }
+
+    @Test
+    void shouldNotBatchAddGroupsToSavedEventWhenAlreadyPresent() {
+        SavedEvent savedEvent = new SavedEvent();
+        savedEvent.setSavedEventId(3);
+        savedEvent.setGroups(makeGroupList());
+        List<Integer> groupIds = makeGroupList().stream().map(Group::getGroupId).toList();
+        when(savedEventRepository.findById(3)).thenReturn(savedEvent);
+        when(groupRepository.findById(10)).thenReturn(new Group());
+        when(groupRepository.findById(12)).thenReturn(new Group());
+        when(savedEventRepository.batchAddGroupsToEvent(groupIds, 3)).thenReturn(true);
+        Result<Void> actual = savedEventService.batchAddGroupsToSavedEvent(groupIds, 3);
+        assertFalse(actual.isSuccess());
+        assertEquals("Group id 10 already in this saved event", actual.getMessages().get(0));
+    }
+
     List<Contact> makeContactsList() {
         Contact contact = new Contact(2, "spongebob@yahoo.com",
                 "3333333", "Sponge", "Bob");
