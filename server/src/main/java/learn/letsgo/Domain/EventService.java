@@ -43,7 +43,7 @@ public class EventService {
         Event existingEvent = Helpers.findEventIfExists(event, eventRepository);
 
         if (existingEvent != null) {
-            result = validateCanPerformBridgeAction(event.getEventId(), appUserId, true);
+            result = validateCanPerformBridgeAction(existingEvent.getEventId(), appUserId, true);
             if (!result.isSuccess()) {
                 return result;
             }
