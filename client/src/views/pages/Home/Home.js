@@ -30,7 +30,6 @@ const Home = () => {
         setEvents(combinedEvents);
       })
       .catch((e) => {
-        console.error(e);
         setEvents([]);
       });
   };
@@ -56,7 +55,7 @@ const Home = () => {
       </form>
       <EventsList
         events={normalizeApiEvents(events)}
-        listTitle="ALl events near you"
+        listTitle="All events near you"
       />
     </div>
   );

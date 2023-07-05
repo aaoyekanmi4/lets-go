@@ -17,7 +17,16 @@ const EventsList = ({ events, listTitle }) => {
       <div className="EventsList">
         <div className="container">
           <h1 className="EventsList__header">{listTitle}</h1>
-          <div className="EventsList__events-container">
+          <div
+            className="EventsList__events-container"
+            style={
+              events.length >= 4
+                ? {
+                    gridTemplateColumns: "repeat(auto-fit, minmax(28rem, 1fr))",
+                  }
+                : { gridTemplateColumns: "repeat(auto-fit, 30rem" }
+            }
+          >
             {events.map((event) => (
               <EventCard
                 key={event.sourceId}

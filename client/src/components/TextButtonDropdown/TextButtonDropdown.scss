@@ -18,12 +18,13 @@
     &--open {
       position: absolute;
       z-index: -1;
-      top: 4rem;
+      top: 5rem;
       left: 0rem;
       width: 100%;
       display: flex;
       flex-direction: column;
-      padding-top: 2rem;
+      padding: 2rem 0rem;
+      background-color: white;
     }
   }
 }

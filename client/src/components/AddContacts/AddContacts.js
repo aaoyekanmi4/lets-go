@@ -112,8 +112,9 @@ const AddContacts = ({ data, onChange, error, initialSelectedContacts }) => {
         <p className="AddContacts__selected-name">{`${contact.firstName} ${contact.lastName}`}</p>
         <button
           className="AddContacts__remove-selected-icon"
-          onClick={() => {
+          onClick={(e) => {
             removeContactFromSelected(contact.contactId);
+            e.preventDefault();
           }}
         >
           <AiOutlineDelete />

@@ -6,7 +6,6 @@
   &__events-container {
     margin-top: 3rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
     justify-content: center;
     grid-gap: 3rem;
   }

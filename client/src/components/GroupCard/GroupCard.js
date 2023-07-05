@@ -61,7 +61,6 @@ const GroupCard = ({ groupId, groupName, setDeleteResultIndicator }) => {
       >
         <span className="GroupCard__content">
           <span className="GroupCard__name">{groupName}</span>
-          <FaBullhorn className="GroupCard__icon" />
         </span>
         <span
           onClick={(e) => {

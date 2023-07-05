@@ -37,15 +37,9 @@
   }
   &__icon-saved {
     color: var(--color-secondary);
-    &:hover {
-      color: rgba(var(--color-black), 0.2);
-    }
   }
   &__icon-not-saved {
     color: rgba(var(--color-black), 0.6);
-    &:hover {
-      color: var(--color-secondary);
-    }
   }
   &__saved {
     color: var(--color-secondary);

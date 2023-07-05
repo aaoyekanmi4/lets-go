@@ -19,7 +19,6 @@ const saveEvent = async (appUserId, jwtToken, eventData) => {
 
     const savedVenue = venueResponse.data;
 
-    console.log(eventData);
     //update the venue in eventId to also include venueId since used as foreign key
     await axios.post(
       `${baseUrls.database}/api/event/user/${appUserId}`,
