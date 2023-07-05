@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import Header from "../../../components/Header/Header.js";
-import EventList from "../../../components/EventList/EventList.js";
+import EventsList from "../../../components/EventsList/EventsList.js";
 import "./Home.scss";
-
+import normalizeApiEvents from "../../../normalizeApiEvents.js";
 let saveEventResultIndicatorId;
 
 const Home = () => {
@@ -54,7 +54,10 @@ const Home = () => {
         </label>
         <button type="submit">Search</button>
       </form>
-      <EventList events={events} />
+      <EventsList
+        events={normalizeApiEvents(events)}
+        listTitle="ALl events near you"
+      />
     </div>
   );
 };

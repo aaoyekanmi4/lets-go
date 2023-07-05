@@ -1,9 +1,16 @@
 .SavedEvents {
-  &__events-container {
-    margin-top: 5rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
-    justify-content: center;
-    grid-gap: 3rem;
+  padding-bottom: var(--padding-bottom-page);
+  &__main {
+    margin-top: 3rem;
+    display: flex;
+  }
+  &__side-actions {
+    background-color: red;
+    margin-left: 8rem;
+    flex: 0 0 20rem;
+  }
+
+  .EventsList {
+    flex: 7 0 0;
   }
 }
