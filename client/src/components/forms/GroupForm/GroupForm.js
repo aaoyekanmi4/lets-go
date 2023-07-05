@@ -28,6 +28,8 @@ const GroupForm = ({ type, contacts, initialFormValues, sendData }) => {
 
   const [backendErrors, setBackendErrors] = useState([]);
 
+  const [successMessage, setSuccessMessage] = useState("");
+
   useEffect(() => {
     setFormValues(initialFormValues);
   }, [initialFormValues]);
@@ -54,7 +56,11 @@ const GroupForm = ({ type, contacts, initialFormValues, sendData }) => {
       if (response.status === 201 || response.status === 204) {
         await dispatch(getGroups());
 
-        navigate(`/groups/${user.appUserId}`);
+        setSuccessMessage("Success! Redirecting you back to groups page...");
+
+        setTimeout(() => {
+          navigate(`/groups/${user.appUserId}`);
+        }, 1300);
       } else {
         setBackendErrors(response.errorMessages);
       }
@@ -83,7 +89,13 @@ const GroupForm = ({ type, contacts, initialFormValues, sendData }) => {
       <h1 className="Form__header">
         {type === "create" ? "Create Group" : "Edit Group"}
       </h1>
+
       <ErrorsContainer errorsArray={backendErrors} />
+
+      {successMessage ? (
+        <p className="Form__success-message">{successMessage}</p>
+      ) : null}
+
       <TextInput
         type="text"
         id="group-name"

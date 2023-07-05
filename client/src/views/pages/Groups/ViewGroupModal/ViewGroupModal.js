@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 import { defaultGroupValues } from "../../../../components/forms/defaultValues.js";
 import ModalContainer from "../../../../components/ModalContainer/ModalContainer.js";
 import { findGroup } from "../../EditGroup/helpers.js";
 import "./ViewGroupModal.scss";
+
 const ViewGroupModal = ({ closeModal, groupId, jwtToken }) => {
   const [values, setValues] = useState(defaultGroupValues);
 
@@ -31,7 +31,7 @@ const ViewGroupModal = ({ closeModal, groupId, jwtToken }) => {
   const renderedContacts = sortContacts(values.contacts).map((contact) => {
     return (
       <p
-        className="ViewGroupCard__contact"
+        className="ViewGroupModal__contact"
         key={contact.contactId}
       >{`${contact.firstName} ${contact.lastName}`}</p>
     );
@@ -39,11 +39,11 @@ const ViewGroupModal = ({ closeModal, groupId, jwtToken }) => {
 
   return (
     <ModalContainer closeModal={closeModal}>
-      <div className="ViewGroupCard">
-        <h2 className="ViewGroupCard__group-name">{values.name}</h2>
-        <div className="ViewGroupCard__contacts">
+      <div className="ViewGroupModal">
+        <h2 className="ViewGroupModal__group-name">{values.name}</h2>
+        <div className="ViewGroupModal__contacts">
           <h3 className="text-center">Contacts In This Group</h3>
-          <div className="ViewGroupCard__contacts-container">
+          <div className="ViewGroupModal__contacts-container">
             {renderedContacts}
           </div>
         </div>

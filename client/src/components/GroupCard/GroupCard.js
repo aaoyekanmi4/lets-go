@@ -85,9 +85,9 @@ const GroupCard = ({ groupId, groupName, setDeleteResultIndicator }) => {
             setShowDeleteGroupModal(false);
           }}
           message={
-            <p className="DeleteCard__text">
+            <p className="DeleteModal__text">
               Are you sure you want to delete group{" "}
-              <span className="DeleteCard__name">{`"${groupName}"?`}</span>
+              <span className="DeleteModal__name">{`"${groupName}"?`}</span>
             </p>
           }
           onDelete={onDelete}

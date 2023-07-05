@@ -6,9 +6,9 @@ import "./DeleteModal.scss";
 const DeleteModal = ({ closeModal, onDelete, message }) => {
   return (
     <ModalContainer closeModal={closeModal}>
-      <div className="DeleteCard">
+      <div className="DeleteModal">
         {message}
-        <div className="DeleteCard__actions">
+        <div className="DeleteModal__actions">
           <button
             className="button-main button-main--danger"
             onClick={closeModal}

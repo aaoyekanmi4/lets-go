@@ -4,6 +4,12 @@
   border: 2px solid rgba(var(--color-black), 0.1);
   color: var(--color-dark);
   position: relative;
+  &__success-message {
+    padding: 0.5rem;
+    background-color: green;
+    color: var(--color-light);
+    margin-bottom: 0.5rem;
+  }
   &__text {
     font-size: 2rem;
   }

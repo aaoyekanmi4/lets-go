@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { AiOutlinePlus } from "react-icons/ai";
 
 import Header from "../../../components/Header/Header.js";
 import GroupCard from "../../../components/GroupCard/GroupCard.js";
