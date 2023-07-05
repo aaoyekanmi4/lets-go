@@ -3,16 +3,16 @@ import ReactDOM from "react-dom";
 
 import "./ResultIndicator.scss";
 
-const ResultIndicator = ({ type, message }) => {
+const ResultIndicator = ({ outcome, text }) => {
   return ReactDOM.createPortal(
     <div
       className={`ResultIndicator ${
-        type === "success"
+        outcome === "success"
           ? "ResultIndicator--success"
           : "ResultIndicator--danger"
       }`}
     >
-      <p className="mb-0">{message}</p>
+      <p className="mb-0">{text}</p>
     </div>,
     document.getElementById("modal")
   );

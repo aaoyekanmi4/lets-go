@@ -19,8 +19,9 @@ const Groups = () => {
 
   const [searchValue, setSearchValue] = useState("");
 
-  const [showDeleteResultIndicator, setShowDeleteResultIndicator] =
-    useResultIndicator(deleteIndicatorTimerId);
+  const [deleteResultIndicator, setDeleteResultIndicator] = useResultIndicator(
+    deleteIndicatorTimerId
+  );
 
   useEffect(() => {
     getFilteredGroups();
@@ -52,7 +53,7 @@ const Groups = () => {
         key={group.groupId}
         groupId={group.groupId}
         groupName={group.name}
-        setDeleteResultIndicator={setShowDeleteResultIndicator}
+        setDeleteResultIndicator={setDeleteResultIndicator}
       />
     );
   });
@@ -82,10 +83,8 @@ const Groups = () => {
         </main>
       </div>
 
-      {showDeleteResultIndicator.show
-        ? getResultIndicator(showDeleteResultIndicator.type, {
-            operation: "delete",
-          })
+      {deleteResultIndicator.show
+        ? getResultIndicator(deleteResultIndicator)
         : null}
     </>
   );

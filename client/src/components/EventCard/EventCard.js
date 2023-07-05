@@ -10,7 +10,7 @@ import { saveEvent, removeEvent } from "./helpers";
 import AuthenticateModal from "../AuthenticateModal/AuthenticateModal.js";
 import "./EventCard.scss";
 
-const EventCard = ({ eventData, setShowSaveEventResult }) => {
+const EventCard = ({ eventData, setEventResultIndicator }) => {
   const {
     imageUrl,
     eventName,
@@ -59,22 +59,51 @@ const EventCard = ({ eventData, setShowSaveEventResult }) => {
 
       if (response.status === 201) {
         await dispatch(getSavedEvents());
-        setShowSaveEventResult({ show: true, type: "success" });
+        displayEventResultIndicator("success", "save");
       } else {
-        setShowSaveEventResult({ show: true, type: "fail" });
+        displayEventResultIndicator("fail", "save");
       }
     }
 
     if (isEventSaved()) {
-      const response = await saveEvent(user.appUserId, user.jwtToken, eventId);
+      const response = await removeEvent(
+        user.appUserId,
+        user.jwtToken,
+        savedEvents[sourceId]["event"]["eventId"]
+      );
 
       if (response.status === 204) {
         await dispatch(getSavedEvents());
-        setShowSaveEventResult({ show: true, type: "success" });
+        displayEventResultIndicator("success", "delete");
       } else {
-        setShowSaveEventResult({ show: true, type: "fail" });
+        displayEventResultIndicator("fail", "delete");
       }
     }
+  };
+
+  const displayEventResultIndicator = (outcome, operation) => {
+    let message = "";
+
+    if (outcome === "success") {
+      if (operation === "delete") {
+        message = "Removed from saved events";
+      } else {
+        message = "Added to saved events";
+      }
+    } else if (outcome === "fail") {
+      if (operation === "delete") {
+        message = "Unable to remove from saved events";
+      } else {
+        message = "Unable to add to saved events";
+      }
+    }
+
+    setEventResultIndicator({
+      show: true,
+      outcome: outcome,
+      operation: operation,
+      message: message,
+    });
   };
 
   const isEventSaved = () => {

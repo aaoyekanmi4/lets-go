@@ -5,11 +5,12 @@ import getResultIndicator from "../../getResultIndicator.js";
 import EventCard from "../EventCard/EventCard.js";
 import "./EventsList.scss";
 
-let saveEventResultId;
+let eventResultIndicatorId;
 
 const EventsList = ({ events, listTitle }) => {
-  const [showSaveEventResult, setShowSaveEventResult] =
-    useResultIndicator(saveEventResultId);
+  const [eventResultIndicator, setEventResultIndicator] = useResultIndicator(
+    eventResultIndicatorId
+  );
 
   return (
     <>
@@ -21,17 +22,15 @@ const EventsList = ({ events, listTitle }) => {
               <EventCard
                 key={event.sourceId}
                 eventData={event}
-                setShowSaveEventResult={setShowSaveEventResult}
+                setEventResultIndicator={setEventResultIndicator}
               />
             ))}
           </div>
         </div>
       </div>
 
-      {showSaveEventResult.show
-        ? getResultIndicator(showSaveEventResult.type, {
-            operation: "save",
-          })
+      {eventResultIndicator.show
+        ? getResultIndicator(eventResultIndicator)
         : null}
     </>
   );

@@ -1,7 +1,10 @@
 import ResultIndicator from "./components/ResultIndicator/ResultIndicator.js";
 
 //takes in a message object with operation and data fields
-const getResultIndicator = (type, message) => {
+//takes in an object of outcome,operation,message
+const getResultIndicator = (resultDetails) => {
+  const { outcome, operation, message } = resultDetails;
+
   const genericMessages = {
     delete: {
       success: "Successfully deleted!",
@@ -13,13 +16,13 @@ const getResultIndicator = (type, message) => {
     },
   };
 
-  let text = message.data;
+  let text = message;
 
   if (!text) {
-    text = genericMessages[message.operation][type];
+    text = genericMessages[operation][outcome];
   }
 
-  return <ResultIndicator type={type} message={text} />;
+  return <ResultIndicator outcome={outcome} text={text} />;
 };
 
 export default getResultIndicator;

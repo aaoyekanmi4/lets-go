@@ -40,8 +40,13 @@ const GroupCard = ({ groupId, groupName, setDeleteResultIndicator }) => {
     }
   };
 
-  const displayResultIndicator = (type) => {
-    setDeleteResultIndicator({ show: true, type: type });
+  const displayResultIndicator = (outcome) => {
+    setDeleteResultIndicator({
+      show: true,
+      outcome: outcome,
+      operation: "delete",
+      message: "",
+    });
 
     setShowDeleteGroupModal(false);
   };
@@ -71,7 +76,12 @@ const GroupCard = ({ groupId, groupName, setDeleteResultIndicator }) => {
         <span
           className="GroupCard__action-button GroupCard__trash"
           onClick={(e) => {
-            setDeleteResultIndicator({ show: false, type: "" });
+            setDeleteResultIndicator({
+              show: false,
+              outcome: "",
+              operation: "",
+              message: "",
+            });
             setShowDeleteGroupModal(true);
             e.stopPropagation();
           }}

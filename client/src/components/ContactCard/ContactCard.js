@@ -41,8 +41,13 @@ const ContactCard = ({
     }
   };
 
-  const displayResultIndicator = (type) => {
-    setDeleteResultIndicator({ show: true, type: type });
+  const displayResultIndicator = (outcome) => {
+    setDeleteResultIndicator({
+      show: true,
+      outcome: outcome,
+      operation: "delete",
+      message: "",
+    });
     setShowDeleteContactModal(false);
   };
 
@@ -74,7 +79,12 @@ const ContactCard = ({
         <button
           className="ContactCard__action-button ContactCard__trash"
           onClick={() => {
-            setDeleteResultIndicator({ show: false, type: "" });
+            setDeleteResultIndicator({
+              show: false,
+              outcome: "",
+              operation: "",
+              message: "",
+            });
             setShowDeleteContactModal(true);
           }}
         >

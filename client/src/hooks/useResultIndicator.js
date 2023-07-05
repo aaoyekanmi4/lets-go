@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 
+const defaultResultValues = {
+  show: false,
+  outcome: "",
+  operation: "",
+  message: "",
+};
 const useResultIndicator = (resultIndicatorTimerId) => {
-  const [showResultIndicator, setShowResultIndicator] = useState({
-    show: false,
-    type: "",
-  });
+  const [showResultIndicator, setShowResultIndicator] =
+    useState(defaultResultValues);
 
   //remove the  result indicator after 2seconds
   useEffect(() => {
@@ -12,7 +16,7 @@ const useResultIndicator = (resultIndicatorTimerId) => {
       clearTimeout(resultIndicatorTimerId);
 
       resultIndicatorTimerId = setTimeout(() => {
-        setShowResultIndicator({ show: false, type: "" });
+        setShowResultIndicator(defaultResultValues);
       }, 2000);
     }
   }, [showResultIndicator.show]);

@@ -19,8 +19,9 @@ const Contacts = () => {
 
   const [searchValue, setSearchValue] = useState("");
 
-  const [showDeleteResultIndicator, setShowDeleteResultIndicator] =
-    useResultIndicator(deleteIndicatorTimerId);
+  const [deleteResultIndicator, setDeleteResultIndicator] = useResultIndicator(
+    deleteIndicatorTimerId
+  );
 
   useEffect(() => {
     getFilteredContacts();
@@ -59,7 +60,7 @@ const Contacts = () => {
           phone={contact.phone}
           email={contact.email}
           contactId={contact.contactId}
-          setDeleteResultIndicator={setShowDeleteResultIndicator}
+          setDeleteResultIndicator={setDeleteResultIndicator}
         />
       );
     }
@@ -103,10 +104,8 @@ const Contacts = () => {
         </main>
       </div>
 
-      {showDeleteResultIndicator.show
-        ? getResultIndicator(showDeleteResultIndicator.type, {
-            operation: "delete",
-          })
+      {deleteResultIndicator.show
+        ? getResultIndicator(deleteResultIndicator)
         : null}
     </>
   );
