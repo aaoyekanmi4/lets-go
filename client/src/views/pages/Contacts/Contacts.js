@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import Header from "../../../components/Header/Header.js";
 import SearchField from "../../../components/SearchField/SearchField.js";
 import ContactCard from "../../../components/ContactCard/ContactCard.js";
-import useDeleteResultIndicator from "../../../hooks/useDeleteResultIndicator.js";
-import getDeleteResultIndicator from "../../../getDeleteResultIndicator.js";
+import useResultIndicator from "../../../hooks/useResultIndicator.js";
+import getResultIndicator from "../../../getResultIndicator.js";
 import "./Contacts.scss";
 import "../../sharedStyles/contactsGroups.scss";
 
@@ -20,7 +20,7 @@ const Contacts = () => {
   const [searchValue, setSearchValue] = useState("");
 
   const [showDeleteResultIndicator, setShowDeleteResultIndicator] =
-    useDeleteResultIndicator(deleteIndicatorTimerId);
+    useResultIndicator(deleteIndicatorTimerId);
 
   useEffect(() => {
     getFilteredContacts();
@@ -104,7 +104,9 @@ const Contacts = () => {
       </div>
 
       {showDeleteResultIndicator.show
-        ? getDeleteResultIndicator(showDeleteResultIndicator.type)
+        ? getResultIndicator(showDeleteResultIndicator.type, {
+            operation: "delete",
+          })
         : null}
     </>
   );

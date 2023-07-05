@@ -15,6 +15,7 @@ const EventCard = ({
   venue,
   sourceId,
   source,
+  setShowSaveEventResult,
 }) => {
   const user = useSelector((state) => {
     return state.user;
@@ -34,6 +35,12 @@ const EventCard = ({
   };
 
   const onSaveClick = async (e) => {
+    e.preventDefault();
+
+    e.stopPropagation();
+
+    e.nativeEvent.stopImmediatePropagation();
+
     if (!user) {
       setShowAuthenticateModal(true);
     } else {
@@ -44,22 +51,16 @@ const EventCard = ({
       );
 
       if (response.status === 201) {
-        //
+        setShowSaveEventResult({ show: true, type: "success" });
       } else {
-        setSaveEventErrors(response.errors);
+        setShowSaveEventResult({ show: true, type: "fail" });
       }
     }
-
-    e.preventDefault();
-
-    e.stopPropagation();
-
-    e.nativeEvent.stopImmediatePropagation();
   };
 
   return (
     <>
-      <Link className="EventCard" to="/contacts">
+      <Link className="EventCard" to={`events/${sourceId}`}>
         <div className="EventCard__image-container">
           <img src={imageUrl} className="EventCard__image" alt={eventName} />
         </div>

@@ -10,6 +10,8 @@ import { getContacts } from "./contacts.js";
 
 import { getGroups } from "./groups.js";
 
+import { getSavedEvents } from "./savedEvents.js";
+
 export {
   loginUser,
   createUser,
@@ -18,4 +20,5 @@ export {
   clearBackendLoginErrors,
   getContacts,
   getGroups,
+  getSavedEvents,
 };

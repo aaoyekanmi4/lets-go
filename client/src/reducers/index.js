@@ -9,6 +9,8 @@ import groups from "./groups.js";
 import groupsErrors from "./groupsErrors.js";
 import isLoggingIn from "./isLoggingIn.js";
 import isCreatingUser from "./isCreatingUser.js";
+import savedEvents from "./savedEvents.js";
+import savedEventsErrors from "./savedEventsErrors.js";
 
 export default combineReducers({
   user,
@@ -20,4 +22,6 @@ export default combineReducers({
   groupsErrors,
   isLoggingIn,
   isCreatingUser,
+  savedEvents,
+  savedEventsErrors,
 });

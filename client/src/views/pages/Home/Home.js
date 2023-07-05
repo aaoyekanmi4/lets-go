@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+
 import Header from "../../../components/Header/Header.js";
 import EventList from "../../../components/EventList/EventList.js";
 import "./Home.scss";
+
+let saveEventResultIndicatorId;
 
 const Home = () => {
   const [events, setEvents] = useState([]);

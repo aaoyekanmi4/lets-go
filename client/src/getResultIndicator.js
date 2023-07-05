@@ -1,6 +1,6 @@
 import ResultIndicator from "./components/ResultIndicator/ResultIndicator.js";
 
-//takes in message object with operation and data fields
+//takes in a message object with operation and data fields
 const getResultIndicator = (type, message) => {
   const genericMessages = {
     delete: {
@@ -22,4 +22,4 @@ const getResultIndicator = (type, message) => {
   return <ResultIndicator type={type} message={text} />;
 };
 
-export default { getResultIndicator };
+export default getResultIndicator;

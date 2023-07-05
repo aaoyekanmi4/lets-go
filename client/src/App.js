@@ -13,7 +13,7 @@ import EditGroup from "./views/pages/EditGroup/EditGroup.js";
 import CreateGroup from "./views/pages/CreateGroup/CreateGroup.js";
 import SavedEvents from "./views/pages/SavedEvents/SavedEvents.js";
 import EventResults from "./views/pages/EventResults/EventResults.js";
-import { getContacts, getGroups } from "./actions";
+import { getContacts, getGroups, getSavedEvents } from "./actions";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -26,6 +26,7 @@ const App = () => {
     if (user) {
       dispatch(getContacts());
       dispatch(getGroups());
+      dispatch(getSavedEvents());
     }
   }, [user]);
 
