@@ -20,7 +20,15 @@ const defaultValues = {
   imageUrl: "",
   source: "",
   sourceId: "",
-  venue: {},
+  venue: {
+    venueId: "",
+    venueName: "",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    zipCode: "",
+  },
 };
 
 let saveResultIndicatorId;
@@ -151,9 +159,11 @@ const EventDetails = () => {
                     />
                   </div>
                   <p className="EventDetails__detail-text">
-                    {`${moment(details.dateTime).format(
-                      "dddd, MMMM Do YYYY"
-                    )} at ${moment(details.dateTime).format("h:mm a")}`}
+                    {details.dateTime
+                      ? `${moment(details.dateTime).format(
+                          "dddd, MMMM Do YYYY"
+                        )} at ${moment(details.dateTime).format("h:mm a")}`
+                      : null}
                   </p>
                   <address className="EventDetails__venue EventDetails__detail-text">
                     {details.venue.venueName} <br />
@@ -169,7 +179,7 @@ const EventDetails = () => {
                     target="new_page"
                     className="EventDetails__link EventDetails__detail-text"
                   >
-                    Go to event link
+                    {details.eventLink ? "Go to event link" : null}
                   </a>
                 </div>
                 <div className="EventDetails__info-forms">

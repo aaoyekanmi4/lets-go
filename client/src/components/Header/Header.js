@@ -50,7 +50,7 @@ const Header = () => {
             }`}
           >
             <h3
-              className="color-tertiary"
+              className="Header__username color-tertiary"
               onClick={(e) => {
                 e.stopPropagation();
               }}
@@ -156,7 +156,7 @@ const Header = () => {
             <li>
               <TextButtonDropdown buttonName="My Personals">
                 <h3
-                  className="color-tertiary"
+                  className="Header__username color-tertiary"
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
