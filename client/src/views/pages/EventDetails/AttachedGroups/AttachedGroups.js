@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 import AddData from "../../../../components/AddData/AddData.js";
+import AddGroupsToEventModal from "../../../../components/AddGroupsToEventModal/AddGroupsToEventModal.js";
 import "./AttachedGroups.scss";
 
 const AttachedGroups = ({ sourceId }) => {
@@ -21,6 +22,8 @@ const AttachedGroups = ({ sourceId }) => {
   // });
 
   const [selectedGroups, setSelectedGroups] = useState(groupsInEvent);
+
+  const [showAddGroupsModal, setShowAddGroupsModal] = useState(false);
 
   const onSelectedChange = (selectedData) => {
     setSelectedGroups(selectedData);
@@ -67,18 +70,37 @@ const AttachedGroups = ({ sourceId }) => {
 
   const renderGroupNames = () => {
     return (
-      <div className="AttachedGroups">
-        <h2 className="AttachedGroups__header">
-          Groups attached to this event
-        </h2>
-        <div className="AttachedGroups__groups">
-          {renderedGroupsInEvent.length ? (
-            renderedGroupsInEvent
-          ) : (
-            <p>No Groupsp</p>
-          )}
+      <>
+        <div className="AttachedGroups">
+          <h2 className="AttachedGroups__header">
+            Groups attached to this event
+          </h2>
+          <div className="AttachedGroups__groups">
+            {renderedGroupsInEvent.length ? (
+              renderedGroupsInEvent
+            ) : (
+              <p>No Groups</p>
+            )}
+          </div>
+          <button
+            className="AttachedGroups__button button-outline button-outline--primary"
+            onClick={() => {
+              setShowAddGroupsModal(true);
+            }}
+          >
+            Add Group
+          </button>
         </div>
-      </div>
+
+        {showAddGroupsModal ? (
+          <AddGroupsToEventModal
+            sourceId={sourceId}
+            closeModal={() => {
+              setShowAddGroupsModal(false);
+            }}
+          />
+        ) : null}
+      </>
     );
   };
 

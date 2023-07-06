@@ -1,0 +1,12 @@
+.AddGroupsToEvent {
+  margin-top: 15rem;
+  max-width: 55rem;
+  width: 100%;
+  background-color: var(--color-light);
+  padding: 2rem;
+  &__header {
+    color: var(--color-tertiary);
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+}
