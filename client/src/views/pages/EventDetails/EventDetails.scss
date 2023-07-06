@@ -22,6 +22,10 @@
       text-decoration: underline;
     }
   }
+  &__save-link {
+    display: inline;
+    background-color: blue;
+  }
   &__name {
     font-size: 4rem;
     text-align: center;

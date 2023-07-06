@@ -50,7 +50,9 @@ const Home = () => {
     }
   };
 
-  const onGeolocationError = (error) => {};
+  const onGeolocationError = (error) => {
+    fetchEvents("91423");
+  };
 
   const fetchEvents = (postalCode = "") => {
     Promise.all([
@@ -72,10 +74,6 @@ const Home = () => {
       });
   };
 
-  useEffect(() => {
-    fetchEvents(postalCode);
-  }, [postalCode]);
-
   return (
     <div className="Home">
       <Header />
@@ -85,7 +83,7 @@ const Home = () => {
           placeholder="Enter your postal code"
           onChange={setPostalCode}
           value={postalCode}
-          onSearch={(e) => setPostalCode(e.target.value)}
+          onSearch={() => fetchEvents(postalCode)}
         />
       </div>
 

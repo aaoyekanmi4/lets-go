@@ -1,5 +1,6 @@
 .Home {
-  height: calc(100vh - 5rem);
+  padding-bottom: var(--padding-bottom-page);
+  min-height: calc(100vh - 5rem);
   &__search-field-container {
     max-width: 50rem;
     height: 6rem;

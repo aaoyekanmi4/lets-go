@@ -50,7 +50,6 @@ const EventDetails = () => {
     return state.savedEvents;
   });
 
-  console.log(savedEvents);
   const [details, setDetails] = useState(defaultValues);
 
   const [errorMessages, setErrorMessages] = useState([]);
@@ -154,18 +153,20 @@ const EventDetails = () => {
 
     if (!savedEvents[sourceId]) {
       return (
-        <span
-          className="button-text button-text--primary"
-          onClick={onSaveClick}
-        >
-          Save this event to add groups to it
-        </span>
+        <p>
+          <span
+            className="EventDetails__save-link button-text button-text--primary"
+            onClick={onSaveClick}
+          >
+            Save this event to add groups to it
+          </span>
+        </p>
       );
     }
 
     return (
       <div className="EventDetails__groups">
-        <AttachedGroups sourceId={ sourceId } details={ details } />
+        <AttachedGroups sourceId={sourceId} details={details} />
       </div>
     );
   };
