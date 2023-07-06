@@ -50,6 +50,7 @@ const EventDetails = () => {
     return state.savedEvents;
   });
 
+  console.log(savedEvents);
   const [details, setDetails] = useState(defaultValues);
 
   const [errorMessages, setErrorMessages] = useState([]);
