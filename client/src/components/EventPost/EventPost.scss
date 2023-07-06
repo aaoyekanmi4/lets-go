@@ -1,0 +1,22 @@
+.EventPost {
+  background-color: var(--color-light);
+  padding: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color-dark);
+  box-shadow: 2px 1px 3px rgba(var(--color-black), 0.4);
+  &:first-of-type {
+    margin-top: 5rem;
+  }
+  &__author {
+    font-style: italic;
+    font-size: 2.3rem;
+    color: var(--color-secondary);
+  }
+  &__post-date {
+    font-size: 1.7rem;
+    color: rgba(var(--color-black), 0.4);
+  }
+  &__post-body {
+    margin-top: 2rem;
+  }
+}

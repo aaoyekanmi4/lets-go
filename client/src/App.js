@@ -14,6 +14,7 @@ import CreateGroup from "./views/pages/CreateGroup/CreateGroup.js";
 import SavedEvents from "./views/pages/SavedEvents/SavedEvents.js";
 import EventResults from "./views/pages/EventResults/EventResults.js";
 import { getContacts, getGroups, getSavedEvents } from "./actions";
+import EventDetails from "./views/pages/EventDetails/EventDetails.js";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,10 @@ const App = () => {
         />
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<EventResults />} />
+        <Route
+          path="/events/:sourceValue/:sourceId"
+          element={<EventDetails />}
+        />
         <Route
           path="/contacts/:userId"
           element={user ? <Contacts /> : <Navigate to="/login" />}

@@ -85,7 +85,7 @@ const SavedEvents = () => {
                   setSortBy(e.target.value);
                 }}
                 className="SavedEvents__select"
-                selected={sortBy}
+                default={sortBy}
               >
                 <option selected={sortBy === "eventName"} value="eventName">
                   Sort by event name
