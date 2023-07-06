@@ -9,7 +9,6 @@ const getAuthorization = (token) => {
 };
 
 const getAllEventMembers = async (savedEvent, token) => {
-
   const Authorization = getAuthorization(token);
 
   const { groups, contacts } = savedEvent;
@@ -116,4 +115,4 @@ const sendEmail = async (savedEvent, token) => {
   console.log("EMAIL RESPONSE", response);
 };
 
-export { sendEmail, sendSMSMessage }
+export { sendEmail, sendSMSMessage };
