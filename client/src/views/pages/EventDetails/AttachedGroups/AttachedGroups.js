@@ -46,7 +46,7 @@ const AttachedGroups = ({ sourceId }) => {
     );
   });
 
-  const renderGroupNames = () => {
+  const renderContent = () => {
     return (
       <>
         <div className="AttachedGroups">
@@ -84,7 +84,7 @@ const AttachedGroups = ({ sourceId }) => {
     );
   };
 
-  return renderGroupNames();
+  return renderContent();
 };
 
 export default AttachedGroups;

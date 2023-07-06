@@ -25,7 +25,6 @@ const getSavedEvent = async (savedEventId, jwtToken) => {
       data: response.data,
     };
   } catch (e) {
-    console.log(e);
     return {
       status: e.response.status,
       backendErrorMessages: getBackendErrorMessages(
