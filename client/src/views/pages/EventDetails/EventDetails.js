@@ -11,7 +11,7 @@ import { getSavedEvents } from "../../../actions";
 import { saveEvent } from "../../..//components/EventCard/helpers.js";
 import useResultIndicator from "../../../hooks/useResultIndicator.js";
 import getResultIndicator from "../../../getResultIndicator.js";
-import SendMessage from "./SendMessage/SendMessage.js";
+import AttachedGroups from "./AttachedGroups/AttachedGroups.js";
 import "./EventDetails.scss";
 
 const defaultValues = {
@@ -68,7 +68,7 @@ const EventDetails = () => {
         //if error getting the event details currently(most likely
         // because no longer existing), but event is already saved,
         // upload saved event. Otherwise,send error
-        if (savedEvents[sourceId]["event"]) {
+        if (savedEvents[sourceId] && savedEvents[sourceId]["event"]) {
           setDetails(savedEvents[sourceId]["event"]);
         } else {
           setErrorMessages(response.errorMessages);
@@ -184,7 +184,7 @@ const EventDetails = () => {
                   </a>
                 </div>
                 <div className="EventDetails__info-forms">
-                  <SendMessage sourceId={sourceId} />
+                  <AttachedGroups sourceId={sourceId} />
                 </div>
               </div>
               {renderEventPosts()}
