@@ -11,6 +11,7 @@ import { getSavedEvents } from "../../../actions";
 import { saveEvent } from "../../..//components/EventCard/helpers.js";
 import useResultIndicator from "../../../hooks/useResultIndicator.js";
 import getResultIndicator from "../../../getResultIndicator.js";
+import SendMessage from "./SendMessage/SendMessage.js";
 import "./EventDetails.scss";
 
 const defaultValues = {
@@ -183,7 +184,7 @@ const EventDetails = () => {
                   </a>
                 </div>
                 <div className="EventDetails__info-forms">
-                  <p>Info form</p>
+                  <SendMessage sourceId={sourceId} />
                 </div>
               </div>
               {renderEventPosts()}

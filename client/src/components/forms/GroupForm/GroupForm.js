@@ -115,7 +115,9 @@ const GroupForm = ({ type, contacts, initialFormValues, sendData }) => {
       <AddContacts
         data={contacts}
         error={formErrors.contacts}
-        onChange={onInputChange}
+        onChange={(values) => {
+          onInputChange("contacts", values);
+        }}
         initialSelectedContacts={formValues.contacts}
       />
 
