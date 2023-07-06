@@ -1,5 +1,5 @@
 @url=http://localhost:8080/api/event-post
-@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiZXJpY0BkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MSwiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4MTY3NDI5fQ.j7yJrhC20PykEjjKTbmFpEAS7BnBcx4BOkf_kYReUpU
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4NjE1ODU4fQ.1WC56P-Z5qj3Y3eUgKpmNe4uLG-CGSNLJ0gyl1YAIrA
 
 ###
 
@@ -46,17 +46,17 @@ Authorization:Bearer {{token}}
 // PATH: /:eventPostId
 // ACCESS: AUTH
 
-PUT {{url}}/5
+PUT {{url}}/6
 Content-Type: application/json
 Authorization:Bearer {{token}}
 
 {
-  "postId":5,
+  "postId":6,
   "eventId": 1,
   "appUserId": 1,
   "author": "eric@dev10.com",
   "postDate": "2015-08-10T19:00:00",
-  "postBody": "Did you find cheaper tickets on Seat Geek?",
+  "postBody": "Did you find cheaper from anyone around?",
   "likes": 1
 }
 
@@ -67,7 +67,7 @@ Authorization:Bearer {{token}}
 // PATH: /:eventPostId
 // ACCESS: AUTH
 
-DELETE {{url}}/5
+DELETE {{url}}/7
 Content-Type: application/json
 Authorization:Bearer {{token}}
 
