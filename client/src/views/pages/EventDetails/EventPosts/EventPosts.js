@@ -43,12 +43,7 @@ const EventPosts = ({ user, eventId }) => {
   const renderedPosts = posts.map((post) => {
     return (
       <EventPost
-        postBody={post.postBody}
-        eventId={post.eventId}
-        postId={post.postId}
-        appUserId={post.appUserId}
-        author={post.author}
-        postDate={post.postDate}
+        postData={post}
         key={post.postId}
         getEventPosts={async () => {
           await getEventPosts(eventId, setPosts, setFindPostsErrors);

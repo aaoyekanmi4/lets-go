@@ -5,7 +5,7 @@ import getBackendErrorMessages from "../../getBackendErrorMessages";
 
 const editEventPost = async (jwtToken, postData) => {
   try {
-    const response = await axios.put(
+    await axios.put(
       `${baseUrls.database}/api/event-post/${postData.postId}`,
       postData,
       {
@@ -27,4 +27,22 @@ const editEventPost = async (jwtToken, postData) => {
   }
 };
 
-export { editEventPost };
+const deleteEventPost = async (jwtToken, postId) => {
+  try {
+    await axios.delete(`${baseUrls.database}/api/event-post/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    });
+
+    return {
+      status: 204,
+    };
+  } catch (e) {
+    return {
+      status: e.response.status,
+      errorMessages: getBackendErrorMessages(e, "Could not find event post"),
+    };
+  }
+};
+export { editEventPost, deleteEventPost };

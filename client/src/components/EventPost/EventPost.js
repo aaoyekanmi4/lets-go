@@ -2,18 +2,12 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
-import { editEventPost } from "./helpers.js";
+import { editEventPost, deleteEventPost } from "./helpers.js";
 import "./EventPost.scss";
 
-const EventPost = ({
-  postId,
-  postBody,
-  appUserId,
-  author,
-  postDate,
-  eventId,
-  getEventPosts,
-}) => {
+const EventPost = ({ postData, getEventPosts }) => {
+  const { postId, postBody, appUserId, author, postDate, eventId } = postData;
+
   const userId = useSelector((state) => {
     return state.user.appUserId;
   });
@@ -44,8 +38,14 @@ const EventPost = ({
       await getEventPosts();
 
       setShowEditView(false);
-    } else {
-      console.log("there were some errors");
+    }
+  };
+
+  const onDelete = async () => {
+    const response = await deleteEventPost(jwtToken, postId);
+
+    if (response.status === 204) {
+      await getEventPosts();
     }
   };
 
@@ -63,9 +63,7 @@ const EventPost = ({
           </button>
           <button
             className="button-main button-main--primary"
-            onClick={() => {
-              //delete
-            }}
+            onClick={onDelete}
           >
             Delete
           </button>
@@ -99,7 +97,9 @@ const EventPost = ({
           <button
             className="button-main button-main--primary"
             type="button"
-            onClick={() => {}}
+            onClick={() => {
+              setShowEditView(false);
+            }}
           >
             Cancel
           </button>
