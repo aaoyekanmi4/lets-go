@@ -23,13 +23,7 @@ const SearchField = ({ placeholder, value, onChange, onSearch }) => {
           }
         }}
       />
-      <button
-        type="button"
-        className="SearchField__button"
-        onClick={() => {
-          onSearch();
-        }}
-      >
+      <button type="button" className="SearchField__button" onClick={onSearch}>
         <FaMagnifyingGlass className="SearchField__icon" />
       </button>
     </div>

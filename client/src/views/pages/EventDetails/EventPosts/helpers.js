@@ -10,6 +10,8 @@ const getEventPosts = async (eventId, setPosts, setErrors) => {
     );
 
     setPosts(response.data);
+
+    setErrors([]);
   } catch (e) {
     setErrors(getBackendErrorMessages(e, "Unable to fetch event posts."));
   }

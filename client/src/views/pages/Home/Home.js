@@ -5,7 +5,7 @@ import EventsList from "../../../components/EventsList/EventsList.js";
 import "./Home.scss";
 import normalizeApiEvents from "../../../normalizeApiEvents.js";
 let saveEventResultIndicatorId;
-
+import SearchField from "../../../components//SearchField/SearchField.js";
 const Home = () => {
   const [events, setEvents] = useState([]);
   const [postalCode, setPostalCode] = useState("");
@@ -42,17 +42,16 @@ const Home = () => {
   return (
     <div className="Home">
       <Header />
-      <form onSubmit={handleSearch}>
-        <label>
-          Postal Code:
-          <input
-            type="text"
-            value={postalCode}
-            onChange={(e) => setPostalCode(e.target.value)}
-          />
-        </label>
-        <button type="submit">Search</button>
-      </form>
+
+      <div className="Home__search-field-container">
+        <SearchField
+          placeholder="Enter your postal code"
+          onChange={setPostalCode}
+          value={postalCode}
+          onSearch={(e) => setPostalCode(e.target.value)}
+        />
+      </div>
+
       <EventsList
         events={normalizeApiEvents(events)}
         listTitle="All events near you"

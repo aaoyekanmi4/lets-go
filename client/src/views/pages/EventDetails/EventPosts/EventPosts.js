@@ -90,6 +90,12 @@ const EventPosts = ({ user, eventId }) => {
         </div>
       </form>
       {renderedPosts}
+      {!posts.length ? (
+        <p>There are no discussion on this event yet. Be the first.</p>
+      ) : null}
+      {findPostsErrors.length ? (
+        <p>There was a problem finding your posts</p>
+      ) : null}
     </div>
   );
 };

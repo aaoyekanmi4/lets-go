@@ -140,6 +140,36 @@ const EventDetails = () => {
     );
   };
 
+  const renderEventGroups = () => {
+    if (!user) {
+      return (
+        <p>
+          You must be logged in to add groups to this event{" "}
+          <Link to="/login" className="button-text button-text--primary">
+            Click to log in
+          </Link>
+        </p>
+      );
+    }
+
+    if (!savedEvents[sourceId]) {
+      return (
+        <span
+          className="button-text button-text--primary"
+          onClick={onSaveClick}
+        >
+          Save this event to add groups to it
+        </span>
+      );
+    }
+
+    return (
+      <div className="EventDetails__groups">
+        <AttachedGroups sourceId={sourceId} />
+      </div>
+    );
+  };
+
   const displayContent = () => {
     if (errorMessages.length) {
       return <ErrorPage message="Unable to find event" />;
@@ -184,9 +214,8 @@ const EventDetails = () => {
                     {details.eventLink ? "Go to event link" : null}
                   </a>
                 </div>
-                <div className="EventDetails__groups">
-                  <AttachedGroups sourceId={sourceId} />
-                </div>
+
+                {renderEventGroups()}
               </div>
               {renderEventPosts()}
             </div>
