@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import Header from "../../../components/Header/Header.js";
-import EventCard from "../../../components/EventCard/EventCard.js";
 import EventsList from "../../../components/EventsList/EventsList.js";
 import SearchField from "../../../components/SearchField/SearchField.js";
 import "./SavedEvents.scss";
@@ -67,6 +66,7 @@ const SavedEvents = () => {
   return (
     <div className="SavedEvents">
       <Header />
+
       <div className="SavedEvents__main">
         <div className="container">
           <div className="SavedEvents__search-and-filter">

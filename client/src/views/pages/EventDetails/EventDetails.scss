@@ -1,6 +1,7 @@
 .EventDetails {
   color: var(--color-dark);
   font-size: 2.5rem;
+  padding-bottom: var(--padding-bottom-page);
   &__info {
     display: flex;
   }
@@ -35,6 +36,9 @@
   }
   &__image {
     width: 100%;
+  }
+  &__click-to-save {
+    margin-top: 2rem;
   }
   .EventPosts {
     margin-top: 5rem;

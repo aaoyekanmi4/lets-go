@@ -40,7 +40,21 @@ const EventPosts = ({ user, eventId }) => {
     }
   };
 
-  const renderedPosts = posts.map((post) => {
+  const sortByPostDate = (posts) => {
+    posts.sort((a, b) => {
+      if (moment(a.postDate).utc() > moment(b.postDate).utc()) {
+        return -1;
+      } else if (moment(a.postDate).utc() < moment(b.postDate).utc()) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    return posts;
+  };
+
+  const renderedPosts = sortByPostDate(posts).map((post) => {
     return (
       <EventPost
         postData={post}

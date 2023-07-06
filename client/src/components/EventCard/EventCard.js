@@ -114,7 +114,7 @@ const EventCard = ({ eventData, setEventResultIndicator }) => {
     <>
       <Link
         className="EventCard"
-        to={`events/${source === "TicketMaster" ? "1" : "2"}/${sourceId}`}
+        to={`/events/${source === "TicketMaster" ? "1" : "2"}/${sourceId}`}
       >
         <div className="EventCard__image-container">
           <img src={imageUrl} className="EventCard__image" alt={eventName} />
