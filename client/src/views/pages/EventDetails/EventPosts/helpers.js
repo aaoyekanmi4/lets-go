@@ -3,7 +3,7 @@ import axios from "axios";
 import baseUrls from "../../../../baseUrls";
 import getBackendErrorMessages from "../../../../getBackendErrorMessages";
 
-const findEventPosts = async (eventId, setPosts, setErrors) => {
+const getEventPosts = async (eventId, setPosts, setErrors) => {
   try {
     const response = await axios.get(
       `${baseUrls.database}/api/event-post/${eventId}`
@@ -40,4 +40,5 @@ const createEventPost = async (postData, jwtToken) => {
     };
   }
 };
-export { findEventPosts, createEventPost };
+
+export { getEventPosts, createEventPost };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 
-import { findEventPosts, createEventPost } from "./helpers.js";
+import { getEventPosts, createEventPost } from "./helpers.js";
 import EventPost from "../../../../components/EventPost/EventPost.js";
 import "./EventPosts.scss";
 
@@ -15,7 +15,7 @@ const EventPosts = ({ user, eventId }) => {
   const [createPostErrors, setCreatePostErrors] = useState([]);
 
   useEffect(() => {
-    findEventPosts(eventId, setPosts, setFindPostsErrors);
+    getEventPosts(eventId, setPosts, setFindPostsErrors);
   }, []);
 
   const onPostSubmit = async (e) => {
@@ -32,7 +32,7 @@ const EventPosts = ({ user, eventId }) => {
     const response = await createEventPost(postData, user.jwtToken);
 
     if (response.status === 201) {
-      await findEventPosts(eventId, setPosts, setFindPostsErrors);
+      await getEventPosts(eventId, setPosts, setFindPostsErrors);
 
       setPostBody("");
     } else {
@@ -44,11 +44,15 @@ const EventPosts = ({ user, eventId }) => {
     return (
       <EventPost
         postBody={post.postBody}
+        eventId={post.eventId}
         postId={post.postId}
         appUserId={post.appUserId}
         author={post.author}
         postDate={post.postDate}
         key={post.postId}
+        getEventPosts={async () => {
+          await getEventPosts(eventId, setPosts, setFindPostsErrors);
+        }}
       />
     );
   });
