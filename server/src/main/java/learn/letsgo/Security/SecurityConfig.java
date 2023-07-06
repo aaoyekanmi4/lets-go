@@ -41,6 +41,7 @@ public class SecurityConfig {
                 .antMatchers("/api/message/*").authenticated()
                 .antMatchers(HttpMethod.GET,"/api/event-post/post/*").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/event-post/*").permitAll()
+                .antMatchers("/api/event-post/*").authenticated()
                 .antMatchers("/api/event-post").authenticated()
                 .antMatchers("/api/event/user/contact/*/*").authenticated()
                 .antMatchers("/api/event/user/group/*/*").authenticated()

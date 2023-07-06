@@ -6,13 +6,51 @@ import "./Home.scss";
 import normalizeApiEvents from "../../../normalizeApiEvents.js";
 let saveEventResultIndicatorId;
 import SearchField from "../../../components//SearchField/SearchField.js";
+
+const api_url = "https://api.opencagedata.com/geocode/v1/json";
+const api_key = "504e225fe87f4659a2b35a2d377d922b";
+
+const findZipCodeFromUserLocation = async (lat, lng) => {
+  const query = `${lat},${lng}`;
+  const requestUrl = `${api_url}?key=${api_key}&q=${encodeURIComponent(
+    query
+  )}&pretty=1&no_annotations=1`;
+
+  const response = await fetch(requestUrl);
+  if (response.status !== 200) {
+    throw new Error("Could not get postal code from user location");
+  }
+  const responseJSON = await response.json();
+  return responseJSON.results[0].components.postcode;
+};
+
 const Home = () => {
   const [events, setEvents] = useState([]);
   const [postalCode, setPostalCode] = useState("");
 
   useEffect(() => {
-    fetchEvents(postalCode);
-  }, [postalCode]);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        onGeolocationSuccess,
+        onGeolocationError
+      );
+    } else {
+      console.log("Geolocation not supported");
+    }
+  }, []);
+
+  const onGeolocationSuccess = async (position) => {
+    const { latitude, longitude } = position.coords;
+    try {
+      const postalCode = await findZipCodeFromUserLocation(latitude, longitude);
+      setPostalCode(postalCode);
+      fetchEvents(postalCode);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onGeolocationError = (error) => {};
 
   const fetchEvents = (postalCode = "") => {
     Promise.all([
@@ -34,10 +72,9 @@ const Home = () => {
       });
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  useEffect(() => {
     fetchEvents(postalCode);
-  };
+  }, [postalCode]);
 
   return (
     <div className="Home">

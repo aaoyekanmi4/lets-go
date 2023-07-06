@@ -1,5 +1,5 @@
 @url=http://localhost:8080/api/event
-@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4NTY0ODYyfQ._onvDaKuQzWvdlgrJ9rUBECOWJPD0IlJay3LDx8h_yQ
+@token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsZXRzLWdvIiwic3ViIjoiYXJpdEBkZXYxMC5jb20iLCJhcHBfdXNlcl9pZCI6MywiYXV0aG9yaXRpZXMiOiJVU0VSIiwiZXhwIjoxNjg4NjU0ODYwfQ.oLAw68kxTa7v2znkOzBYJWiydB6px78wQ8LplabbQfU
 
 // FUNCTION: findAllSavedEventsByUserId
 // RETURNS: List of SavedEvents
@@ -16,7 +16,7 @@ Authorization:Bearer {{token}}
 // PATH: /saved/:savedEventId
 // ACCESS: AUTH
 
-GET {{url}}/saved/16
+GET {{url}}/saved/15
 Authorization:Bearer {{token}}
 
 ###
@@ -107,11 +107,11 @@ Authorization:Bearer {{token}}
 // PATH: /batch/groups/:savedEventId
 // ACCESS: AUTH
 // PUT BODY: array of groupIds
-PUT {{url}}/batch/groups/16
+PUT {{url}}/batch/groups/15
 Content-Type: application/json
 Authorization:Bearer {{token}}
 
-[1,7]
+[1,5,7]
 
 ###
 
