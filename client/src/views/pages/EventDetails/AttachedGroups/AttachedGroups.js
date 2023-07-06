@@ -1,72 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import AddData from "../../../../components/AddData/AddData.js";
 import AddGroupsToEventModal from "../../../../components/AddGroupsToEventModal/AddGroupsToEventModal.js";
+import { getSavedEvent } from "../AttachedGroups/helpers.js";
 import "./AttachedGroups.scss";
 
 const AttachedGroups = ({ sourceId }) => {
-  const allGroups = useSelector((state) => {
-    return state.groups;
+  const user = useSelector((state) => {
+    return state.user;
   });
 
-  const groupsInEvent = useSelector((state) => {
+  const savedEventId = useSelector((state) => {
     if (state.savedEvents[sourceId]) {
-      return state.savedEvents[sourceId].groups;
+      return state.savedEvents[sourceId].savedEventId;
     }
-    return [];
+
+    return null;
   });
 
-  // const eventId = useSelector((state) => {
-  //   return state.savedEvents[sourceId].event.eventId;
-  // });
+  const [groupsInEvent, setGroupsInEvent] = useState([]);
 
-  const [selectedGroups, setSelectedGroups] = useState(groupsInEvent);
+  const [savedEventErrors, setSavedEventErrors] = useState([]);
 
   const [showAddGroupsModal, setShowAddGroupsModal] = useState(false);
 
-  const onSelectedChange = (selectedData) => {
-    setSelectedGroups(selectedData);
-  };
+  useEffect(() => {
+    runGetSavedEvent();
+  }, []);
 
-  //dataObj is a group object
-  const getDataName = (dataObj) => {
-    return `${dataObj.name}`;
-  };
+  const runGetSavedEvent = async () => {
+    const response = await getSavedEvent(savedEventId, user.jwtToken);
 
-  const isSelected = (selectedDataObj, currentObjId) => {
-    return selectedDataObj.groupId === currentObjId;
-  };
-
-  const getDataId = (dataObj) => {
-    return dataObj.groupId;
+    if (!response.errorMessages) {
+      setGroupsInEvent(response.data.groups);
+    } else {
+      setSavedEventErrors(response.errorMessages);
+    }
   };
 
   const renderedGroupsInEvent = groupsInEvent.map((group) => {
     return (
-      <p key={group.groupId} className="">
+      <p key={group.groupId} className="AttachedGroups__group">
         {group.name}
       </p>
     );
   });
-
-  const renderContent = () => {
-    return (
-      <form className="SendMessage">
-        <p>Select groups to send this event to</p>
-        <AddData
-          getDataName={getDataName}
-          isSelected={isSelected}
-          getDataId={getDataId}
-          inputPlaceholder="Search group..."
-          labelName="Select groups"
-          data={allGroups}
-          onSelectedChange={onSelectedChange}
-          initialSelectedData={selectedGroups}
-        />
-      </form>
-    );
-  };
 
   const renderGroupNames = () => {
     return (
@@ -79,7 +57,7 @@ const AttachedGroups = ({ sourceId }) => {
             {renderedGroupsInEvent.length ? (
               renderedGroupsInEvent
             ) : (
-              <p>No Groups</p>
+              <p>No groups to show</p>
             )}
           </div>
           <button
@@ -88,7 +66,7 @@ const AttachedGroups = ({ sourceId }) => {
               setShowAddGroupsModal(true);
             }}
           >
-            Add Group
+            Update Groups
           </button>
         </div>
 
@@ -98,6 +76,8 @@ const AttachedGroups = ({ sourceId }) => {
             closeModal={() => {
               setShowAddGroupsModal(false);
             }}
+            getSavedEvent={runGetSavedEvent}
+            initialSavedGroups={groupsInEvent}
           />
         ) : null}
       </>

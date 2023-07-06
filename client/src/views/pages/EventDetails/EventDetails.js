@@ -183,7 +183,7 @@ const EventDetails = () => {
                     {details.eventLink ? "Go to event link" : null}
                   </a>
                 </div>
-                <div className="EventDetails__info-forms">
+                <div className="EventDetails__groups">
                   <AttachedGroups sourceId={sourceId} />
                 </div>
               </div>

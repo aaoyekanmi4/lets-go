@@ -6,7 +6,11 @@
     display: flex;
   }
   &__info-main {
+    flex: 4 0 0;
+  }
+  &__groups {
     flex: 2 0 0;
+    margin-right: 1rem;
   }
   &__detail-text {
     margin-bottom: 2rem;
@@ -18,9 +22,6 @@
       text-decoration: underline;
     }
   }
-  &__info-forms {
-    flex: 1 0 0;
-  }
   &__name {
     font-size: 4rem;
     text-align: center;
@@ -31,14 +32,14 @@
     margin-bottom: 2rem;
     width: 100%;
   }
-  &__venue {
-  }
+
   &__image {
     width: 100%;
   }
   &__click-to-save {
     margin-top: 2rem;
   }
+
   .EventPosts {
     margin-top: 5rem;
   }

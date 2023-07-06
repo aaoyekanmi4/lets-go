@@ -2,28 +2,35 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 import ModalContainer from "../ModalContainer/ModalContainer.js";
+import ErrorsContainer from "../../components/forms/ErrorsContainer/ErrorsContainer.js";
 import AddData from "../AddData/AddData.js";
+import { updateGroupsInEvent } from "./helpers.js";
 import "./AddGroupsToEventModal.scss";
 
-const AddGroupsToEventModal = ({ closeModal, sourceId }) => {
+const AddGroupsToEventModal = ({
+  closeModal,
+  sourceId,
+  initialSavedGroups,
+  getSavedEvent,
+}) => {
   const allGroups = useSelector((state) => {
     return state.groups;
   });
-
-  const groupsInEvent = useSelector((state) => {
-    if (state.savedEvents[sourceId]) {
-      return state.savedEvents[sourceId].groups;
-    }
-    return [];
+  const jwtToken = useSelector((state) => {
+    return state.user.jwtToken;
   });
 
-  // const eventId = useSelector((state) => {
-  //   return state.savedEvents[sourceId].event.eventId;
-  // });
+  const savedEventId = useSelector((state) => {
+    if (state.savedEvents[sourceId]) {
+      return state.savedEvents[sourceId].savedEventId;
+    }
 
-  const [selectedGroups, setSelectedGroups] = useState(groupsInEvent);
+    return null;
+  });
 
-  const [showAddGroupsModal, setShowAddGroupsModal] = useState(false);
+  const [selectedGroups, setSelectedGroups] = useState(initialSavedGroups);
+
+  const [updateErrors, setUpdateErrors] = useState([]);
 
   const onSelectedChange = (selectedData) => {
     setSelectedGroups(selectedData);
@@ -42,12 +49,31 @@ const AddGroupsToEventModal = ({ closeModal, sourceId }) => {
     return dataObj.groupId;
   };
 
+  const onUpdate = async (e) => {
+    e.preventDefault();
+
+    const response = await updateGroupsInEvent(
+      jwtToken,
+      savedEventId,
+      selectedGroups.map((group) => group.groupId)
+    );
+
+    if (response.status === 204) {
+      await getSavedEvent();
+
+      closeModal();
+    } else {
+      setUpdateErrors(response.errorMessages);
+    }
+  };
+
   return (
     <ModalContainer closeModal={closeModal}>
-      <form className="AddGroupsToEvent">
+      <form className="AddGroupsToEvent" onSubmit={onUpdate}>
         <h2 className="AddGroupsToEvent__header">
           Select groups to send this event to
         </h2>
+        <ErrorsContainer errorsArray={updateErrors} />
         <AddData
           getDataName={getDataName}
           isSelected={isSelected}

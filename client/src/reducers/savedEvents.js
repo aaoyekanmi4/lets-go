@@ -7,6 +7,7 @@ const savedEvents = (state = [], action) => {
       action.payload.forEach(
         (savedEvent) => (events[savedEvent.event.sourceId] = savedEvent)
       );
+
       return events;
     }
     case types.CLEAR_SAVED_EVENTS:
