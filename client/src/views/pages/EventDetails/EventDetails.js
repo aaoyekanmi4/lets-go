@@ -166,7 +166,7 @@ const EventDetails = () => {
 
     return (
       <div className="EventDetails__groups">
-        <AttachedGroups sourceId={sourceId} />
+        <AttachedGroups sourceId={ sourceId } details={ details } />
       </div>
     );
   };
