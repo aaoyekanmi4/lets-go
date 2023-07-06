@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { sendEmail, sendSMSMessage } from "../../../../MessagingTextApi.js";
 import { useSelector } from "react-redux";
 
 import AddGroupsToEventModal from "../../../../components/AddGroupsToEventModal/AddGroupsToEventModal.js";
@@ -24,6 +25,8 @@ const AttachedGroups = ({ sourceId }) => {
 
   const [showAddGroupsModal, setShowAddGroupsModal] = useState(false);
 
+  const [savedEvent, setSavedEvent] = useState(null);
+
   useEffect(() => {
     runGetSavedEvent();
   }, []);
@@ -33,6 +36,7 @@ const AttachedGroups = ({ sourceId }) => {
 
     if (!response.errorMessages) {
       setGroupsInEvent(response.data.groups);
+      setSavedEvent(response.data);
     } else {
       setSavedEventErrors(response.errorMessages);
     }
@@ -67,6 +71,22 @@ const AttachedGroups = ({ sourceId }) => {
             }}
           >
             Update Groups
+          </button>
+          <button
+            className="AttachedGroups__button button-outline button-outline--primary"
+            onClick={() => {
+              sendEmail(savedEvent, user.jwtToken);
+            }}
+          >
+            Notify by email
+          </button>
+          <button
+            className="AttachedGroups__button button-outline button-outline--primary"
+            onClick={() => {
+              sendSMSMessage(savedEvent, user.jwtToken);
+            }}
+          >
+            Notify by text
           </button>
         </div>
 
