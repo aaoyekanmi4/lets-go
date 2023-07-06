@@ -1,0 +1,13 @@
+.ErrorPage {
+  &__main {
+    margin-top: 5rem;
+  }
+  &__container {
+    display: flex;
+    align-items: center;
+  }
+  &__message {
+    font-size: 3rem;
+    color: var(--color-dark);
+  }
+}

@@ -1,4 +1,4 @@
-.AddContacts {
+.AddData {
   position: relative;
   &__view {
     width: 100%;
@@ -82,7 +82,7 @@
     top: 0rem;
     font-size: 1.5rem;
   }
-  .AddContacts__circle:hover {
+  .AddData__circle:hover {
     border: 1px solid #3944bc;
   }
 }

@@ -1,0 +1,46 @@
+.EventDetails {
+  color: var(--color-dark);
+  font-size: 2.5rem;
+  padding-bottom: var(--padding-bottom-page);
+  &__info {
+    display: flex;
+  }
+  &__info-main {
+    flex: 4 0 0;
+  }
+  &__groups {
+    flex: 2 0 0;
+    margin-right: 1rem;
+  }
+  &__detail-text {
+    margin-bottom: 2rem;
+  }
+  &__link {
+    color: blue;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  &__name {
+    font-size: 4rem;
+    text-align: center;
+    color: var(--color-tertiary);
+  }
+  &__image-container {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+
+  &__image {
+    width: 100%;
+  }
+  &__click-to-save {
+    margin-top: 2rem;
+  }
+
+  .EventPosts {
+    margin-top: 5rem;
+  }
+}

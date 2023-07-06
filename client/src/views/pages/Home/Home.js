@@ -5,20 +5,23 @@ import EventsList from "../../../components/EventsList/EventsList.js";
 import "./Home.scss";
 import normalizeApiEvents from "../../../normalizeApiEvents.js";
 let saveEventResultIndicatorId;
+import SearchField from "../../../components//SearchField/SearchField.js";
 
 const api_url = "https://api.opencagedata.com/geocode/v1/json";
 const api_key = "504e225fe87f4659a2b35a2d377d922b";
 
 const findZipCodeFromUserLocation = async (lat, lng) => {
-    const query = `${lat},${lng}`;
-    const requestUrl = `${api_url}?key=${api_key}&q=${encodeURIComponent(query)}&pretty=1&no_annotations=1`;
+  const query = `${lat},${lng}`;
+  const requestUrl = `${api_url}?key=${api_key}&q=${encodeURIComponent(
+    query
+  )}&pretty=1&no_annotations=1`;
 
-    const response = await fetch(requestUrl);
-    if (response.status !== 200) {
-      throw new Error("Could not get postal code from user location");
-    }
-    const responseJSON = await response.json();
-    return responseJSON.results[0].components.postcode;
+  const response = await fetch(requestUrl);
+  if (response.status !== 200) {
+    throw new Error("Could not get postal code from user location");
+  }
+  const responseJSON = await response.json();
+  return responseJSON.results[0].components.postcode;
 };
 
 const Home = () => {
@@ -27,11 +30,14 @@ const Home = () => {
 
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(onGeolocationSuccess, onGeolocationError);
+      navigator.geolocation.getCurrentPosition(
+        onGeolocationSuccess,
+        onGeolocationError
+      );
     } else {
       console.log("Geolocation not supported");
     }
-  }, [])
+  }, []);
 
   const onGeolocationSuccess = async (position) => {
     const { latitude, longitude } = position.coords;
@@ -44,9 +50,7 @@ const Home = () => {
     }
   };
 
-  const onGeolocationError = (error) => {
-    console.log(`Geolocation Error: ${error.message}`);
-  };
+  const onGeolocationError = (error) => {};
 
   const fetchEvents = (postalCode = "") => {
     Promise.all([
@@ -68,25 +72,23 @@ const Home = () => {
       });
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  useEffect(() => {
     fetchEvents(postalCode);
-  };
+  }, [postalCode]);
 
   return (
     <div className="Home">
       <Header />
-      <form onSubmit={handleSearch}>
-        <label>
-          Postal Code:
-          <input
-            type="text"
-            value={postalCode}
-            onChange={(e) => setPostalCode(e.target.value)}
-          />
-        </label>
-        <button type="submit">Search</button>
-      </form>
+
+      <div className="Home__search-field-container">
+        <SearchField
+          placeholder="Enter your postal code"
+          onChange={setPostalCode}
+          value={postalCode}
+          onSearch={(e) => setPostalCode(e.target.value)}
+        />
+      </div>
+
       <EventsList
         events={normalizeApiEvents(events)}
         listTitle="All events near you"

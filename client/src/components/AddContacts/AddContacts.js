@@ -31,7 +31,7 @@ const AddContacts = ({ data, onChange, error, initialSelectedContacts }) => {
   //when selectedContacts change, update the contacts values the in parent createGroupForm
   //component
   useEffect(() => {
-    onChange("contacts", selectedContacts);
+    onChange(selectedContacts);
   }, [selectedContacts]);
 
   //when search value changes, get filteredResults/suggested contacts
