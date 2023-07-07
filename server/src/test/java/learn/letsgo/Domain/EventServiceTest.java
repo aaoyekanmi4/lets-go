@@ -57,10 +57,9 @@ class EventServiceTest {
         event.setEventId(1);
         when(eventRepository.findAll()).thenReturn(makeExistingEvents());
         when(appUserRepository.findById(3)).thenReturn(makeAppUser());
-        when(eventRepository.findById(1)).thenReturn(makeExistingEvents().get(1));
+        when(eventRepository.findById(4)).thenReturn(makeExistingEvents().get(1));
         when(savedEventRepository.addEventToUser(4, 3)).thenReturn(true);
-        Result<Event> actual = eventService.saveEventToUser(event, 3);
-        System.out.println(actual.getMessages());
+        Result<Event> actual = eventService.saveEventToUser(makeExistingEvents().get(1), 3);
         assertEquals(4, actual.getPayload().getEventId());
     }
 

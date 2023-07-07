@@ -20,7 +20,7 @@ module.exports = {
   rules: {
     "react/react-in-jsx-scope": "off",
     // this allows us to disable rules(off) or enforce errors for the rule guidelines we are extending from
-    "prettier/prettier": "error", // enforce prettier rules
+    "prettier/prettier": "warn", // enforce prettier rules
     quotes: "off", // turns off now allowing me to use double quotes
     "no-console": "off",
     "no-unused-vars": "warn",
