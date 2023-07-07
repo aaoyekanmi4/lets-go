@@ -57,28 +57,10 @@ const AttachedGroups = ({ sourceId }) => {
     );
   });
 
-  const renderContent = () => {
-    return (
-      <>
-        <div className="AttachedGroups">
-          <h2 className="AttachedGroups__header">
-            Groups attached to this event
-          </h2>
-          <div className="AttachedGroups__groups">
-            {renderedGroupsInEvent.length ? (
-              renderedGroupsInEvent
-            ) : (
-              <p>No groups to show</p>
-            )}
-          </div>
-          <button
-            className="AttachedGroups__button button-outline button-outline--primary"
-            onClick={() => {
-              setShowAddGroupsModal(true);
-            }}
-          >
-            Update Groups
-          </button>
+  const renderSendNotificationButtons = () => {
+    if (groupsInEvent.length) {
+      return (
+        <>
           <button
             className="AttachedGroups__button button-outline button-outline--primary"
             onClick={async () => {
@@ -127,6 +109,35 @@ const AttachedGroups = ({ sourceId }) => {
           >
             Notify by text
           </button>
+        </>
+      );
+    }
+  };
+
+  const renderContent = () => {
+    return (
+      <>
+        <div className="AttachedGroups">
+          <h2 className="AttachedGroups__header">
+            Groups attached to this event
+          </h2>
+          <div className="AttachedGroups__groups">
+            {renderedGroupsInEvent.length ? (
+              renderedGroupsInEvent
+            ) : (
+              <p>No groups to show</p>
+            )}
+          </div>
+          <button
+            className="AttachedGroups__button button-outline button-outline--primary"
+            onClick={() => {
+              setShowAddGroupsModal(true);
+            }}
+          >
+            Update Groups
+          </button>
+
+          {renderSendNotificationButtons()}
         </div>
 
         {showAddGroupsModal ? (
