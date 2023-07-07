@@ -169,7 +169,7 @@ const RegisterForm = () => {
           }}
         />
         <TextInput
-          type="text"
+          type="password"
           id="password"
           label="Password*"
           name="password"

@@ -78,7 +78,7 @@ const LoginForm = () => {
         }}
       />
       <TextInput
-        type="text"
+        type="password"
         id="password"
         label="Password*"
         name="password"

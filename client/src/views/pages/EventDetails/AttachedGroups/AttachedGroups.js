@@ -4,7 +4,11 @@ import { useSelector } from "react-redux";
 
 import AddGroupsToEventModal from "../../../../components/AddGroupsToEventModal/AddGroupsToEventModal.js";
 import { getSavedEvent } from "../AttachedGroups/helpers.js";
+import useResultIndicator from "../../../../hooks/useResultIndicator.js";
+import getResultIndicator from "../../../../getResultIndicator.js";
 import "./AttachedGroups.scss";
+
+let resultIndicatorId;
 
 const AttachedGroups = ({ sourceId }) => {
   const user = useSelector((state) => {
@@ -26,6 +30,9 @@ const AttachedGroups = ({ sourceId }) => {
   const [showAddGroupsModal, setShowAddGroupsModal] = useState(false);
 
   const [savedEvent, setSavedEvent] = useState(null);
+
+  const [resultIndicator, setResultIndicator] =
+    useResultIndicator(resultIndicatorId);
 
   useEffect(() => {
     runGetSavedEvent();
@@ -74,16 +81,48 @@ const AttachedGroups = ({ sourceId }) => {
           </button>
           <button
             className="AttachedGroups__button button-outline button-outline--primary"
-            onClick={() => {
-              sendEmail(savedEvent, user.jwtToken);
+            onClick={async () => {
+              const response = await sendEmail(savedEvent, user.jwtToken);
+
+              if (response.status === 200) {
+                setResultIndicator({
+                  show: "true",
+                  outcome: "success",
+                  operation: "notify",
+                  message: "Successfully emailed all groups",
+                });
+              } else {
+                setResultIndicator({
+                  show: "true",
+                  outcome: "fail",
+                  operation: "notify",
+                  message: "Unable to email groups",
+                });
+              }
             }}
           >
             Notify by email
           </button>
           <button
             className="AttachedGroups__button button-outline button-outline--primary"
-            onClick={() => {
-              sendSMSMessage(savedEvent, user.jwtToken);
+            onClick={async () => {
+              const response = await sendSMSMessage(savedEvent, user.jwtToken);
+
+              if (response.status === 200) {
+                setResultIndicator({
+                  show: "true",
+                  outcome: "success",
+                  operation: "notify",
+                  message: "Successfully sent text to all groups",
+                });
+              } else {
+                setResultIndicator({
+                  show: "true",
+                  outcome: "fail",
+                  operation: "notify",
+                  message: "Unable to send text to groups",
+                });
+              }
             }}
           >
             Notify by text
@@ -100,6 +139,8 @@ const AttachedGroups = ({ sourceId }) => {
             initialSavedGroups={groupsInEvent}
           />
         ) : null}
+
+        {resultIndicator.show ? getResultIndicator(resultIndicator) : null}
       </>
     );
   };
