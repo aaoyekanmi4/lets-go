@@ -63,56 +63,71 @@ const getEventDetailLink = (savedEvent) => {
 };
 
 const sendSMSMessage = async (savedEvent, token) => {
-  const Authorization = getAuthorization(token);
-  const eventMembers = await getAllEventMembers(savedEvent, token);
+  try {
+    const Authorization = getAuthorization(token);
+    const eventMembers = await getAllEventMembers(savedEvent, token);
 
-  const phoneNumbers = getPhoneNumbers(eventMembers);
+    const phoneNumbers = getPhoneNumbers(eventMembers);
 
-  const smsMessages = phoneNumbers.map((number) => {
+    const smsMessages = phoneNumbers.map((number) => {
+      return {
+        recipient: number,
+        savedEvent,
+        eventDetailUrl: getEventDetailLink(savedEvent),
+      };
+    });
+
+    await axios.all(
+      smsMessages.map((message) =>
+        axios.post(SEND_SMS_API_URL, message, {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization,
+          },
+        })
+      )
+    );
+
     return {
-      recipient: number,
-      savedEvent,
-      eventDetailUrl: getEventDetailLink(savedEvent),
+      status: 200,
     };
-  });
-
-  const responses = await axios.all(
-    smsMessages.map((message) =>
-      axios.post(SEND_SMS_API_URL, message, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization,
-        },
-      })
-    )
-  );
-
-  console.log("TEXT MESSAGE RESPONSE", responses);
+  } catch (e) {
+    return {
+      status: 500,
+    };
+  }
 };
 
 const sendEmail = async (savedEvent, token) => {
-  console.log(token);
-  const Authorization = getAuthorization(token);
-  const eventMembers = await getAllEventMembers(savedEvent, token);
+  try {
+    const Authorization = getAuthorization(token);
+    const eventMembers = await getAllEventMembers(savedEvent, token);
 
-  const emailAddresses = getContactEmails(eventMembers);
+    const emailAddresses = getContactEmails(eventMembers);
 
-  const emailMessage = {
-    recipients: emailAddresses,
-    savedEvent,
-    eventDetailUrl: getEventDetailLink(savedEvent),
-  };
+    const emailMessage = {
+      recipients: emailAddresses,
+      savedEvent,
+      eventDetailUrl: getEventDetailLink(savedEvent),
+    };
 
-  const response = await axios.post(SEND_EMAIL_API_URL, emailMessage, {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization,
-    },
-  });
+    const response = await axios.post(SEND_EMAIL_API_URL, emailMessage, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization,
+      },
+    });
 
-  console.log("EMAIL RESPONSE", response);
+    return {
+      status: response.status,
+    };
+  } catch (e) {
+    return {
+      status: e.response.status,
+    };
+  }
 };
 
 export { sendEmail, sendSMSMessage };
