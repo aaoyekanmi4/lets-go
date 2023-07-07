@@ -108,7 +108,7 @@ const EventDetails = () => {
   const renderEventPosts = () => {
     if (!user) {
       return (
-        <p>
+        <p className="margin-top-medium">
           You must be logged in to see event posts{" "}
           <Link to="/login" className="button-text button-text--primary">
             Click to log in
@@ -125,7 +125,7 @@ const EventDetails = () => {
             className="button-text button-text--primary"
             onClick={onSaveClick}
           >
-            Click here to save this event
+            Click here to save!
           </span>
         </p>
       );
@@ -142,25 +142,30 @@ const EventDetails = () => {
   const renderEventGroups = () => {
     if (!user) {
       return (
-        <p>
-          You must be logged in to add groups to this event{" "}
-          <Link to="/login" className="button-text button-text--primary">
-            Click to log in
-          </Link>
-        </p>
+        <div className="EventDetails__groups">
+          <div className="EventDetails__unauthorized-text">
+            Log in to add groups to this event
+            <Link to="/login" className="button-text button-text--primary">
+              Log in
+            </Link>
+          </div>
+        </div>
       );
     }
 
     if (!savedEvents[sourceId]) {
       return (
-        <p>
-          <span
-            className="EventDetails__save-link button-text button-text--primary"
-            onClick={onSaveClick}
-          >
-            Save this event to add groups to it
-          </span>
-        </p>
+        <div className="EventDetails__groups">
+          <div className="EventDetails__unauthorized-text">
+            Save this event to add groups to it.
+            <span
+              className="EventDetails__save-link button-text button-text--primary"
+              onClick={onSaveClick}
+            >
+              Click here to save!
+            </span>
+          </div>
+        </div>
       );
     }
 
