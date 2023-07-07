@@ -57,6 +57,8 @@ const ContactForm = ({ type, initialFormValues, sendData }) => {
       if (response.status === 201 || response.status === 204) {
         await dispatch(getContacts());
 
+        setBackendErrors([]);
+
         setSuccessMessage("Success! Redirecting you back to contacts page");
 
         setTimeout(() => {

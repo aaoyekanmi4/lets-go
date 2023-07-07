@@ -56,6 +56,8 @@ const GroupForm = ({ type, contacts, initialFormValues, sendData }) => {
       if (response.status === 201 || response.status === 204) {
         await dispatch(getGroups());
 
+        setBackendErrors([]);
+
         setSuccessMessage("Success! Redirecting you back to groups page...");
 
         setTimeout(() => {
