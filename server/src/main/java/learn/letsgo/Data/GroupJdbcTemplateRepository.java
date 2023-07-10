@@ -17,7 +17,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-public class GroupJdbcTemplateRepository implements GroupRepository{
+public class GroupJdbcTemplateRepository implements GroupRepository {
 
     private final JdbcTemplate jdbcTemplate;
 

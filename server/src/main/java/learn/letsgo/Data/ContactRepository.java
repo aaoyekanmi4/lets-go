@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface ContactRepository {
+public interface ContactRepository extends BridgeTableRepository<Contact> {
     Contact findById(int contactId);
 
     Contact create(Contact contact);

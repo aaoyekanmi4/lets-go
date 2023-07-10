@@ -66,7 +66,7 @@ public class GroupController {
 
     @PostMapping("/{contactId}/{groupId}")
     public ResponseEntity<?> addContactToGroup (@PathVariable int contactId, @PathVariable int groupId) {
-        Result<Void> result = groupService.addContactToGroup(contactId, groupId);
+        Result<Group> result = groupService.addContactToGroup(contactId, groupId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -75,7 +75,7 @@ public class GroupController {
 
     @PostMapping("/{groupId}")
     public ResponseEntity<?> batchAddContactsToGroup (@RequestBody List<Integer> contactIds, @PathVariable int groupId) {
-        Result<Void> result = groupService.batchAddContactsToGroup(contactIds, groupId);
+        Result<Group> result = groupService.batchAddContactsToGroup(contactIds, groupId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -84,7 +84,7 @@ public class GroupController {
 
     @PutMapping("/batch/{groupId}")
     public ResponseEntity<?> batchUpdateContactsInGroup (@RequestBody List<Integer> contactIds, @PathVariable int groupId) {
-        Result<Void> result = groupService.batchUpdateContactsInGroup(contactIds, groupId);
+        Result<Group> result = groupService.batchUpdateContactsInGroup(contactIds, groupId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -94,7 +94,7 @@ public class GroupController {
     @DeleteMapping("/{contactId}/{groupId}")
     public ResponseEntity<?> removeContactFromGroup(@PathVariable int contactId,
                                                   @PathVariable int groupId) {
-        Result<Void> result = groupService.removeContactFromGroup(contactId, groupId);
+        Result<Group> result = groupService.removeContactFromGroup(contactId, groupId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

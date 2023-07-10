@@ -5,7 +5,7 @@ import learn.letsgo.Models.Group;
 
 import java.util.List;
 
-public interface GroupRepository {
+public interface GroupRepository extends BridgeTableRepository<Group> {
     Group findById(int groupId);
 
     Group create(Group group);

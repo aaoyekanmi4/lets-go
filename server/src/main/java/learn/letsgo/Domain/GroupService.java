@@ -33,7 +33,7 @@ public class GroupService {
     }
 
     public Result<Group> create(Group group) {
-        Result<Group> result = validate(group);
+        Result<Group> result = validateFields(group);
         if (!result.isSuccess()) {
             return result;
         }
@@ -43,7 +43,7 @@ public class GroupService {
     }
 
     public Result<Group> update(Group group) {
-        Result<Group> result = validate(group);
+        Result<Group> result = validateFields(group);
         if (!result.isSuccess()) {
             return result;
         }
@@ -66,12 +66,11 @@ public class GroupService {
         return groupRepository.deleteById(groupId);
     }
 
-    public Result<Void> addContactToGroup(int contactId, int groupId) {
-        Result<Void> result = validateCanPerformBridgeAction(contactId, groupId, true);
+    public Result<Group> addContactToGroup(int contactId, int groupId) {
+        Result<Group> result = validateCanBridgeContactToGroup(contactId, groupId, BridgeTableOperation.ADD);
         if (!result.isSuccess()) {
             return result;
         }
-
         boolean didAddContact = groupRepository.addContactToGroup(contactId, groupId);
         if (!didAddContact) {
             result.addMessage(ResultType.INVALID, "Could not add contact to group");
@@ -79,11 +78,11 @@ public class GroupService {
         return result;
     }
 
-    public Result<Void> batchAddContactsToGroup(List<Integer> contactIds, int groupId) {
+    public Result<Group> batchAddContactsToGroup(List<Integer> contactIds, int groupId) {
 
-        Result<Void> result = new Result<>();
+        Result<Group> result = new Result<>();
         for (Integer contactId : contactIds) {
-            result = validateCanPerformBridgeAction(contactId, groupId, true);
+            result = validateCanBridgeContactToGroup(contactId, groupId, BridgeTableOperation.ADD);
             if (!result.isSuccess()) {
                 return result;
             }
@@ -96,11 +95,11 @@ public class GroupService {
         return result;
     }
 
-    public Result<Void> batchUpdateContactsInGroup(List<Integer> contactIds, int groupId) {
+    public Result<Group> batchUpdateContactsInGroup(List<Integer> contactIds, int groupId) {
 
-        Result<Void> result = new Result<>();
+        Result<Group> result = new Result<>();
         for (Integer contactId : contactIds) {
-            result = validateCanPerformBridgeUpdate(contactId, groupId);
+            result = validateCanBridgeContactToGroup(contactId, groupId, BridgeTableOperation.UPDATE);
             if (!result.isSuccess()) {
                 return result;
             }
@@ -113,8 +112,9 @@ public class GroupService {
         return result;
     }
 
-    public Result<Void> removeContactFromGroup(int contactId, int groupId) {
-        Result<Void> result = validateCanPerformBridgeAction(contactId, groupId, false);
+    public Result<Group> removeContactFromGroup(int contactId, int groupId) {
+
+        Result<Group> result = validateCanBridgeContactToGroup(contactId, groupId, BridgeTableOperation.REMOVE);
         if (!result.isSuccess()) {
             return result;
         }
@@ -126,7 +126,7 @@ public class GroupService {
         return result;
     }
 
-    private Result<Group> validate(Group group) {
+    private Result<Group> validateFields(Group group) {
         Result<Group> result = new Result<>();
         if (group == null) {
             result.addMessage(ResultType.INVALID, "Group cannot be null");
@@ -139,54 +139,19 @@ public class GroupService {
         return result;
     }
 
-    private Result<Void> validateCanPerformBridgeAction(int contactId, int groupId, boolean isAdding) {
-
-        Result<Void> result = new Result<>();
-
-        Contact contactToAdd = contactRepository.findById(contactId);
-
-        if (contactToAdd == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find contact with contactId: %s", contactId));
+    private Result<Group> validateCanBridgeContactToGroup(int contactId, int groupId, BridgeTableOperation operation) {
+        Result<Group> result = Helpers.validateBothEntitiesExist(contactRepository, contactId, "contact",
+                groupRepository, groupId, "group");
+        if (!result.isSuccess()) {
+            return result;
         }
+        if (operation != BridgeTableOperation.UPDATE) {
+            List<Contact> contactsList = groupRepository.findById(groupId).getContacts();
 
-        Group groupToAddContact = groupRepository.findById(groupId);
-
-        if (groupToAddContact == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find group with groupId: %s", groupId));
-        } else {
-            //check if contactId present in group's contacts
-            boolean containsContact = groupToAddContact.getContacts()
-                    .stream().map(contact -> contact.getContactId()).anyMatch(id -> id == contactId);
-
-            if (containsContact && isAdding) {
-                result.addMessage(ResultType.INVALID,
-                        String.format("Contact with id %s already in group", contactId));
-            } else if (!containsContact && !isAdding) {
-                result.addMessage(ResultType.INVALID,
-                        String.format("Contact with id %s not in group so cannot be removed", contactId));
-            }
+            result = Helpers.validateCanPerformBridgeAction(contactId, "contact", "group",
+                    contactsList, operation);
         }
-        return result;
-    }
-
-    private Result<Void> validateCanPerformBridgeUpdate(int contactId, int groupId) {
-        Result<Void> result = new Result<>();
-
-        Contact contactToAdd = contactRepository.findById(contactId);
-
-        if (contactToAdd == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find contact with contactId: %s", contactId));
-        }
-
-        Group groupToAddContact = groupRepository.findById(groupId);
-
-        if (groupToAddContact == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find group with groupId: %s", groupId));
-        }
-        return result;
+            return result;
     }
 }
+

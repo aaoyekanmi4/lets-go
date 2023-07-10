@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Event {
+public class Event extends Identifiable {
     private int eventId;
     private String eventName;
     private String category;
@@ -39,6 +39,8 @@ public class Event {
     public int getEventId() {
         return eventId;
     }
+
+    public int getId() { return eventId; };
 
     public void setEventId(int eventId) {
         this.eventId = eventId;

@@ -36,14 +36,14 @@ public class EventService {
     }
 
     public Result<Event> saveEventToUser(Event event, int appUserId) {
-        Result<Event> result = validate(event);
+        Result<Event> result = validateFields(event);
         if (!result.isSuccess()) {
             return result;
         }
         Event existingEvent = Helpers.findEventIfExists(event, eventRepository);
 
         if (existingEvent != null) {
-            result = validateCanPerformBridgeAction(existingEvent.getEventId(), appUserId, true);
+            result = validateCanBridgeEventToUser(existingEvent.getEventId(), appUserId, BridgeTableOperation.ADD);
             if (!result.isSuccess()) {
                 return result;
             }
@@ -56,7 +56,7 @@ public class EventService {
         } else {
             Event newEvent = eventRepository.create(event);
             if (newEvent != null) {
-                result = validateCanPerformBridgeAction(newEvent.getEventId(), appUserId, true);
+                result = validateCanBridgeEventToUser(newEvent.getEventId(), appUserId, BridgeTableOperation.ADD);
                 if (!result.isSuccess()) {
                     return result;
                 }
@@ -74,7 +74,7 @@ public class EventService {
     }
 
     public Result<Event> removeEventFromUser(int eventId, int appUserId) {
-        Result<Event> result = validateCanPerformBridgeAction(eventId, appUserId, false);
+        Result<Event> result = validateCanBridgeEventToUser(eventId, appUserId, BridgeTableOperation.REMOVE);
         boolean didRemoveEvent = savedEventRepository.removeEventFromUser(eventId, appUserId);
         if (!didRemoveEvent) {
             result.addMessage(ResultType.INVALID, "Could not remove event from saved events");
@@ -82,10 +82,8 @@ public class EventService {
         return result;
     }
 
-
-
     public Result<Event> update(Event event) {
-        Result<Event> result = validate(event);
+        Result<Event> result = validateFields(event);
         if (!result.isSuccess()) {
             return result;
         }
@@ -101,7 +99,7 @@ public class EventService {
         return eventRepository.deleteById(eventId);
     }
 
-    private Result<Event> validate(Event event) {
+    private Result<Event> validateFields(Event event) {
         Result<Event> result = new Result<>();
         if (event == null) {
             result.addMessage(ResultType.INVALID, "Event cannot be null");
@@ -116,34 +114,17 @@ public class EventService {
         return result;
     }
 
-    //TODO REFACTOR 4: EventForUser, ContactsForGroup, GroupsForEvent, ContactsForEvent
-    private Result<Event> validateCanPerformBridgeAction(int eventId, int appUserId, boolean isAdding) {
-
-        Result<Event> result = new Result<>();
-
-        Event event = eventRepository.findById(eventId);
-
-        if (event == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find event with eventId: %s", eventId));
+    private Result<Event> validateCanBridgeEventToUser (int eventId, int appUserId, BridgeTableOperation operation) {
+        Result<Event> result = Helpers.validateBothEntitiesExist(
+                appUserRepository, appUserId, "user", eventRepository, eventId, "event");
+        if (!result.isSuccess()) {
+            return result;
         }
+        if (operation != BridgeTableOperation.UPDATE) {
+            List<Event> eventsList = appUserRepository.findById(appUserId).getEvents();
 
-        AppUser user = appUserRepository.findById(appUserId);
-
-        if (user == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find user with userId: %s", appUserId));
-        } else {
-            boolean alreadyHasEventSaved = user.getEvents()
-                    .stream().map(currEvent -> currEvent.getEventId()).anyMatch(id -> id == eventId);
-
-            if (alreadyHasEventSaved && isAdding) {
-                result.addMessage(ResultType.INVALID,
-                        String.format("Event with id %s already in saved events for user", eventId));
-            } else if (!alreadyHasEventSaved && !isAdding) {
-                result.addMessage(ResultType.INVALID,
-                        String.format("Event with id %s not in user's saved events for removal", eventId));
-            }
+            result = Helpers.validateCanPerformBridgeAction(eventId, "event", "user",
+                    eventsList, operation);
         }
         return result;
     }
