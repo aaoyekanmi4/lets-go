@@ -43,7 +43,7 @@ public class EventService {
         Event existingEvent = Helpers.findEventIfExists(event, eventRepository);
 
         if (existingEvent != null) {
-            result = validateCanBridgeEventToUser(existingEvent.getEventId(), appUserId, BridgeTableOperation.ADD);
+            result = validateCanPerformEventToUserBridgeAction(existingEvent.getEventId(), appUserId, BridgeTableOperation.ADD);
             if (!result.isSuccess()) {
                 return result;
             }
@@ -56,7 +56,7 @@ public class EventService {
         } else {
             Event newEvent = eventRepository.create(event);
             if (newEvent != null) {
-                result = validateCanBridgeEventToUser(newEvent.getEventId(), appUserId, BridgeTableOperation.ADD);
+                result = validateCanPerformEventToUserBridgeAction(newEvent.getEventId(), appUserId, BridgeTableOperation.ADD);
                 if (!result.isSuccess()) {
                     return result;
                 }
@@ -74,7 +74,7 @@ public class EventService {
     }
 
     public Result<Event> removeEventFromUser(int eventId, int appUserId) {
-        Result<Event> result = validateCanBridgeEventToUser(eventId, appUserId, BridgeTableOperation.REMOVE);
+        Result<Event> result = validateCanPerformEventToUserBridgeAction(eventId, appUserId, BridgeTableOperation.REMOVE);
         boolean didRemoveEvent = savedEventRepository.removeEventFromUser(eventId, appUserId);
         if (!didRemoveEvent) {
             result.addMessage(ResultType.INVALID, "Could not remove event from saved events");
@@ -114,18 +114,8 @@ public class EventService {
         return result;
     }
 
-    private Result<Event> validateCanBridgeEventToUser (int eventId, int appUserId, BridgeTableOperation operation) {
-        Result<Event> result = Helpers.validateBothEntitiesExist(
-                appUserRepository, appUserId, "user", eventRepository, eventId, "event");
-        if (!result.isSuccess()) {
-            return result;
-        }
-        if (operation != BridgeTableOperation.UPDATE) {
-            List<Event> eventsList = appUserRepository.findById(appUserId).getEvents();
-
-            result = Helpers.validateCanPerformBridgeAction(eventId, "event", "user",
-                    eventsList, operation);
-        }
-        return result;
+    private Result<Event> validateCanPerformEventToUserBridgeAction (int eventId, int appUserId, BridgeTableOperation operation) {
+        return Helpers.validateCanPerformBridgeAction(appUserRepository, appUserId, "user", "getEvents",eventRepository, eventId, "event",
+                operation);
     }
 }

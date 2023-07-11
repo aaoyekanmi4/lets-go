@@ -4,6 +4,7 @@ import learn.letsgo.Data.ContactRepository;
 import learn.letsgo.Data.GroupRepository;
 import learn.letsgo.Data.SavedEventRepository;
 import learn.letsgo.Models.Contact;
+import learn.letsgo.Models.Event;
 import learn.letsgo.Models.Group;
 import learn.letsgo.Models.SavedEvent;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,8 @@ public class SavedEventService {
         return savedEventRepository.findById(savedEventId);
     }
 
-    public Result<Void> addContactToEvent(int contactId, int savedEventId) {
-        Result<Void> result = validateCanBridgeContactToSavedEvent(contactId, savedEventId, true);
+    public Result<Contact> addContactToEvent(int contactId, int savedEventId) {
+        Result<Contact> result = validateCanBridgeContactToSavedEvent(contactId, savedEventId, BridgeTableOperation.ADD);
         if (!result.isSuccess()) {
             return result;
         }
@@ -42,8 +43,8 @@ public class SavedEventService {
         return result;
     }
 
-    public Result<Void> removeContactFromEvent(int contactId, int savedEventId) {
-        Result<Void> result = validateCanBridgeContactToSavedEvent(contactId, savedEventId, false);
+    public Result<Contact> removeContactFromEvent(int contactId, int savedEventId) {
+        Result<Contact> result = validateCanBridgeContactToSavedEvent(contactId, savedEventId,BridgeTableOperation.REMOVE);
         if (!result.isSuccess()) {
             return result;
         }
@@ -54,8 +55,8 @@ public class SavedEventService {
         return result;
     }
 
-    public Result<Void> addGroupToEvent(int groupId, int savedEventId) {
-        Result<Void> result = validateCanBridgeGroupToSavedEvent(groupId, savedEventId, true);
+    public Result<Group> addGroupToEvent(int groupId, int savedEventId) {
+        Result<Group> result = validateCanBridgeGroupToSavedEvent(groupId, savedEventId, BridgeTableOperation.ADD);
         if (!result.isSuccess()) {
             return result;
         }
@@ -66,8 +67,8 @@ public class SavedEventService {
         return result;
     }
 
-    public Result<Void> removeGroupFromEvent(int groupId, int savedEventId) {
-        Result<Void> result = validateCanBridgeGroupToSavedEvent(groupId, savedEventId, false);
+    public Result<Group> removeGroupFromEvent(int groupId, int savedEventId) {
+        Result<Group> result = validateCanBridgeGroupToSavedEvent(groupId, savedEventId, BridgeTableOperation.REMOVE);
         if (!result.isSuccess()) {
             return result;
         }
@@ -78,11 +79,11 @@ public class SavedEventService {
         return result;
     }
 
-    public Result<Void> batchAddContactsToSavedEvent(List<Integer> contactIds, int savedEventId) {
+    public Result<Contact> batchAddContactsToSavedEvent(List<Integer> contactIds, int savedEventId) {
 
-        Result<Void> result = new Result<>();
+        Result<Contact> result = new Result<>();
         for (Integer contactId : contactIds) {
-            result = validateCanBridgeContactToSavedEvent(contactId, savedEventId, true);
+            result = validateCanBridgeContactToSavedEvent(contactId, savedEventId, BridgeTableOperation.ADD);
             if (!result.isSuccess()) {
                 return result;
             }
@@ -95,11 +96,11 @@ public class SavedEventService {
         return result;
     }
 
-    public Result<Void> batchUpdateContactsInSavedEvent(List<Integer> contactIds, int savedEventId) {
+    public Result<Contact> batchUpdateContactsInSavedEvent(List<Integer> contactIds, int savedEventId) {
 
-        Result<Void> result = new Result<>();
+        Result<Contact> result = new Result<>();
         for (Integer contactId : contactIds) {
-            result = validateCanPerformContactBridgeUpdate(contactId, savedEventId);
+            result = validateCanBridgeContactToSavedEvent(contactId, savedEventId, BridgeTableOperation.UPDATE);
             if (!result.isSuccess()) {
                 return result;
             }
@@ -112,11 +113,11 @@ public class SavedEventService {
         return result;
     }
 
-    public Result<Void> batchAddGroupsToSavedEvent(List<Integer> groupIds, int savedEventId) {
+    public Result<Group> batchAddGroupsToSavedEvent(List<Integer> groupIds, int savedEventId) {
 
-        Result<Void> result = new Result<>();
+        Result<Group> result = new Result<>();
         for (Integer groupId : groupIds) {
-            result = validateCanBridgeGroupToSavedEvent(groupId, savedEventId, true);
+            result = validateCanBridgeGroupToSavedEvent(groupId, savedEventId, BridgeTableOperation.ADD);
             if (!result.isSuccess()) {
                 return result;
             }
@@ -129,11 +130,11 @@ public class SavedEventService {
         return result;
     }
 
-    public Result<Void> batchUpdateGroupsInSavedEvent(List<Integer> groupIds, int savedEventId) {
+    public Result<Group> batchUpdateGroupsInSavedEvent(List<Integer> groupIds, int savedEventId) {
 
-        Result<Void> result = new Result<>();
+        Result<Group> result = new Result<>();
         for (Integer groupId : groupIds) {
-            result = validateCanPerformGroupBridgeUpdate(groupId, savedEventId);
+            result = validateCanBridgeGroupToSavedEvent(groupId, savedEventId, BridgeTableOperation.UPDATE);
             if (!result.isSuccess()) {
                 return result;
             }
@@ -146,104 +147,18 @@ public class SavedEventService {
         return result;
     }
 
-    //TODO REFACTOR THESE INTO ONE METHOD
-    private Result<Void> validateCanBridgeGroupToSavedEvent(int groupId, int savedEventId, boolean isAdding) {
+    private Result<Contact> validateCanBridgeContactToSavedEvent(int contactId, int savedEventId, BridgeTableOperation operation) {
 
-        Result<Void> result = new Result<>();
-
-        Group group = groupRepository.findById(groupId);
-
-        if (group == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find group with groupId: %s", groupId));
-        }
-
-        SavedEvent savedEvent = savedEventRepository.findById(savedEventId);
-
-        if (savedEvent == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find savedEvent with savedEventId: %s", savedEventId));
-        } else {
-            boolean alreadyHasGroup = savedEvent.getGroups()
-                    .stream().map(currGroup -> currGroup.getGroupId()).anyMatch(id -> id == groupId);
-            System.out.println(alreadyHasGroup);
-            if (alreadyHasGroup && isAdding) {
-                result.addMessage(ResultType.INVALID,
-                        String.format("Group id %s already in this saved event", groupId));
-            } else if (!alreadyHasGroup && !isAdding) {
-                result.addMessage(ResultType.INVALID,
-                        String.format("Group with id %s not in this saved event for removal", groupId));
-            }
-        }
-        return result;
+        return Helpers.validateCanPerformBridgeAction(savedEventRepository, savedEventId, "saved event", "getContacts",
+                contactRepository, contactId, "contact",
+                operation);
     }
 
-    private Result<Void> validateCanBridgeContactToSavedEvent(int contactId, int savedEventId, boolean isAdding) {
+    private Result<Group> validateCanBridgeGroupToSavedEvent(int groupId, int savedEventId, BridgeTableOperation operation) {
 
-        Result<Void> result = new Result<>();
-
-        Contact contact = contactRepository.findById(contactId);
-
-        if (contact == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find contact with contactId: %s", contactId));
-        }
-
-        SavedEvent savedEvent = savedEventRepository.findById(savedEventId);
-
-        if (savedEvent == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find savedEvent with savedEventId: %s", savedEventId));
-        } else {
-            boolean alreadyHasContact = savedEvent.getContacts()
-                    .stream().map(currContact -> currContact.getContactId()).anyMatch(id -> id == contactId);
-
-            if (alreadyHasContact && isAdding) {
-                result.addMessage(ResultType.INVALID,
-                        String.format("Contact id %s already in this saved event", contactId));
-            } else if (!alreadyHasContact && !isAdding) {
-                result.addMessage(ResultType.INVALID,
-                        String.format("Contact with id %s not in this saved event for removal", contactId));
-            }
-        }
-        return result;
+        return Helpers.validateCanPerformBridgeAction(savedEventRepository, savedEventId, "saved event", "getGroups",
+                groupRepository, groupId, "group",
+                operation);
     }
 
-    private Result<Void> validateCanPerformContactBridgeUpdate(int contactId, int savedEventId) {
-        Result<Void> result = new Result<>();
-
-        Contact contactToAdd = contactRepository.findById(contactId);
-
-        if (contactToAdd == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find contact with contactId: %s", contactId));
-        }
-
-        SavedEvent savedEventToAddContact = savedEventRepository.findById(savedEventId);
-
-        if (savedEventToAddContact == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find savedEvent with savedEventId: %s", savedEventId));
-        }
-        return result;
-    }
-
-    private Result<Void> validateCanPerformGroupBridgeUpdate(int groupId, int savedEventId) {
-        Result<Void> result = new Result<>();
-
-        Group groupToAdd = groupRepository.findById(groupId);
-
-        if (groupToAdd == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find group with groupId: %s", groupId));
-        }
-
-        SavedEvent savedEventToAddGroup = savedEventRepository.findById(savedEventId);
-
-        if (savedEventToAddGroup == null) {
-            result.addMessage(ResultType.NOT_FOUND,
-                    String.format("Could not find savedEvent with savedEventId: %s", savedEventId));
-        }
-        return result;
-    }
 }

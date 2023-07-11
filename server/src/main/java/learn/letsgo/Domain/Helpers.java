@@ -9,6 +9,9 @@ import learn.letsgo.Models.Event;
 import learn.letsgo.Models.Identifiable;
 import learn.letsgo.Models.Venue;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,11 +64,12 @@ public class Helpers {
         return lowercaseStr.substring(0, 1).toUpperCase() + lowercaseStr.substring(1);
     }
 
-    public static <S, T> Result<T> validateBothEntitiesExist(BridgeTableRepository<S> childRepo,
+    private static <S, T> Result<S> validateBothEntitiesExist(BridgeTableRepository<S> childRepo,
                                                                 int childId, String childName,
                                                                 BridgeTableRepository<T> parentRepo,
-                                                                int parentId, String parentName) {
-        Result<T> result = new Result<>();
+                                                                int parentId, String parentName
+                                                             ) {
+        Result<S> result = new Result<>();
         S child = childRepo.findById(childId);
         if (child == null) {
             result.addMessage(ResultType.NOT_FOUND,
@@ -80,7 +84,7 @@ public class Helpers {
         return result;
     }
 
-    public static <S extends Identifiable, T> Result<T> validateCanPerformBridgeAction(int childId, String childName, String parentName,
+    private static <S extends Identifiable, T> Result<T> validateCanAddOrRemoveChild(int childId, String childName, String parentName,
             List<S> parentListOfChild, BridgeTableOperation operation) {
         Result<T> result = new Result<>();
 
@@ -96,4 +100,34 @@ public class Helpers {
             }
         return result;
     }
+
+    public static <S extends Identifiable, T> Result<S> validateCanPerformBridgeAction
+            (BridgeTableRepository<T> parentRepo, int parentId, String parentName,
+             String parentMethodName, BridgeTableRepository<S> childRepo,
+             int childId, String childName, BridgeTableOperation operation) {
+        Result<S> result = validateBothEntitiesExist(childRepo, childId, childName, parentRepo, parentId, parentName);
+        if (!result.isSuccess()) {
+            return result;
+        }
+        if (operation != BridgeTableOperation.UPDATE) {
+            T parent = parentRepo.findById(parentId);
+            try {
+                Method method = parent.getClass().getMethod(parentMethodName);
+                List<S> parentListOfChildren;
+                parentListOfChildren = (List<S>) method.invoke(parent);
+                System.out.println(parentListOfChildren);
+                result = validateCanAddOrRemoveChild(childId, childName,
+                        parentName, parentListOfChildren, operation);
+
+            } catch (NoSuchMethodException
+                    | IllegalArgumentException
+                    | InvocationTargetException
+                    | IllegalAccessException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+
+        return result;
+    }
+
 }

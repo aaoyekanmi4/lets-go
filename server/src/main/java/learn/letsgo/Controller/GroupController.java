@@ -3,6 +3,7 @@ package learn.letsgo.Controller;
 import learn.letsgo.Domain.GroupService;
 import learn.letsgo.Domain.Result;
 
+import learn.letsgo.Models.Contact;
 import learn.letsgo.Models.Group;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +67,7 @@ public class GroupController {
 
     @PostMapping("/{contactId}/{groupId}")
     public ResponseEntity<?> addContactToGroup (@PathVariable int contactId, @PathVariable int groupId) {
-        Result<Group> result = groupService.addContactToGroup(contactId, groupId);
+        Result<Contact> result = groupService.addContactToGroup(contactId, groupId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -75,7 +76,7 @@ public class GroupController {
 
     @PostMapping("/{groupId}")
     public ResponseEntity<?> batchAddContactsToGroup (@RequestBody List<Integer> contactIds, @PathVariable int groupId) {
-        Result<Group> result = groupService.batchAddContactsToGroup(contactIds, groupId);
+        Result<Contact> result = groupService.batchAddContactsToGroup(contactIds, groupId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -84,7 +85,7 @@ public class GroupController {
 
     @PutMapping("/batch/{groupId}")
     public ResponseEntity<?> batchUpdateContactsInGroup (@RequestBody List<Integer> contactIds, @PathVariable int groupId) {
-        Result<Group> result = groupService.batchUpdateContactsInGroup(contactIds, groupId);
+        Result<Contact> result = groupService.batchUpdateContactsInGroup(contactIds, groupId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -94,7 +95,7 @@ public class GroupController {
     @DeleteMapping("/{contactId}/{groupId}")
     public ResponseEntity<?> removeContactFromGroup(@PathVariable int contactId,
                                                   @PathVariable int groupId) {
-        Result<Group> result = groupService.removeContactFromGroup(contactId, groupId);
+        Result<Contact> result = groupService.removeContactFromGroup(contactId, groupId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

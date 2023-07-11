@@ -66,8 +66,8 @@ public class GroupService {
         return groupRepository.deleteById(groupId);
     }
 
-    public Result<Group> addContactToGroup(int contactId, int groupId) {
-        Result<Group> result = validateCanBridgeContactToGroup(contactId, groupId, BridgeTableOperation.ADD);
+    public Result<Contact> addContactToGroup(int contactId, int groupId) {
+        Result<Contact> result = validateCanPerformContactToGroupBridgeAction(contactId, groupId, BridgeTableOperation.ADD);
         if (!result.isSuccess()) {
             return result;
         }
@@ -78,11 +78,11 @@ public class GroupService {
         return result;
     }
 
-    public Result<Group> batchAddContactsToGroup(List<Integer> contactIds, int groupId) {
+    public Result<Contact> batchAddContactsToGroup(List<Integer> contactIds, int groupId) {
 
-        Result<Group> result = new Result<>();
+        Result<Contact> result = new Result<>();
         for (Integer contactId : contactIds) {
-            result = validateCanBridgeContactToGroup(contactId, groupId, BridgeTableOperation.ADD);
+            result = validateCanPerformContactToGroupBridgeAction(contactId, groupId, BridgeTableOperation.ADD);
             if (!result.isSuccess()) {
                 return result;
             }
@@ -95,11 +95,11 @@ public class GroupService {
         return result;
     }
 
-    public Result<Group> batchUpdateContactsInGroup(List<Integer> contactIds, int groupId) {
+    public Result<Contact> batchUpdateContactsInGroup(List<Integer> contactIds, int groupId) {
 
-        Result<Group> result = new Result<>();
+        Result<Contact> result = new Result<>();
         for (Integer contactId : contactIds) {
-            result = validateCanBridgeContactToGroup(contactId, groupId, BridgeTableOperation.UPDATE);
+            result = validateCanPerformContactToGroupBridgeAction(contactId, groupId, BridgeTableOperation.UPDATE);
             if (!result.isSuccess()) {
                 return result;
             }
@@ -112,9 +112,9 @@ public class GroupService {
         return result;
     }
 
-    public Result<Group> removeContactFromGroup(int contactId, int groupId) {
+    public Result<Contact> removeContactFromGroup(int contactId, int groupId) {
 
-        Result<Group> result = validateCanBridgeContactToGroup(contactId, groupId, BridgeTableOperation.REMOVE);
+        Result<Contact> result = validateCanPerformContactToGroupBridgeAction(contactId, groupId, BridgeTableOperation.REMOVE);
         if (!result.isSuccess()) {
             return result;
         }
@@ -139,19 +139,10 @@ public class GroupService {
         return result;
     }
 
-    private Result<Group> validateCanBridgeContactToGroup(int contactId, int groupId, BridgeTableOperation operation) {
-        Result<Group> result = Helpers.validateBothEntitiesExist(contactRepository, contactId, "contact",
-                groupRepository, groupId, "group");
-        if (!result.isSuccess()) {
-            return result;
-        }
-        if (operation != BridgeTableOperation.UPDATE) {
-            List<Contact> contactsList = groupRepository.findById(groupId).getContacts();
-
-            result = Helpers.validateCanPerformBridgeAction(contactId, "contact", "group",
-                    contactsList, operation);
-        }
-            return result;
+    private Result<Contact> validateCanPerformContactToGroupBridgeAction(int contactId, int groupId, BridgeTableOperation operation) {
+        return Helpers.validateCanPerformBridgeAction( groupRepository,
+                groupId, "group", "getContacts", contactRepository,
+                contactId, "contact",operation);
     }
 }
 
