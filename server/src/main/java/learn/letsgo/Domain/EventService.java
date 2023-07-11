@@ -114,8 +114,10 @@ public class EventService {
         return result;
     }
 
-    private Result<Event> validateCanPerformEventToUserBridgeAction (int eventId, int appUserId, BridgeTableOperation operation) {
-        return Helpers.validateCanPerformBridgeAction(appUserRepository, appUserId, "user", "getEvents",eventRepository, eventId, "event",
+    private Result<Event> validateCanPerformEventToUserBridgeAction (int eventId, int appUserId,
+                                                                     BridgeTableOperation operation) {
+        return Helpers.validateCanPerformBridgeAction(appUserRepository, appUserId, "user",
+                "getEvents",eventRepository, eventId, "event",
                 operation);
     }
 }

@@ -147,16 +147,19 @@ public class SavedEventService {
         return result;
     }
 
-    private Result<Contact> validateCanBridgeContactToSavedEvent(int contactId, int savedEventId, BridgeTableOperation operation) {
+    private Result<Contact> validateCanBridgeContactToSavedEvent(int contactId, int savedEventId,
+                                                                 BridgeTableOperation operation) {
 
-        return Helpers.validateCanPerformBridgeAction(savedEventRepository, savedEventId, "saved event", "getContacts",
+        return Helpers.validateCanPerformBridgeAction(savedEventRepository, savedEventId, "saved event",
+                "getContacts",
                 contactRepository, contactId, "contact",
                 operation);
     }
 
     private Result<Group> validateCanBridgeGroupToSavedEvent(int groupId, int savedEventId, BridgeTableOperation operation) {
 
-        return Helpers.validateCanPerformBridgeAction(savedEventRepository, savedEventId, "saved event", "getGroups",
+        return Helpers.validateCanPerformBridgeAction(savedEventRepository, savedEventId, "saved event",
+                "getGroups",
                 groupRepository, groupId, "group",
                 operation);
     }

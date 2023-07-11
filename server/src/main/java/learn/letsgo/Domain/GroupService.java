@@ -139,7 +139,8 @@ public class GroupService {
         return result;
     }
 
-    private Result<Contact> validateCanPerformContactToGroupBridgeAction(int contactId, int groupId, BridgeTableOperation operation) {
+    private Result<Contact> validateCanPerformContactToGroupBridgeAction(int contactId, int groupId,
+                                                                         BridgeTableOperation operation) {
         return Helpers.validateCanPerformBridgeAction( groupRepository,
                 groupId, "group", "getContacts", contactRepository,
                 contactId, "contact",operation);
