@@ -37,7 +37,7 @@ class SavedEventServiceTest {
         when(savedEventRepository.findById(3)).thenReturn(new SavedEvent());
         when(contactRepository.findById(1)).thenReturn(new Contact());
         when(savedEventRepository.addContactToEvent(1,3)).thenReturn(true);
-        Result<Void> actual = savedEventService.addContactToEvent(1,3);
+        Result<Contact> actual = savedEventService.addContactToEvent(1,3);
         assertTrue(actual.isSuccess());
     }
 
@@ -46,7 +46,7 @@ class SavedEventServiceTest {
         when(savedEventRepository.findById(3)).thenReturn(new SavedEvent());
         when(contactRepository.findById(1)).thenReturn(null);
         when(savedEventRepository.addContactToEvent(1,3)).thenReturn(true);
-        Result<Void> actual = savedEventService.addContactToEvent(1,3);
+        Result<Contact> actual = savedEventService.addContactToEvent(1,3);
         assertFalse(actual.isSuccess());
         assertEquals("Could not find contact with contactId: 1",
                 actual.getMessages().get(0));
@@ -60,9 +60,9 @@ class SavedEventServiceTest {
         contactToAdd.setContactId(10);
         when(savedEventRepository.findById(3)).thenReturn(savedEvent);
         when(contactRepository.findById(10)).thenReturn(makeContactsList().get(0));
-        Result<Void> actual = savedEventService.addContactToEvent(10,3);
+        Result<Contact> actual = savedEventService.addContactToEvent(10,3);
         assertFalse(actual.isSuccess());
-        assertEquals("Contact id 10 already in this saved event",
+        assertEquals("Contact with id 10 already in saved event",
                 actual.getMessages().get(0));
         System.out.println(actual.getMessages());
     }
@@ -76,7 +76,7 @@ class SavedEventServiceTest {
         when(savedEventRepository.findById(3)).thenReturn(savedEvent);
         when(savedEventRepository.removeContactFromEvent(10,3)).thenReturn(true);
         when(contactRepository.findById(10)).thenReturn(contactToRemove);
-        Result<Void> actual = savedEventService.removeContactFromEvent(10,3);
+        Result<Contact> actual = savedEventService.removeContactFromEvent(10,3);
         assertTrue(actual.isSuccess());
     }
 
@@ -88,8 +88,8 @@ class SavedEventServiceTest {
         contactToRemove.setContactId(9);
         when(contactRepository.findById(9)).thenReturn(contactToRemove);
         when(savedEventRepository.findById(3)).thenReturn(savedEvent);
-        Result<Void> actual = savedEventService.removeContactFromEvent(9,3);
-        assertEquals("Contact with id 9 not in this saved event for removal", actual.getMessages().get(0));
+        Result<Contact> actual = savedEventService.removeContactFromEvent(9,3);
+        assertEquals("Contact with id 9 not in saved event so cannot be removed", actual.getMessages().get(0));
         assertFalse(actual.isSuccess());
     }
 
@@ -98,7 +98,7 @@ class SavedEventServiceTest {
         when(savedEventRepository.findById(3)).thenReturn(new SavedEvent());
         when(groupRepository.findById(1)).thenReturn(new Group());
         when(savedEventRepository.addGroupToEvent(1,3)).thenReturn(true);
-        Result<Void> actual = savedEventService.addGroupToEvent(1,3);
+        Result<Group> actual = savedEventService.addGroupToEvent(1,3);
         assertTrue(actual.isSuccess());
     }
 
@@ -113,8 +113,7 @@ class SavedEventServiceTest {
         when(savedEventRepository.findById(3)).thenReturn(savedEvent);
         when(savedEventRepository.removeGroupFromEvent(10,3)).thenReturn(true);
         when(groupRepository.findById(10)).thenReturn(groupToRemove);
-        Result<Void> actual = savedEventService.removeGroupFromEvent(10,3);
-        System.out.println(actual.getMessages());
+        Result<Group> actual = savedEventService.removeGroupFromEvent(10,3);
         assertTrue(actual.isSuccess());
     }
 
@@ -127,7 +126,7 @@ class SavedEventServiceTest {
         when(contactRepository.findById(10)).thenReturn(new Contact());
         when(contactRepository.findById(12)).thenReturn(new Contact());
         when(savedEventRepository.batchAddContactsToEvent(contactIds, 3)).thenReturn(true);
-        Result<Void> actual = savedEventService.batchAddContactsToSavedEvent(contactIds, 3);
+        Result<Contact> actual = savedEventService.batchAddContactsToSavedEvent(contactIds, 3);
         assertTrue(actual.isSuccess());
     }
 
@@ -141,9 +140,9 @@ class SavedEventServiceTest {
         when(contactRepository.findById(10)).thenReturn(new Contact());
         when(contactRepository.findById(12)).thenReturn(new Contact());
         when(savedEventRepository.batchAddContactsToEvent(contactIds, 3)).thenReturn(true);
-        Result<Void> actual = savedEventService.batchAddContactsToSavedEvent(contactIds, 3);
+        Result<Contact> actual = savedEventService.batchAddContactsToSavedEvent(contactIds, 3);
         assertFalse(actual.isSuccess());
-        assertEquals("Contact id 10 already in this saved event", actual.getMessages().get(0));
+        assertEquals("Contact with id 10 already in saved event", actual.getMessages().get(0));
     }
 
     @Test
@@ -155,7 +154,7 @@ class SavedEventServiceTest {
         when(contactRepository.findById(15)).thenReturn(new Contact());
         when(contactRepository.findById(17)).thenReturn(null);
         when(savedEventRepository.batchAddContactsToEvent(List.of(15,17), 3)).thenReturn(true);
-        Result<Void> actual = savedEventService.batchAddContactsToSavedEvent(List.of(15,17), 3);
+        Result<Contact> actual = savedEventService.batchAddContactsToSavedEvent(List.of(15,17), 3);
         assertFalse(actual.isSuccess());
         assertEquals(ResultType.NOT_FOUND, actual.getStatus());
     }
@@ -168,7 +167,7 @@ class SavedEventServiceTest {
         when(contactRepository.findById(10)).thenReturn(new Contact());
         when(contactRepository.findById(14)).thenReturn(new Contact());
         when(savedEventRepository.batchUpdateContactsInEvent(List.of(10,14), 3)).thenReturn(true);
-        Result<Void> actual = savedEventService.batchUpdateContactsInSavedEvent(List.of(10,14), 3);
+        Result<Contact> actual = savedEventService.batchUpdateContactsInSavedEvent(List.of(10,14), 3);
         assertTrue(actual.isSuccess());
     }
 
@@ -178,7 +177,7 @@ class SavedEventServiceTest {
         when(contactRepository.findById(15)).thenReturn(new Contact());
         when(contactRepository.findById(17)).thenReturn(new Contact());
         when(savedEventRepository.batchUpdateContactsInEvent(List.of(15,17), 3)).thenReturn(true);
-        Result<Void> actual = savedEventService.batchUpdateContactsInSavedEvent(List.of(15,17), 3);
+        Result<Contact> actual = savedEventService.batchUpdateContactsInSavedEvent(List.of(15,17), 3);
         assertFalse(actual.isSuccess());
         assertEquals(ResultType.NOT_FOUND, actual.getStatus());
     }
@@ -192,7 +191,7 @@ class SavedEventServiceTest {
         when(groupRepository.findById(10)).thenReturn(new Group());
         when(groupRepository.findById(12)).thenReturn(new Group());
         when(savedEventRepository.batchAddGroupsToEvent(groupIds, 3)).thenReturn(true);
-        Result<Void> actual = savedEventService.batchAddGroupsToSavedEvent(groupIds, 3);
+        Result<Group> actual = savedEventService.batchAddGroupsToSavedEvent(groupIds, 3);
         assertTrue(actual.isSuccess());
     }
 
@@ -206,9 +205,9 @@ class SavedEventServiceTest {
         when(groupRepository.findById(10)).thenReturn(new Group());
         when(groupRepository.findById(12)).thenReturn(new Group());
         when(savedEventRepository.batchAddGroupsToEvent(groupIds, 3)).thenReturn(true);
-        Result<Void> actual = savedEventService.batchAddGroupsToSavedEvent(groupIds, 3);
+        Result<Group> actual = savedEventService.batchAddGroupsToSavedEvent(groupIds, 3);
         assertFalse(actual.isSuccess());
-        assertEquals("Group id 10 already in this saved event", actual.getMessages().get(0));
+        assertEquals("Group with id 10 already in saved event", actual.getMessages().get(0));
     }
 
     List<Contact> makeContactsList() {

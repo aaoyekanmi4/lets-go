@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Group {
+public class Group extends Identifiable {
     private int groupId;
     private int appUserId;
     private String name;
@@ -23,6 +23,8 @@ public class Group {
     public int getGroupId() {
         return groupId;
     }
+
+    public int getId() { return groupId; };
 
     public void setGroupId(int groupId) {
         this.groupId = groupId;

@@ -4,7 +4,7 @@ import learn.letsgo.App;
 import learn.letsgo.Models.AppUser;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface AppUserRepository {
+public interface AppUserRepository extends BridgeTableRepository<AppUser> {
 
     @Transactional
     AppUser findById(int appUserId);

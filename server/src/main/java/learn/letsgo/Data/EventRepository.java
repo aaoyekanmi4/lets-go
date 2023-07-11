@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface EventRepository {
+public interface EventRepository extends BridgeTableRepository<Event> {
 
     List<Event> findAll();
 

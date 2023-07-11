@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
-public class ContactJdbcTemplateRepository implements ContactRepository{
+public class ContactJdbcTemplateRepository implements ContactRepository {
 
     private final JdbcTemplate jdbcTemplate;
 

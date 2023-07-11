@@ -4,7 +4,7 @@ import learn.letsgo.Models.SavedEvent;
 
 import java.util.List;
 
-public interface SavedEventRepository {
+public interface SavedEventRepository extends BridgeTableRepository<SavedEvent> {
     boolean addEventToUser(int eventId, int appUserId);
 
     boolean removeEventFromUser(int eventId, int appUserId);

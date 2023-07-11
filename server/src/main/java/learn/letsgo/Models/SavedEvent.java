@@ -3,7 +3,7 @@ package learn.letsgo.Models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavedEvent {
+public class SavedEvent extends Identifiable {
     private int savedEventId;
     private int appUserId;
     private Event event;
@@ -22,6 +22,8 @@ public class SavedEvent {
     public int getSavedEventId() {
         return savedEventId;
     }
+
+    public int getId() { return savedEventId; };
 
     public void setSavedEventId(int savedEventId) {
         this.savedEventId = savedEventId;

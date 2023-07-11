@@ -95,7 +95,7 @@ class GroupServiceTest {
         when(groupRepository.findById(3)).thenReturn(new Group());
         when(contactRepository.findById(1)).thenReturn(new Contact());
         when(groupRepository.addContactToGroup(1,3)).thenReturn(true);
-        Result<Void> actual = groupService.addContactToGroup(1,3);
+        Result<Contact> actual = groupService.addContactToGroup(1,3);
         assertTrue(actual.isSuccess());
     }
 
@@ -104,7 +104,7 @@ class GroupServiceTest {
         when(groupRepository.findById(3)).thenReturn(new Group());
         when(contactRepository.findById(1)).thenReturn(null);
         when(groupRepository.addContactToGroup(1,3)).thenReturn(true);
-        Result<Void> actual = groupService.addContactToGroup(1,3);
+        Result<Contact> actual = groupService.addContactToGroup(1,3);
         assertFalse(actual.isSuccess());
         assertEquals("Could not find contact with contactId: 1",
                 actual.getMessages().get(0));
@@ -115,7 +115,7 @@ class GroupServiceTest {
         when(groupRepository.findById(3)).thenReturn(null);
         when(contactRepository.findById(1)).thenReturn(new Contact());
         when(groupRepository.addContactToGroup(1,3)).thenReturn(true);
-        Result<Void> actual = groupService.addContactToGroup(1,3);
+        Result<Contact> actual = groupService.addContactToGroup(1,3);
         assertFalse(actual.isSuccess());
         assertEquals("Could not find group with groupId: 3",
                 actual.getMessages().get(0));
@@ -129,7 +129,7 @@ class GroupServiceTest {
         contactToAdd.setContactId(10);
         when(groupRepository.findById(3)).thenReturn(group);
         when(contactRepository.findById(10)).thenReturn(makeContactsList().get(0));
-        Result<Void> actual = groupService.addContactToGroup(10,3);
+        Result<Contact> actual = groupService.addContactToGroup(10,3);
         assertFalse(actual.isSuccess());
         assertEquals("Contact with id 10 already in group",
                 actual.getMessages().get(0));
@@ -145,7 +145,7 @@ class GroupServiceTest {
         when(groupRepository.findById(3)).thenReturn(group);
         when(groupRepository.removeContactFromGroup(10,3)).thenReturn(true);
         when(contactRepository.findById(10)).thenReturn(contactToRemove);
-        Result<Void> actual = groupService.removeContactFromGroup(10,3);
+        Result<Contact> actual = groupService.removeContactFromGroup(10,3);
         assertTrue(actual.isSuccess());
     }
 
@@ -157,7 +157,7 @@ class GroupServiceTest {
         contactToRemove.setContactId(9);
         when(contactRepository.findById(9)).thenReturn(contactToRemove);
         when(groupRepository.findById(3)).thenReturn(group);
-        Result<Void> actual = groupService.removeContactFromGroup(9,3);
+        Result<Contact> actual = groupService.removeContactFromGroup(9,3);
         assertFalse(actual.isSuccess());
     }
 
@@ -170,7 +170,7 @@ class GroupServiceTest {
         when(contactRepository.findById(10)).thenReturn(new Contact());
         when(contactRepository.findById(12)).thenReturn(new Contact());
         when(groupRepository.batchAddContactsToGroup(contactIds, 3)).thenReturn(true);
-        Result<Void> actual = groupService.batchAddContactsToGroup(contactIds, 3);
+        Result<Contact> actual = groupService.batchAddContactsToGroup(contactIds, 3);
         assertTrue(actual.isSuccess());
     }
 
@@ -184,7 +184,7 @@ class GroupServiceTest {
         when(contactRepository.findById(10)).thenReturn(new Contact());
         when(contactRepository.findById(12)).thenReturn(new Contact());
         when(groupRepository.batchAddContactsToGroup(contactIds, 3)).thenReturn(true);
-        Result<Void> actual = groupService.batchAddContactsToGroup(contactIds, 3);
+        Result<Contact> actual = groupService.batchAddContactsToGroup(contactIds, 3);
         assertFalse(actual.isSuccess());
         assertEquals("Contact with id 10 already in group", actual.getMessages().get(0));
     }
@@ -197,7 +197,7 @@ class GroupServiceTest {
         when(contactRepository.findById(15)).thenReturn(new Contact());
         when(contactRepository.findById(17)).thenReturn(null);
         when(groupRepository.batchAddContactsToGroup(List.of(15,17), 3)).thenReturn(true);
-        Result<Void> actual = groupService.batchAddContactsToGroup(List.of(15,17), 3);
+        Result<Contact> actual = groupService.batchAddContactsToGroup(List.of(15,17), 3);
         assertFalse(actual.isSuccess());
         assertEquals(ResultType.NOT_FOUND, actual.getStatus());
     }
@@ -211,7 +211,7 @@ class GroupServiceTest {
         when(contactRepository.findById(10)).thenReturn(new Contact());
         when(contactRepository.findById(14)).thenReturn(new Contact());
         when(groupRepository.batchUpdateContactsInGroup(List.of(10,14), 3)).thenReturn(true);
-        Result<Void> actual = groupService.batchUpdateContactsInGroup(List.of(10,14), 3);
+        Result<Contact> actual = groupService.batchUpdateContactsInGroup(List.of(10,14), 3);
         assertTrue(actual.isSuccess());
     }
 
@@ -223,7 +223,7 @@ class GroupServiceTest {
         when(contactRepository.findById(15)).thenReturn(new Contact());
         when(contactRepository.findById(17)).thenReturn(new Contact());
         when(groupRepository.batchUpdateContactsInGroup(List.of(15,17), 3)).thenReturn(true);
-        Result<Void> actual = groupService.batchUpdateContactsInGroup(List.of(15,17), 3);
+        Result<Contact> actual = groupService.batchUpdateContactsInGroup(List.of(15,17), 3);
         assertFalse(actual.isSuccess());
         assertEquals(ResultType.NOT_FOUND, actual.getStatus());
     }

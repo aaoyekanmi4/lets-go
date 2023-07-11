@@ -32,7 +32,6 @@ public class SavedEventJdbcTemplateRepository implements SavedEventRepository {
                 + "where se.app_user_id =?;";
 
         List<SavedEvent> result = jdbcTemplate.query(sql, new SavedEventMapper(eventRepository),  appUserId);
-        System.out.println(result);
         return result;
     }
 
@@ -63,7 +62,6 @@ public class SavedEventJdbcTemplateRepository implements SavedEventRepository {
             addGroups(result);
             addContacts(result);
         }
-        System.out.println(result);
         return result;
     }
 
@@ -102,7 +100,6 @@ public class SavedEventJdbcTemplateRepository implements SavedEventRepository {
     public boolean removeContactFromEvent(int contactId, int savedEventId) {
         return jdbcTemplate.update("delete from contact_saved_event "
                 + "where saved_event_id =? and contact_id=?;", savedEventId, contactId) > 0;
-
     }
 
     @Override
@@ -126,7 +123,6 @@ public class SavedEventJdbcTemplateRepository implements SavedEventRepository {
         List<Group> groups = jdbcTemplate.query(sql, new GroupMapper(), savedEvent.getSavedEventId());
 
         savedEvent.setGroups(groups);
-        System.out.println(savedEvent);
     }
 
     private void addContacts(SavedEvent savedEvent) {

@@ -14,7 +14,7 @@ GET {{url}}
 // PATH: ?postalCode=/:postalCode
 // ACCESS: PUBLIC
 
-GET {{url}}?postalCode=78701
+GET {{url}}?postalCode=77407
 
 ###
 
@@ -23,7 +23,7 @@ GET {{url}}?postalCode=78701
 // PATH: /id/:id (TicketMaster site id)
 // ACCESS: PUBLIC
 
-GET {{url}}/id/Z7r9jZ1AdpZjV
+GET {{url}}/id/Z7r9jZ1AdQ4Pv
 
 
 ###

@@ -3,7 +3,7 @@ package learn.letsgo.Models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Contact {
+public class Contact extends Identifiable {
     private int contactId;
     private int appUserId;
     private String email;
@@ -28,6 +28,8 @@ public class Contact {
     public int getContactId() {
         return contactId;
     }
+
+    public int getId() { return contactId; };
 
     public void setContactId(int contactId) {
         this.contactId = contactId;
